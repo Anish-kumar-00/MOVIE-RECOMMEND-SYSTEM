@@ -1,95 +1,91 @@
 🎬 Movie Recommendation System
 
-<p align="center">🍿 Content-Based Movie Recommendation System
+<p align="center">🍿 Movie Recommendation System
 
-A Machine Learning based movie recommendation system that recommends movies similar to your favourite movie.
+🤖 Content-Based Movie Recommendation using Machine Learning
+
+</p><p align="center"><a href="https://movie-recommend-system-f4fbvjdrp7s2p6hhfspsfo.streamlit.app/">
+<img src="https://img.shields.io/badge/🚀%20Live%20Demo-Streamlit-red?style=for-the-badge">
+</a><a href="https://github.com/Anish-kumar-00/movie-recommend-system">
+<img src="https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github">
+</a></p>---
+
+🎬 Movie Showcase
+
+<p align="center"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d7/RRR_Poster.jpg/220px-RRR_Poster.jpg" width="160" alt="RRR"><img src="https://upload.wikimedia.org/wikipedia/en/3/39/Jawan_film_poster.jpg" width="160" alt="Jawan"><img src="https://upload.wikimedia.org/wikipedia/en/d/df/3_idiots_poster.jpg" width="160" alt="3 Idiots"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/Welcome_poster_2007.jpg/220px-Welcome_poster_2007.jpg" width="160" alt="Welcome"><img src="https://upload.wikimedia.org/wikipedia/en/6/6f/Stanley_Ka_Dabba_Poster.jpg" width="160" alt="Stanley Ka Dabba"></p><p align="center">RRR • Jawan • 3 Idiots • Welcome • Stanley Ka Dabba
 
 </p>---
 
 🚀 Live Demo
 
-<p align="center">👉 "🎬 Open Movie Recommendation System" (https://movie-recommend-system-f4fbvjdrp7s2p6hhfspsfo.streamlit.app/)
+<p align="center">👉 "🎬 Open the Movie Recommendation System" (https://movie-recommend-system-f4fbvjdrp7s2p6hhfspsfo.streamlit.app/)
 
 </p>---
-
-🎞️ Popular Indian Movies
-
-<p align="center"><a href="https://www.themoviedb.org/search/movie?query=Drishyam%202">
-<img src="https://image.tmdb.org/t/p/w500/yJNNwHQuKYNeHFbsxSFR6yK9Dda.jpg" width="170" alt="Drishyam 2">
-</a><a href="https://www.themoviedb.org/search/movie?query=Dangal">
-<img src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg" width="170" alt="Dangal">
-</a><a href="https://www.themoviedb.org/search/movie?query=3%20Idiots">
-<img src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg" width="170" alt="3 Idiots">
-</a><a href="https://www.themoviedb.org/search/movie?query=Jawan">
-<img src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg" width="170" alt="Jawan">
-</a><a href="https://www.themoviedb.org/search/movie?query=RRR">
-<img src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg" width="170" alt="RRR">
-</a></p><p align="center">Drishyam 2 • Dangal • 3 Idiots • Jawan • RRR
-
-</p>«⚠️ Poster images are served from TMDB's image CDN. TMDB documents the image URL format as "base_url + file_size + file_path".»
-
----
 
 ✨ Features
 
 - 🎬 Select your favourite movie
-- 🤖 Content-Based Movie Recommendation
+- 🤖 Content-Based Recommendation
 - 🔍 Find similar movies
-- ⭐ Get top 5 recommendations
+- ⭐ Get Top 5 recommendations
 - 🖼️ Fetch movie posters using TMDB API
-- ⚡ Fast recommendation using precomputed similarity data
+- ⚡ Fast recommendations
 - 🌐 Streamlit Web Application
-- 📱 Mobile-friendly interface
+- 📦 Precomputed similarity data
+- 🔐 API key protected using Streamlit Secrets
 
 ---
 
 🧠 How It Works
 
-                 Movie Dataset
-                      │
-                      ▼
+                🎬 Movie Dataset
+                       │
+                       ▼
               Movies + Credits
-                      │
-                      ▼
-                    Merge
-                      │
-                      ▼
-        ┌─────────────────────────┐
-        │ Genres                  │
-        │ Keywords                │
-        │ Cast                    │
-        │ Director                │
-        │ Overview                │
-        └─────────────────────────┘
-                      │
-                      ▼
-                    Tags
-                      │
-                      ▼
-             Text Preprocessing
-                      │
-                      ▼
-               CountVectorizer
-                      │
-                      ▼
+                       │
+                       ▼
+                     Merge
+                       │
+                       ▼
+        ┌────────────────────────────┐
+        │ Genres                     │
+        │ Keywords                   │
+        │ Cast                       │
+        │ Director                   │
+        │ Overview                   │
+        └────────────────────────────┘
+                       │
+                       ▼
+                     Tags
+                       │
+                       ▼
+              Text Preprocessing
+                       │
+                       ▼
+                 Stemming
+                       │
+                       ▼
+              CountVectorizer
+                       │
+                       ▼
              Feature Vectors
-                      │
-                      ▼
-             Similarity Analysis
-                      │
-                      ▼
+                       │
+                       ▼
+            Similarity Analysis
+                       │
+                       ▼
              Similar Movies
-                      │
-                      ▼
-              Top 5 Recommendations
+                       │
+                       ▼
+             Top 5 Recommendations
 
 ---
 
-🔬 Recommendation Algorithm
+🔬 Recommendation System
 
 This project uses Content-Based Filtering.
 
-Each movie is represented using important textual information:
+The recommendation system uses information about each movie such as:
 
 - 🎭 Genres
 - 🔑 Keywords
@@ -97,39 +93,43 @@ Each movie is represented using important textual information:
 - 🎬 Director
 - 📝 Overview
 
-These features are combined into a single "tags" column.
+All these features are combined into a single "tags" column.
 
 The text is then converted into numerical vectors using:
 
 CountVectorizer()
 
-After that, movie similarity is calculated using:
+Movie similarity is calculated using:
 
 Cosine Similarity
 
-The system finally returns the movies with the highest similarity.
+The system then selects the most similar movies.
 
 ---
 
 🧮 Machine Learning Pipeline
 
-Raw Data
-   ↓
+Raw CSV Data
+     ↓
 Data Cleaning
-   ↓
+     ↓
+Merge Movies + Credits
+     ↓
 Feature Extraction
-   ↓
-Feature Combination
-   ↓
+     ↓
+Create Tags
+     ↓
 Text Preprocessing
-   ↓
+     ↓
 Stemming
-   ↓
+     ↓
 CountVectorizer
-   ↓
+     ↓
 Cosine Similarity
-   ↓
+     ↓
 Top Similar Movies
+     ↓
+Recommendation
 
 ---
 
@@ -162,28 +162,26 @@ movie-recommend-system/
 
 ---
 
-📄 Important Files
+📄 Project Files
 
 "app.py"
 
-Contains the complete Streamlit application.
+Main Streamlit application.
 
-It:
+It handles:
 
-- Loads the processed movie dataset
-- Loads compressed similarity data
-- Takes the selected movie
-- Finds similar movies
-- Fetches posters from TMDB
-- Displays recommendations
+- Movie selection
+- Recommendation generation
+- TMDB poster fetching
+- User interface
 
 ---
 
 "movies.pkl"
 
-Contains the processed movie DataFrame used by the recommendation system.
+Contains the processed movie DataFrame.
 
-It contains information such as:
+The processed data contains information such as:
 
 movie_id
 title
@@ -198,31 +196,47 @@ tags
 
 "similarity.pkl.gz"
 
-Contains the compressed precomputed recommendation information.
+Contains compressed precomputed recommendation information.
 
-Instead of storing the complete large similarity matrix, the project stores the most relevant movie indices and scores.
+Instead of storing the complete large similarity matrix, this project stores the most relevant movie indices and similarity scores.
 
-This keeps the deployment file much smaller.
+This makes the deployment file much smaller.
+
+---
+
+"requirements.txt"
+
+Contains the libraries required to run the application.
+
+streamlit
+pandas
+numpy
+scikit-learn
+requests
 
 ---
 
 🔑 TMDB API
 
-The application uses TMDB to fetch movie poster images.
+The application uses the TMDB API to fetch movie posters.
 
-The API key is not stored directly inside "app.py".
+The API key is not hardcoded in "app.py".
 
-It is loaded using Streamlit Secrets:
+The application reads it from Streamlit Secrets:
 
 TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
 
-For Streamlit deployment, add:
+TMDB's official documentation describes movie search responses containing "poster_path", which can be combined with the TMDB image base URL and size to create a poster URL.
+
+---
+
+🔐 Streamlit Secrets
+
+For deployment, add the following to Streamlit Secrets:
 
 TMDB_API_KEY = "YOUR_API_KEY"
 
-to the application's Secrets section.
-
-TMDB supports movie searching and returns fields such as "poster_path", which can then be converted into a full image URL.
+Never upload the real API key to GitHub.
 
 ---
 
@@ -242,97 +256,51 @@ pip install -r requirements.txt
 
 ---
 
-3️⃣ Add TMDB API Key
+3️⃣ Add API Key
 
 Create:
 
 .streamlit/secrets.toml
 
-and add:
+Add:
 
 TMDB_API_KEY = "YOUR_API_KEY"
 
 ---
 
-4️⃣ Run Streamlit
+4️⃣ Run the Application
 
 streamlit run app.py
 
 ---
 
-📦 Requirements
-
-streamlit
-pandas
-numpy
-scikit-learn
-requests
-
----
-
 🌐 Deployment
 
-This project can be deployed using:
-
-Streamlit Community Cloud
-
-Deployment flow:
+The project is deployed using Streamlit Community Cloud.
 
 GitHub Repository
-       ↓
-Streamlit Community Cloud
-       ↓
-app.py
-       ↓
-movies.pkl
-       ↓
-similarity.pkl.gz
-       ↓
-Live Web Application
+        ↓
+   Streamlit Cloud
+        ↓
+      app.py
+        ↓
+   movies.pkl
+        ↓
+ similarity.pkl.gz
+        ↓
+    TMDB API
+        ↓
+🎬 Movie Recommendations
 
 ---
 
-🔐 Security
-
-The TMDB API key should never be uploaded directly to GitHub.
-
-Use:
-
-st.secrets["TMDB_API_KEY"]
-
-instead of:
-
-TMDB_API_KEY = "YOUR_SECRET_KEY"
-
----
-
-🎯 Future Improvements
-
-Possible improvements:
-
-- 🔎 Movie Search
-- 🎭 Genre Filtering
-- 📅 Release Year Filtering
-- ⭐ Rating Display
-- 📖 Movie Details
-- 👨‍🎤 Cast Information
-- 🎬 Trailer Integration
-- ❤️ Favourite Movies
-- 🎨 Better UI
-- 📱 Improved Mobile Layout
-- 🔥 Popular Movies Section
-
----
-
-📊 Example
+🎯 Example
 
 Suppose the user selects:
 
 3 Idiots
 
-The system searches the precomputed similarity data and returns movies having similar content/features.
-
-Example output:
+The system searches the precomputed similarity information and returns the top similar movies.
 
 🎬 Recommended Movies
 
@@ -342,23 +310,35 @@ Example output:
 4. Movie D
 5. Movie E
 
-The actual recommendations are generated by the trained/precomputed data.
+The actual recommendations are generated from the processed movie data.
 
 ---
 
-🧑‍💻 Author
+📈 Future Improvements
+
+- 🔎 Movie Search
+- 🎭 Genre Filtering
+- 📅 Release Year Filtering
+- ⭐ Movie Ratings
+- 📖 Movie Details
+- 👨‍🎤 Cast Information
+- 🎞️ Trailer Integration
+- ❤️ Favourite Movies
+- 🎨 Improved UI
+- 📱 Better Mobile Layout
+- 🔥 Popular Movies Section
+
+---
+
+👨‍💻 Author
 
 Anish Kumar
 
-GitHub:
-
-👉 "Anish-kumar-00" (https://github.com/Anish-kumar-00)
-
----
+<p align="center"><a href="https://github.com/Anish-kumar-00"><img src="https://img.shields.io/badge/GitHub-Anish--kumar--00-black?style=for-the-badge&logo=github"></a></p>---
 
 ⭐ Support
 
-If you found this project useful, consider giving the repository a ⭐.
+If you like this project, please consider giving the repository a ⭐.
 
 <p align="center">🎬 Happy Movie Discovering! 🍿
 
@@ -367,5 +347,3 @@ If you found this project useful, consider giving the repository a ⭐.
 🎬 TMDB Attribution
 
 This product uses the TMDB API but is not endorsed or certified by TMDB.
-
-TMDB's documentation states that applications using its API/data should provide the required attribution.
