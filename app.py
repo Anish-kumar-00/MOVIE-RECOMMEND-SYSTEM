@@ -87,7 +87,7 @@ def recommend(movie):
     posters = []
     ids = []
 
-    for movie_index in similarity_indices[index][0:1]:
+    for movie_index in similarity_indices[index][0:10]:
 
         movie_index = int(movie_index)
 
