@@ -114,7 +114,7 @@ def recommend(movie):
 # App UI
 # -----------------------------
 
-st.title("🎬 Movie Recommendation System MADE BY ANISH ")
+st.title("🎬 Movie Recommendation System")
 
 st.write(
     "Find movies similar to your favourite movie."
@@ -166,7 +166,32 @@ if st.button("🚀 Show Recommendation"):
             st.caption(
                 f"Movie ID: {movie_id}"
             )
+
+
+# -----------------------------
+# Developer Info Section (Footer)
+# -----------------------------
+st.divider()
+
+dev_col1, dev_col2, dev_col3 = st.columns([1, 2, 1])
+
+with dev_col2:
+    st.markdown("### 👨‍💻 Developed By")
+    
+    img_col, info_col = st.columns([1, 2])
+    
+    with img_col:
+        # Match uploaded image filename (Anish.jpg or anish.jpg)
+        image_path = os.path.join(BASE_DIR, "Anish.jpg")
+        if not os.path.exists(image_path):
+            image_path = os.path.join(BASE_DIR, "anish.jpg")
             
+        if os.path.exists(image_path):
+            st.image(image_path, width=140)
+        else:
+            st.warning("Developer image not found")
             
-            
-            #TMDB_API_KEY = "8265bd1679663a7ea12ac168da84d2e8"
+    with info_col:
+        st.subheader("Anish Kumar")
+        st.markdown("**Project Lead & Developer**")
+        st.write("Machine Learning & Web Application Project")
