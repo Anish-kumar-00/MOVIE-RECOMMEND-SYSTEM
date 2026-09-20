@@ -181,14 +181,13 @@ with dev_col2:
     img_col, info_col = st.columns([1, 2])
     
     with img_col:
-        image_path = os.path.join(BASE_DIR, "anish.jpg")
-        if not os.path.exists(image_path):
-            image_path = os.path.join(BASE_DIR, "Anish.jpg")
-            
-        if os.path.exists(image_path):
-            st.image(image_path, width=140)
-        else:
-            st.warning("Developer image not found")
+        # GitHub se raw image URL
+        IMAGE_URL = "https://raw.githubusercontent.com/Anish-kumar-00/MOVIE-RECOMMENDATION-SYSTEM/main/anish.jpg"
+        
+        try:
+            st.image(IMAGE_URL, width=140)
+        except Exception:
+            st.warning("Developer image not available")
             
     with info_col:
         st.subheader("Anish Kumar")
