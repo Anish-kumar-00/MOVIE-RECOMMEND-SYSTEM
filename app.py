@@ -3,6 +3,7 @@ import os
 import pickle
 import requests
 import streamlit as st
+import base64
 
 # -----------------------------
 # 1. Page settings
@@ -53,6 +54,14 @@ def fetch_poster(movie_id):
                 return "https://image.tmdb.org/t/p/w500" + poster_path
     except Exception:
         return None
+    return None
+
+
+# Helper function to get image base64 without PIL
+def get_image_base64(path):
+    if os.path.exists(path):
+        with open(path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode('utf-8')
     return None
 
 
@@ -114,9 +123,13 @@ with dev_col2:
     img_col, info_col = st.columns([1, 2])
 
     with img_col:
-        # Direct local image loading from repo
-        if os.path.exists(IMAGE_PATH):
-            st.image(IMAGE_PATH, width=130)
+        # Base64 HTML rendering - bypasses PIL library
+        img_base64 = get_image_base64(IMAGE_PATH)
+        if img_base64:
+            st.markdown(
+                f'<img src="data:image/jpeg;base64,{img_base64}" width="130" style="border-radius: 10px; object-fit: cover;">',
+                unsafe_allow_html=True
+            )
         else:
             st.warning("Photo not found")
 
