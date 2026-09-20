@@ -15,29 +15,26 @@
 
 <p align="center">
   <table>
-    <tr>
-      <td align="center">
-        <img src="https://upload.wikimedia.org/wikipedia/en/3/39/Jawan_film_poster.jpg" width="220"><br><br>
-        <b>Jawan</b>
-      </td>  <td align="center">
-    <img src="https://upload.wikimedia.org/wikipedia/en/d/df/3_idiots_poster.jpg" width="220"><br><br>
+    <tr>  <td align="center">
+    <img src="https://upload.wikimedia.org/wikipedia/en/3/39/Jawan_film_poster.jpg" width="260"><br><br>
+    <b>Jawan</b>
+  </td>
+
+  <td align="center">
+    <img src="https://upload.wikimedia.org/wikipedia/en/d/df/3_idiots_poster.jpg" width="260"><br><br>
     <b>3 Idiots</b>
   </td>
 
   <td align="center">
-    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d7/RRR_Poster.jpg/330px-RRR_Poster.jpg" width="220"><br><br>
+    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/d7/RRR_Poster.jpg/330px-RRR_Poster.jpg" width="260"><br><br>
     <b>RRR</b>
   </td>
 
   <td align="center">
-    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Welcome_poster_2007.jpg?width=400" width="220"><br><br>
-    <b>Welcome</b>
-  </td>
-
-  <td align="center">
-    <img src="https://upload.wikimedia.org/wikipedia/en/6/6f/Stanley_Ka_Dabba_Poster.jpg" width="220"><br><br>
+    <img src="https://upload.wikimedia.org/wikipedia/en/6/6f/Stanley_Ka_Dabba_Poster.jpg" width="260"><br><br>
     <b>Stanley Ka Dabba</b>
   </td>
+
 </tr>
 
   </table>
