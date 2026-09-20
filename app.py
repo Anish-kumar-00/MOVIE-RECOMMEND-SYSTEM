@@ -135,7 +135,7 @@ if st.button("🚀 Show Recommendation"):
         "✨ Recommended Movies"
     )
 
-    cols = st.columns(6)
+    cols = st.columns(10)
 
     for col, name, poster, movie_id in zip(
         cols,
