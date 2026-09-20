@@ -114,7 +114,7 @@ def recommend(movie):
 # App UI
 # -----------------------------
 
-st.title("🎬 Movie Recommendation System")
+st.title("🎬 Movie Recommendation System MADE BY ANISH ")
 
 st.write(
     "Find movies similar to your favourite movie."
