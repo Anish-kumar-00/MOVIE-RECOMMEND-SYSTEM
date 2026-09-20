@@ -121,7 +121,7 @@ dev_col1, dev_col2, dev_col3 = st.columns([1, 2, 1])
 with dev_col2:
     st.markdown("### 👨‍💻 Developed By")
 
-    img_col, info_col = st.columns([1, 2])
+   # img_col, info_col = st.columns([1, 2])
 
     
 
