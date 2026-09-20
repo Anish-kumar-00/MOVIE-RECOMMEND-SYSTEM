@@ -181,10 +181,9 @@ with dev_col2:
     img_col, info_col = st.columns([1, 2])
     
     with img_col:
-        # Match uploaded image filename (Anish.jpg or anish.jpg)
-        image_path = os.path.join(BASE_DIR, "Anish.jpg")
+        image_path = os.path.join(BASE_DIR, "anish.jpg")
         if not os.path.exists(image_path):
-            image_path = os.path.join(BASE_DIR, "anish.jpg")
+            image_path = os.path.join(BASE_DIR, "Anish.jpg")
             
         if os.path.exists(image_path):
             st.image(image_path, width=140)
