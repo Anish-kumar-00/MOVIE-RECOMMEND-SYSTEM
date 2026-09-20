@@ -123,16 +123,7 @@ with dev_col2:
 
     img_col, info_col = st.columns([1, 2])
 
-    with img_col:
-        img_b64 = get_base64_image(IMAGE_PATH)
-        if img_b64:
-            # Browser-native rendering
-            st.markdown(
-                f'<img src="data:image/png;base64,{img_b64}" width="130" style="border-radius: 12px; box-shadow: 0px 4px 8px rgba(0,0,0,0.2);">',
-                unsafe_allow_html=True,
-            )
-        else:
-            st.warning("Photo file not found")
+    
 
     with info_col:
         st.subheader("Anish Kumar")
