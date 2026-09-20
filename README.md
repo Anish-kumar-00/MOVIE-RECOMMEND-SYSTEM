@@ -1,6 +1,3 @@
-Haan, samajh gaya. Problem ye hai ki GitHub README me raw HTML <p>, <img> etc. kabhi-kabhi text/tag ki tarah render ho raha hai, aur external image URLs bhi reliable nahi hain.
-
-Tumhare liye pure GitHub Markdown use karte hain—<p>/<img> hata dete hain. Isse tags dikhne ka issue nahi hoga.
 
 # 🎬 Movie Recommendation System
 
