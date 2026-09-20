@@ -10,18 +10,18 @@
 
 🎬 Popular Indian Movies
 
-<p align="center"><img src="https://image.tmdb.org/t/p/w500/yJNNwHQuKYNeHFbsxSFR6yK9Dda.jpg" width="170"><img src="https://image.tmdb.org/t/p/w500/1P7w3A6z5Y5Y5Y5Y5Y5Y5Y5Y5Y.jpg" width="170"><img src="https://image.tmdb.org/t/p/w500/6U2FQq0q3j4j5j6j7j8j9j0j1j.jpg" width="170"><img src="https://image.tmdb.org/t/p/w500/j9v6G7j8K9L0M1N2O3P4Q5R6S7T.jpg" width="170"><img src="https://image.tmdb.org/t/p/w500/nE3J2R7G8Y9X0W1V2U3T4S5R6Q.jpg" width="170"></p><p align="center">
-<b>Drishyam 2</b> &nbsp;&nbsp;&nbsp;
-<b>Dangal</b> &nbsp;&nbsp;&nbsp;
-<b>3 Idiots</b> &nbsp;&nbsp;&nbsp;
-<b>Jawan</b> &nbsp;&nbsp;&nbsp;
+<p align="center"><img src="https://image.tmdb.org/t/p/w500/yJNNwHQuKYNeHFbsxSFR6yK9Dda.jpg" width="180" alt="Drishyam 2"><img src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg" width="180" alt="Indian Movie"><img src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg" width="180" alt="Indian Movie"><img src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg" width="180" alt="Indian Movie"><img src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg" width="180" alt="Indian Movie"></p><p align="center"><b>Drishyam 2</b>    
+<b>Dangal</b>    
+<b>3 Idiots</b>    
+<b>Jawan</b>    
 <b>RRR</b>
+
 </p>---
 
 ✨ Features
 
 - 🎬 Select your favourite movie
-- 🤖 Content-Based Movie Recommendation
+- 🤖 Content-Based Recommendation
 - 🔍 Find similar movies
 - ⭐ Get 5 movie recommendations
 - 🖼️ Movie posters using TMDB API
@@ -87,7 +87,7 @@ Technology| Used For
 
 📂 Project Structure
 
-Movie-Recommendation/
+movie-recommend-system/
 │
 ├── app.py
 ├── movies.pkl
@@ -105,11 +105,11 @@ Main Streamlit application.
 
 "movies.pkl"
 
-Processed movie dataset created from the original movie data.
+Processed movie dataset used by the recommendation system.
 
 "similarity.pkl.gz"
 
-Precomputed similarity and recommendation indices.
+Compressed precomputed similarity/recommendation indices.
 
 "requirements.txt"
 
@@ -119,7 +119,7 @@ Contains the Python libraries required to run the project.
 
 🚀 Run Locally
 
-Clone the Repository
+Clone Repository
 
 git clone https://github.com/Anish-kumar-00/movie-recommend-system.git
 cd movie-recommend-system
@@ -128,7 +128,7 @@ Install Dependencies
 
 pip install -r requirements.txt
 
-Start the Application
+Run Application
 
 streamlit run app.py
 
@@ -136,17 +136,9 @@ streamlit run app.py
 
 🔑 TMDB API
 
-The application uses the TMDB API to fetch movie posters.
+This project uses the TMDB API to fetch movie posters.
 
 The API key is kept private using Streamlit Secrets.
-
-Manage App
-    ↓
-Settings
-    ↓
-Secrets
-
-Add:
 
 TMDB_API_KEY = "YOUR_API_KEY"
 
