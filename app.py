@@ -79,7 +79,7 @@ def recommend(movie):
 # -----------------------------
 # 5. App User Interface (UI)
 # -----------------------------
-st.title("🎬 Movie Recommendation System")
+st.title("🎬 Movie Recommendation System MADE BY ANISH")
 st.write("Find movies similar to your favourite movie.")
 
 # Finding index of 'Avatar' to make it default
