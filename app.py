@@ -180,14 +180,18 @@ with dev_col2:
     
     img_col, info_col = st.columns([1, 2])
     
+    # Direct image link (Postimages ya Raw Image link yaha daalein)
+    IMAGE_URL = "https://raw.githubusercontent.com/Anish-kumar-00/MOVIE-RECOMMENDATION-SYSTEM/main/anish.jpg"
+    
     with img_col:
-        # GitHub se raw image URL
-        IMAGE_URL = "https://raw.githubusercontent.com/Anish-kumar-00/MOVIE-RECOMMENDATION-SYSTEM/main/anish.jpg"
-        
         try:
-            st.image(IMAGE_URL, width=140)
+            # HTML image rendering to bypass PIL errors entirely
+            st.markdown(
+                f'<img src="{IMAGE_URL}" width="130" style="border-radius: 10px;">',
+                unsafe_allow_html=True
+            )
         except Exception:
-            st.warning("Developer image not available")
+            st.warning("Developer Photo")
             
     with info_col:
         st.subheader("Anish Kumar")
