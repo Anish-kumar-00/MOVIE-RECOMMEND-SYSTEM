@@ -2,22 +2,47 @@ import streamlit as st
 import pickle
 import requests
 import gzip
+import os
 
-# Load movie data
-with open("movies.pkl", "rb") as f:
+# -----------------------------
+# Page settings
+# -----------------------------
+st.set_page_config(
+    page_title="Movie Recommendation System",
+    page_icon="🎬",
+    layout="wide"
+)
+
+# -----------------------------
+# File paths
+# -----------------------------
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+MOVIES_FILE = os.path.join(BASE_DIR, "movies.pkl")
+SIMILARITY_FILE = os.path.join(BASE_DIR, "similarity.pkl.gz")
+
+# -----------------------------
+# Load movies
+# -----------------------------
+with open(MOVIES_FILE, "rb") as f:
     movies = pickle.load(f)
 
-# Load compressed similarity data
-with gzip.open("similarity.pkl.gz", "rb") as f:
+# -----------------------------
+# Load similarity
+# -----------------------------
+with gzip.open(SIMILARITY_FILE, "rb") as f:
     similarity_data = pickle.load(f)
 
 similarity_indices = similarity_data["indices"]
 
-# TMDB API key from Streamlit Secrets
+# -----------------------------
+# TMDB API
+# -----------------------------
 TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
 
 
 def fetch_poster(movie_id):
+
     url = f"https://api.themoviedb.org/3/movie/{movie_id}"
 
     params = {
@@ -26,6 +51,7 @@ def fetch_poster(movie_id):
     }
 
     try:
+
         response = requests.get(
             url,
             params=params,
@@ -36,10 +62,14 @@ def fetch_poster(movie_id):
             return None
 
         data = response.json()
+
         poster_path = data.get("poster_path")
 
         if poster_path:
-            return "https://image.tmdb.org/t/p/w500" + poster_path
+            return (
+                "https://image.tmdb.org/t/p/w500"
+                + poster_path
+            )
 
     except Exception:
         return None
@@ -48,54 +78,62 @@ def fetch_poster(movie_id):
 
 
 def recommend(movie):
-    index = movies[movies["title"] == movie].index[0]
+
+    index = movies[
+        movies["title"] == movie
+    ].index[0]
 
     names = []
     posters = []
     ids = []
 
-    # First result is the selected movie itself,
-    # so take the next 5 movies.
     for movie_index in similarity_indices[index][1:6]:
 
         movie_index = int(movie_index)
 
-        movie_id = movies.iloc[movie_index]["movie_id"]
-        movie_name = movies.iloc[movie_index]["title"]
+        movie_id = movies.iloc[
+            movie_index
+        ]["movie_id"]
+
+        movie_name = movies.iloc[
+            movie_index
+        ]["title"]
 
         names.append(movie_name)
-        posters.append(fetch_poster(movie_id))
+
+        posters.append(
+            fetch_poster(movie_id)
+        )
+
         ids.append(movie_id)
 
     return names, posters, ids
 
 
-# Page settings
-st.set_page_config(
-    page_title="Movie Recommendation System",
-    page_icon="🎬",
-    layout="wide"
-)
+# -----------------------------
+# App UI
+# -----------------------------
 
-# Title
 st.title("🎬 Movie Recommendation System")
 
 st.write(
     "Find movies similar to your favourite movie."
 )
 
-# Movie selection
 selected_movie = st.selectbox(
     "🎥 Select a movie",
     movies["title"].values
 )
 
-# Recommendation button
 if st.button("🚀 Show Recommendation"):
 
-    names, posters, ids = recommend(selected_movie)
+    names, posters, ids = recommend(
+        selected_movie
+    )
 
-    st.subheader("✨ Recommended Movies")
+    st.subheader(
+        "✨ Recommended Movies"
+    )
 
     cols = st.columns(5)
 
@@ -108,15 +146,22 @@ if st.button("🚀 Show Recommendation"):
 
         with col:
 
-            st.markdown(f"**{name}**")
+            st.markdown(
+                f"**{name}**"
+            )
 
             if poster:
+
                 st.image(
                     poster,
                     use_container_width=True
                 )
+
             else:
-                st.info("Poster not available")
+
+                st.info(
+                    "Poster not available"
+                )
 
             st.caption(
                 f"Movie ID: {movie_id}"
