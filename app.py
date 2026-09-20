@@ -18,8 +18,6 @@ st.set_page_config(
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MOVIES_FILE = os.path.join(BASE_DIR, "movies.pkl")
 SIMILARITY_FILE = os.path.join(BASE_DIR, "similarity.pkl.gz")
-
-# PNG file path setup
 IMAGE_PATH = os.path.join(BASE_DIR, "anish.png")
 
 
@@ -59,11 +57,12 @@ def fetch_poster(movie_id):
     return None
 
 
-# PNG ko Base64 me convert karne ka helper
-def get_image_base64(path):
-    if os.path.exists(path):
-        with open(path, "rb") as img_file:
-            return base64.b64encode(img_file.read()).decode('utf-8')
+# Raw Bytes Read Function (PIL bypassed completely)
+def get_base64_image(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, "rb") as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
     return None
 
 
@@ -125,22 +124,15 @@ with dev_col2:
     img_col, info_col = st.columns([1, 2])
 
     with img_col:
-        # PNG handling
-        try:
-            if os.path.exists(IMAGE_PATH):
-                st.image(IMAGE_PATH, width=130)
-            else:
-                st.warning("Photo not found")
-        except Exception:
-            # Fallback using HTML PNG data-uri
-            img_base64 = get_image_base64(IMAGE_PATH)
-            if img_base64:
-                st.markdown(
-                    f'<img src="data:image/png;base64,{img_base64}" width="130" style="border-radius: 10px; object-fit: cover;">',
-                    unsafe_allow_html=True
-                )
-            else:
-                st.warning("Photo error")
+        img_b64 = get_base64_image(IMAGE_PATH)
+        if img_b64:
+            # Browser-native rendering
+            st.markdown(
+                f'<img src="data:image/png;base64,{img_b64}" width="130" style="border-radius: 12px; box-shadow: 0px 4px 8px rgba(0,0,0,0.2);">',
+                unsafe_allow_html=True,
+            )
+        else:
+            st.warning("Photo file not found")
 
     with info_col:
         st.subheader("Anish Kumar")
