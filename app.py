@@ -27,7 +27,7 @@ SIMILARITY_FILE = os.path.join(BASE_DIR, "similarity.pkl.gz")
 
 
 # ============================================================
-# 3. LOAD MOVIE DATA
+# 3. LOAD DATA
 # ============================================================
 
 @st.cache_data(show_spinner=False)
@@ -53,7 +53,7 @@ TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
 
 
 # ============================================================
-# 5. FETCH MOVIE POSTER
+# 5. FETCH POSTER
 # ============================================================
 
 @st.cache_data(show_spinner=False, ttl=86400)
@@ -149,11 +149,9 @@ def fetch_trailer(movie_id):
 
         if response.status_code == 200:
 
-            data = response.json()
+            videos = response.json().get("results", [])
 
-            videos = data.get("results", [])
-
-            # First search for official YouTube trailer
+            # Official trailer
             for video in videos:
 
                 if (
@@ -163,12 +161,11 @@ def fetch_trailer(movie_id):
                 ):
 
                     return (
-                        f"https://www.youtube.com/watch?v="
-                        f"{video.get('key')}"
+                        "https://www.youtube.com/watch?v="
+                        + video.get("key")
                     )
 
-            # If official trailer is not available,
-            # find any YouTube trailer
+            # Any YouTube trailer
             for video in videos:
 
                 if (
@@ -177,8 +174,8 @@ def fetch_trailer(movie_id):
                 ):
 
                     return (
-                        f"https://www.youtube.com/watch?v="
-                        f"{video.get('key')}"
+                        "https://www.youtube.com/watch?v="
+                        + video.get("key")
                     )
 
     except Exception:
@@ -199,21 +196,15 @@ def recommend(movie):
     posters = []
     ids = []
 
-    # Get 20 similar movies
     for movie_index in similarity_indices[index][0:20]:
 
         movie_index = int(movie_index)
 
         movie_id = movies.iloc[movie_index]["movie_id"]
-
         movie_name = movies.iloc[movie_index]["title"]
 
         names.append(movie_name)
-
-        posters.append(
-            fetch_poster(movie_id)
-        )
-
+        posters.append(fetch_poster(movie_id))
         ids.append(movie_id)
 
     return names, posters, ids
@@ -223,29 +214,24 @@ def recommend(movie):
 # 9. MOVIE DETAILS PAGE
 # ============================================================
 
-def show_movie_details(movie_id):
+def movie_details_page(movie_id):
 
-    # Back button
-    if st.button("⬅️ Back to Recommendations"):
+    if st.button(
+        "⬅️ Back to Recommendations",
+        use_container_width=False
+    ):
 
         st.query_params.clear()
-
         st.rerun()
 
     st.divider()
 
-    # Get movie details
     details = fetch_movie_details(movie_id)
 
     if not details:
 
-        st.error("❌ Movie information could not be loaded.")
-
+        st.error("Movie information could not be loaded.")
         return
-
-    # --------------------------------------------------------
-    # Movie information
-    # --------------------------------------------------------
 
     title = details.get(
         "title",
@@ -287,7 +273,7 @@ def show_movie_details(movie_id):
 
 
     # ========================================================
-    # BACKGROUND IMAGE
+    # BACKDROP
     # ========================================================
 
     if backdrop_path:
@@ -300,26 +286,20 @@ def show_movie_details(movie_id):
         st.markdown(
             f"""
             <style>
-
             .movie-banner {{
                 width: 100%;
                 height: 300px;
-
                 background-image:
-                linear-gradient(
-                    rgba(0,0,0,0.45),
-                    rgba(0,0,0,0.85)
-                ),
-                url("{backdrop_url}");
-
+                    linear-gradient(
+                        rgba(0,0,0,0.35),
+                        rgba(0,0,0,0.85)
+                    ),
+                    url("{backdrop_url}");
                 background-size: cover;
                 background-position: center;
-
                 border-radius: 15px;
-
-                margin-bottom: 30px;
+                margin-bottom: 25px;
             }}
-
             </style>
 
             <div class="movie-banner"></div>
@@ -332,11 +312,11 @@ def show_movie_details(movie_id):
     # TITLE
     # ========================================================
 
-    st.title(f"🎬 {title}")
+    st.title("🎬 " + title)
 
 
     # ========================================================
-    # POSTER + DETAILS
+    # POSTER + INFORMATION
     # ========================================================
 
     col1, col2 = st.columns(
@@ -345,9 +325,9 @@ def show_movie_details(movie_id):
     )
 
 
-    # --------------------------------------------------------
+    # ========================================================
     # POSTER
-    # --------------------------------------------------------
+    # ========================================================
 
     with col1:
 
@@ -365,14 +345,12 @@ def show_movie_details(movie_id):
 
         else:
 
-            st.info(
-                "Poster not available"
-            )
+            st.info("Poster not available.")
 
 
-    # --------------------------------------------------------
-    # MOVIE INFORMATION
-    # --------------------------------------------------------
+    # ========================================================
+    # INFORMATION
+    # ========================================================
 
     with col2:
 
@@ -384,6 +362,8 @@ def show_movie_details(movie_id):
             f"### 📅 Release Date: {release_date}"
         )
 
+
+        # Runtime
         if runtime:
 
             hours = runtime // 60
@@ -406,10 +386,7 @@ def show_movie_details(movie_id):
             )
 
 
-        # ----------------------------------------------------
-        # GENRES
-        # ----------------------------------------------------
-
+        # Genres
         if genres:
 
             genre_names = [
@@ -426,10 +403,7 @@ def show_movie_details(movie_id):
             )
 
 
-        # ----------------------------------------------------
-        # OVERVIEW
-        # ----------------------------------------------------
-
+        # Overview
         st.markdown(
             "### 📝 Story"
         )
@@ -439,12 +413,9 @@ def show_movie_details(movie_id):
         )
 
 
-        # ----------------------------------------------------
-        # TRAILER
-        # ----------------------------------------------------
-
+        # Trailer
         st.markdown(
-            "### ▶️ Watch Trailer"
+            "### ▶️ Trailer"
         )
 
         trailer_url = fetch_trailer(
@@ -462,12 +433,12 @@ def show_movie_details(movie_id):
         else:
 
             st.info(
-                "Trailer is not available."
+                "Trailer not available for this movie."
             )
 
 
 # ============================================================
-# 10. CHECK WHETHER DETAILS PAGE IS OPEN
+# 10. CHECK DETAILS PAGE
 # ============================================================
 
 movie_id_from_url = st.query_params.get(
@@ -487,7 +458,7 @@ if movie_id_from_url:
             movie_id_from_url
         )
 
-        show_movie_details(
+        movie_details_page(
             movie_id
         )
 
@@ -504,10 +475,6 @@ if movie_id_from_url:
 
 else:
 
-    # --------------------------------------------------------
-    # TITLE
-    # --------------------------------------------------------
-
     st.title(
         "🎬 Movie Recommendation System MADE BY ANISH"
     )
@@ -517,22 +484,18 @@ else:
     )
 
 
-    # --------------------------------------------------------
-    # MOVIE LIST
-    # --------------------------------------------------------
+    # ========================================================
+    # MOVIE SELECTOR
+    # ========================================================
 
     movie_list = movies["title"].values
 
-
-    # Avatar as default movie
     default_index = 0
 
     if "Avatar" in movie_list:
 
         default_index = int(
-            list(movie_list).index(
-                "Avatar"
-            )
+            list(movie_list).index("Avatar")
         )
 
 
@@ -543,9 +506,9 @@ else:
     )
 
 
-    # --------------------------------------------------------
-    # GET RECOMMENDATIONS
-    # --------------------------------------------------------
+    # ========================================================
+    # RECOMMENDATIONS
+    # ========================================================
 
     names, posters, ids = recommend(
         selected_movie
@@ -557,9 +520,9 @@ else:
     )
 
 
-    # --------------------------------------------------------
-    # NETFLIX STYLE GRID
-    # --------------------------------------------------------
+    # ========================================================
+    # MOVIE GRID
+    # ========================================================
 
     COLS_PER_ROW = 5
 
@@ -582,9 +545,7 @@ else:
             if i + j < len(names):
 
                 name = names[i + j]
-
                 poster = posters[i + j]
-
                 movie_id = ids[i + j]
 
 
@@ -611,13 +572,7 @@ else:
                     )
 
 
-                    # Movie ID
-                    st.caption(
-                        f"Movie ID: {movie_id}"
-                    )
-
-
-                    # Details button
+                    # View details button
                     if st.button(
                         "🎬 View Details",
                         key=f"details_{movie_id}_{i}_{j}",
@@ -636,7 +591,6 @@ else:
     # ========================================================
 
     st.divider()
-
 
     dev_col1, dev_col2, dev_col3 = st.columns(
         [1, 2, 1]
@@ -660,13 +614,3 @@ else:
         st.write(
             "Machine Learning & Web Application Project"
         )
-
-"secrets.toml"
-
-Tumhara existing API key wala setup same rahega:
-
-TMDB_API_KEY = "YOUR_TMDB_API_KEY"
-
-Ab flow: movie select karo → recommendations aayengi → 🎬 View Details dabao → details page khulega → ▶️ Watch Trailer on YouTube se trailer open hoga → ⬅️ Back to Recommendations se wapas aa jaoge.
-
-Ek limitation: full movie ka Play button automatically nahi banega, kyunki TMDB movie information/trailer metadata deta hai; full movie playback ke liye authorized streaming source/API chahiye.
