@@ -12,47 +12,52 @@ st.set_page_config(
 )
 
 # -----------------------------
-# 2. File paths
+# 2. File paths & Caching
 # -----------------------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MOVIES_FILE = os.path.join(BASE_DIR, "movies.pkl")
 SIMILARITY_FILE = os.path.join(BASE_DIR, "similarity.pkl.gz")
+IMAGE_PATH = os.path.join(BASE_DIR, "anish.jpg")
+
+
+# Fast data loading using Streamlit cache
+@st.cache_data(show_spinner=False)
+def load_data():
+    with open(MOVIES_FILE, "rb") as f:
+        movies_data = pickle.load(f)
+
+    with gzip.open(SIMILARITY_FILE, "rb") as f:
+        similarity_data = pickle.load(f)
+
+    return movies_data, similarity_data["indices"]
+
+
+movies, similarity_indices = load_data()
 
 # -----------------------------
-# 3. Load movies & similarity data
-# -----------------------------
-with open(MOVIES_FILE, "rb") as f:
-    movies = pickle.load(f)
-
-with gzip.open(SIMILARITY_FILE, "rb") as f:
-    similarity_data = pickle.load(f)
-
-similarity_indices = similarity_data["indices"]
-
-# -----------------------------
-# 4. TMDB API Function
+# 3. Fast TMDB API Poster Fetcher
 # -----------------------------
 TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
 
 
+@st.cache_data(show_spinner=False, ttl=86400)
 def fetch_poster(movie_id):
     url = f"https://api.themoviedb.org/3/movie/{movie_id}"
     params = {"api_key": TMDB_API_KEY, "language": "en-US"}
     try:
-        response = requests.get(url, params=params, timeout=10)
-        if response.status_code != 200:
-            return None
-        data = response.json()
-        poster_path = data.get("poster_path")
-        if poster_path:
-            return "https://image.tmdb.org/t/p/w500" + poster_path
+        response = requests.get(url, params=params, timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            poster_path = data.get("poster_path")
+            if poster_path:
+                return "https://image.tmdb.org/t/p/w500" + poster_path
     except Exception:
         return None
     return None
 
 
 # -----------------------------
-# 5. Recommendation Function
+# 4. Recommendation Function
 # -----------------------------
 def recommend(movie):
     index = movies[movies["title"] == movie].index[0]
@@ -73,7 +78,7 @@ def recommend(movie):
 
 
 # -----------------------------
-# 6. App User Interface (UI)
+# 5. App User Interface (UI)
 # -----------------------------
 st.title("🎬 Movie Recommendation System")
 st.write("Find movies similar to your favourite movie.")
@@ -81,7 +86,8 @@ st.write("Find movies similar to your favourite movie.")
 selected_movie = st.selectbox("🎥 Select a movie", movies["title"].values)
 
 if st.button("🚀 Show Recommendation"):
-    names, posters, ids = recommend(selected_movie)
+    with st.spinner("Fetching recommendations..."):
+        names, posters, ids = recommend(selected_movie)
 
     st.subheader("✨ Recommended Movies")
     cols = st.columns(5)
@@ -95,9 +101,8 @@ if st.button("🚀 Show Recommendation"):
                 st.info("Poster not available")
             st.caption(f"Movie ID: {movie_id}")
 
-
 # -----------------------------
-# 7. Developer Info Section (Footer)
+# 6. Developer Info Section (Footer)
 # -----------------------------
 st.divider()
 
@@ -108,15 +113,12 @@ with dev_col2:
 
     img_col, info_col = st.columns([1, 2])
 
-    # KANAN DURA: Linkii suuraa direct ta'e (.jpg/.png) bakka kana galchaa:
-    IMAGE_URL = "https://i.postimg.cc/xyz/your-image.jpg"
-
     with img_col:
-        # Streamlit PIL dogoggora malee HTML'n render godha
-        st.markdown(
-            f'<img src="{IMAGE_URL}" width="130" style="border-radius: 10px; object-fit: cover;">',
-            unsafe_allow_html=True,
-        )
+        # Direct local image loading from repo
+        if os.path.exists(IMAGE_PATH):
+            st.image(IMAGE_PATH, width=130)
+        else:
+            st.warning("Photo not found")
 
     with info_col:
         st.subheader("Anish Kumar")
