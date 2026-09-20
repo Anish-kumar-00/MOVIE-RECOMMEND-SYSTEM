@@ -8,22 +8,25 @@
 
 ---
 
-🎥 Popular Indian Movies
+🎬 Popular Indian Movies
 
-🎬 Drishyam 2| 🏆 Dangal| 🤝 3 Idiots| 🔥 Jawan| ⚔️ RRR
-<img src="https://image.tmdb.org/t/p/w500/7G4s0j3B8qG7QJz5h8Y8x6G4Q7m.jpg" width="150">| <img src="https://image.tmdb.org/t/p/w500/1P7w3A6z5Y5Y5Y5Y5Y5Y5Y5Y5Y.jpg" width="150">| <img src="https://image.tmdb.org/t/p/w500/6U2FQq0q3j4j5j6j7j8j9j0j1j.jpg" width="150">| <img src="https://image.tmdb.org/t/p/w500/j9v6G7j8K9L0M1N2O3P4Q5R6S7T.jpg" width="150">| <img src="https://image.tmdb.org/t/p/w500/nE3J2R7G8Y9X0W1V2U3T4S5R6Q.jpg" width="150">
-
----
+<p align="center"><img src="https://image.tmdb.org/t/p/w500/yJNNwHQuKYNeHFbsxSFR6yK9Dda.jpg" width="170"><img src="https://image.tmdb.org/t/p/w500/1P7w3A6z5Y5Y5Y5Y5Y5Y5Y5Y5Y.jpg" width="170"><img src="https://image.tmdb.org/t/p/w500/6U2FQq0q3j4j5j6j7j8j9j0j1j.jpg" width="170"><img src="https://image.tmdb.org/t/p/w500/j9v6G7j8K9L0M1N2O3P4Q5R6S7T.jpg" width="170"><img src="https://image.tmdb.org/t/p/w500/nE3J2R7G8Y9X0W1V2U3T4S5R6Q.jpg" width="170"></p><p align="center">
+<b>Drishyam 2</b> &nbsp;&nbsp;&nbsp;
+<b>Dangal</b> &nbsp;&nbsp;&nbsp;
+<b>3 Idiots</b> &nbsp;&nbsp;&nbsp;
+<b>Jawan</b> &nbsp;&nbsp;&nbsp;
+<b>RRR</b>
+</p>---
 
 ✨ Features
 
 - 🎬 Select your favourite movie
-- 🤖 Content-Based Recommendation
+- 🤖 Content-Based Movie Recommendation
 - 🔍 Find similar movies
 - ⭐ Get 5 movie recommendations
 - 🖼️ Movie posters using TMDB API
 - ⚡ Fast recommendations
-- 🌐 Streamlit Web App
+- 🌐 Streamlit Web Application
 
 ---
 
@@ -106,7 +109,7 @@ Processed movie dataset created from the original movie data.
 
 "similarity.pkl.gz"
 
-Precomputed similarity/recommendation indices.
+Precomputed similarity and recommendation indices.
 
 "requirements.txt"
 
@@ -157,7 +160,7 @@ TMDB_API_KEY = "YOUR_API_KEY"
 - 📅 Release Year Filtering
 - 📖 Detailed Movie Information
 - 👤 Personalized Recommendations
-- 🎨 Improved UI
+- 🎨 Improved User Interface
 - 🔥 Popular Indian Movies Section
 
 ---
