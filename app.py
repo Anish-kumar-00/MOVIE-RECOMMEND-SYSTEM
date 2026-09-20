@@ -96,7 +96,7 @@ selected_movie = st.selectbox(
 names, posters, ids = recommend(selected_movie)
 
 st.subheader(f"✨ Recommended Movies for '{selected_movie}'")
-cols = st.columns(5)
+cols = st.columns(20)
 
 for col, name, poster, movie_id in zip(cols, names, posters, ids):
     with col:
