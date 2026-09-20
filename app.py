@@ -64,6 +64,7 @@ def recommend(movie):
     posters = []
     ids = []
 
+    # 20 movies fetch ho rahi hain
     for movie_index in similarity_indices[index][0:20]:
         movie_index = int(movie_index)
         movie_id = movies.iloc[movie_index]["movie_id"]
@@ -92,20 +93,29 @@ selected_movie = st.selectbox(
     "🎥 Select a movie", movie_list, index=default_index
 )
 
-# Display recommendations by default on initial page load
+# Display recommendations by default
 names, posters, ids = recommend(selected_movie)
 
 st.subheader(f"✨ Recommended Movies for '{selected_movie}'")
-cols = st.columns(20)
 
-for col, name, poster, movie_id in zip(cols, names, posters, ids):
-    with col:
-        st.markdown(f"**{name}**")
-        if poster:
-            st.image(poster, use_container_width=True)
-        else:
-            st.info("Poster not available")
-        st.caption(f"Movie ID: {movie_id}")
+# NETFLIX STYLE GRID (5 columns per row, auto-wrapping for 20 movies)
+COLS_PER_ROW = 5
+
+for i in range(0, len(names), COLS_PER_ROW):
+    cols = st.columns(COLS_PER_ROW)
+    for j in range(COLS_PER_ROW):
+        if i + j < len(names):
+            name = names[i + j]
+            poster = posters[i + j]
+            movie_id = ids[i + j]
+
+            with cols[j]:
+                if poster:
+                    st.image(poster, use_container_width=True)
+                else:
+                    st.info("Poster not available")
+                st.markdown(f"**{name}**")
+                st.caption(f"Movie ID: {movie_id}")
 
 # -----------------------------
 # 6. Developer Info Section (Footer)
