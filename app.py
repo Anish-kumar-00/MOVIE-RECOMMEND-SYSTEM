@@ -3,7 +3,6 @@ import os
 import pickle
 import requests
 import streamlit as st
-import base64
 
 # -----------------------------
 # 1. Page settings
@@ -18,7 +17,6 @@ st.set_page_config(
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MOVIES_FILE = os.path.join(BASE_DIR, "movies.pkl")
 SIMILARITY_FILE = os.path.join(BASE_DIR, "similarity.pkl.gz")
-IMAGE_PATH = os.path.join(BASE_DIR, "anish.png")
 
 
 # Fast data loading using Streamlit cache
@@ -57,15 +55,6 @@ def fetch_poster(movie_id):
     return None
 
 
-# Raw Bytes Read Function (PIL bypassed completely)
-def get_base64_image(file_path):
-    if os.path.exists(file_path):
-        with open(file_path, "rb") as f:
-            data = f.read()
-        return base64.b64encode(data).decode()
-    return None
-
-
 # -----------------------------
 # 4. Recommendation Function
 # -----------------------------
@@ -93,23 +82,30 @@ def recommend(movie):
 st.title("🎬 Movie Recommendation System")
 st.write("Find movies similar to your favourite movie.")
 
-selected_movie = st.selectbox("🎥 Select a movie", movies["title"].values)
+# Finding index of 'Avatar' to make it default
+movie_list = movies["title"].values
+default_index = 0
+if "Avatar" in movie_list:
+    default_index = int(list(movie_list).index("Avatar"))
 
-if st.button("🚀 Show Recommendation"):
-    with st.spinner("Fetching recommendations..."):
-        names, posters, ids = recommend(selected_movie)
+selected_movie = st.selectbox(
+    "🎥 Select a movie", movie_list, index=default_index
+)
 
-    st.subheader("✨ Recommended Movies")
-    cols = st.columns(5)
+# Display recommendations by default on initial page load
+names, posters, ids = recommend(selected_movie)
 
-    for col, name, poster, movie_id in zip(cols, names, posters, ids):
-        with col:
-            st.markdown(f"**{name}**")
-            if poster:
-                st.image(poster, use_container_width=True)
-            else:
-                st.info("Poster not available")
-            st.caption(f"Movie ID: {movie_id}")
+st.subheader(f"✨ Recommended Movies for '{selected_movie}'")
+cols = st.columns(5)
+
+for col, name, poster, movie_id in zip(cols, names, posters, ids):
+    with col:
+        st.markdown(f"**{name}**")
+        if poster:
+            st.image(poster, use_container_width=True)
+        else:
+            st.info("Poster not available")
+        st.caption(f"Movie ID: {movie_id}")
 
 # -----------------------------
 # 6. Developer Info Section (Footer)
@@ -120,12 +116,6 @@ dev_col1, dev_col2, dev_col3 = st.columns([1, 2, 1])
 
 with dev_col2:
     st.markdown("### 👨‍💻 Developed By")
-
-    img_col, info_col = st.columns([1,1])
-
-    
-
-    with info_col:
-        st.subheader("Anish Kumar")
-        st.markdown("**Project Lead & Developer**")
-        st.write("Machine Learning & Web Application Project")
+    st.subheader("Anish Kumar")
+    st.markdown("**Project Lead & Developer**")
+    st.write("Machine Learning & Web Application Project")
