@@ -1,1 +1,0 @@
-TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
