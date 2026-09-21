@@ -18,133 +18,369 @@ st.set_page_config(
 
 
 # ============================================================
-# 2. GLOBAL STYLE
+# 2. GLOBAL CSS
 # ============================================================
 
 st.html(
     """
     <style>
 
-    /* =========================================
+    /* =====================================================
        MAIN APP
-       ========================================= */
+       ===================================================== */
 
     .stApp {
-        background: #050505;
-        color: white;
+        background:
+            radial-gradient(
+                circle at 10% 10%,
+                rgba(229, 9, 20, 0.08),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 90% 80%,
+                rgba(229, 9, 20, 0.06),
+                transparent 30%
+            ),
+            #050505;
+
+        color: #ffffff;
     }
 
-
-    /* Main content width */
 
     .block-container {
         max-width: 1500px;
         padding-top: 25px;
-        padding-bottom: 40px;
+        padding-bottom: 50px;
     }
 
 
-    /* =========================================
-       SELECTBOX
-       ========================================= */
+    /* =====================================================
+       SELECT BOX
+       ===================================================== */
 
     div[data-baseweb="select"] > div {
         background-color: #181818 !important;
-        border: 1px solid #333333 !important;
-        border-radius: 6px !important;
+        border: 1px solid #444 !important;
+        border-radius: 8px !important;
         color: white !important;
     }
 
 
-    /* =========================================
-       NORMAL BUTTONS
-       ========================================= */
+    /* =====================================================
+       NORMAL STREAMLIT BUTTON
+       ===================================================== */
 
     .stButton > button {
-        background-color: #e50914 !important;
+
+        background:
+            linear-gradient(
+                135deg,
+                #e50914,
+                #b20710
+            ) !important;
+
         color: white !important;
-        border: none !important;
-        border-radius: 5px !important;
+
+        border: 1px solid #ff3441 !important;
+
+        border-radius: 7px !important;
+
         font-weight: 700 !important;
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease !important;
     }
 
 
     .stButton > button:hover {
-        background-color: #f40612 !important;
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 8px 20px
+            rgba(229, 9, 20, 0.35) !important;
     }
 
 
-    /* =========================================
+    /* =====================================================
        LINK BUTTON
-       ========================================= */
+       ===================================================== */
 
     .stLinkButton > a {
-        background-color: #e50914 !important;
+
+        background:
+            linear-gradient(
+                135deg,
+                #e50914,
+                #b20710
+            ) !important;
+
         color: white !important;
-        border: none !important;
-        border-radius: 6px !important;
+
+        border: 1px solid #ff3441 !important;
+
+        border-radius: 7px !important;
+
         font-weight: 700 !important;
     }
 
 
-    /* =========================================
+    /* =====================================================
        DIVIDER
-       ========================================= */
+       ===================================================== */
 
     hr {
         border-color: #292929 !important;
     }
 
 
-    /* =========================================
+    /* =====================================================
+       HERO ANIMATION
+       ===================================================== */
+
+    @keyframes heroGlow {
+
+        0% {
+            box-shadow:
+                0 0 20px
+                rgba(229, 9, 20, 0.08);
+        }
+
+        50% {
+            box-shadow:
+                0 0 45px
+                rgba(229, 9, 20, 0.20);
+        }
+
+        100% {
+            box-shadow:
+                0 0 20px
+                rgba(229, 9, 20, 0.08);
+        }
+    }
+
+
+    .hero-box {
+
+        animation:
+            heroGlow 4s
+            ease-in-out
+            infinite;
+
+        border: 1px solid
+            rgba(229, 9, 20, 0.25);
+    }
+
+
+    /* =====================================================
+       TITLE ANIMATION
+       ===================================================== */
+
+    @keyframes titleFade {
+
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    }
+
+
+    .hero-content {
+
+        animation:
+            titleFade 1s
+            ease-out;
+    }
+
+
+    /* =====================================================
        MOVIE CARD
-       ========================================= */
+       ===================================================== */
 
-    .movie-card {
+    .movie-wrapper {
+
         position: relative;
+
+        background:
+            linear-gradient(
+                145deg,
+                #202020,
+                #111111
+            );
+
+        border: 1px solid
+            #333333;
+
+        border-radius: 12px;
+
+        padding: 6px;
+
+        margin-bottom: 22px;
+
         overflow: hidden;
-        border-radius: 8px;
-        background: #181818;
-        transition:
-            transform 0.3s ease,
-            box-shadow 0.3s ease;
-    }
 
-
-    .movie-card:hover {
-        transform: scale(1.06);
-        box-shadow:
-            0 15px 35px rgba(0, 0, 0, 0.75);
-        z-index: 10;
-    }
-
-
-    .movie-card-image {
-        width: 100%;
-        aspect-ratio: 2 / 3;
-        object-fit: cover;
-        display: block;
         transition:
             transform 0.35s ease,
-            filter 0.35s ease;
+            border-color 0.35s ease,
+            box-shadow 0.35s ease;
+
+        box-shadow:
+            0 8px 20px
+            rgba(0, 0, 0, 0.35);
     }
 
 
-    .movie-card:hover .movie-card-image {
-        transform: scale(1.08);
-        filter: brightness(0.65);
-    }
+    /* =====================================================
+       ANIMATED BORDER
+       ===================================================== */
 
+    .movie-wrapper::before {
 
-    .movie-card-overlay {
+        content: "";
+
         position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
+
+        top: -2px;
+        left: -2px;
+
+        right: -2px;
+        bottom: -2px;
+
+        border-radius: 13px;
+
+        background:
+            linear-gradient(
+                120deg,
+                transparent,
+                rgba(229, 9, 20, 0.8),
+                transparent,
+                rgba(255, 70, 80, 0.5),
+                transparent
+            );
+
+        background-size: 300% 300%;
+
+        opacity: 0;
+
+        z-index: 0;
+
+        transition:
+            opacity 0.35s ease;
+
+        animation:
+            borderMove 4s
+            linear
+            infinite;
+    }
+
+
+    @keyframes borderMove {
+
+        0% {
+            background-position:
+                0% 50%;
+        }
+
+        50% {
+            background-position:
+                100% 50%;
+        }
+
+        100% {
+            background-position:
+                0% 50%;
+        }
+
+    }
+
+
+    .movie-wrapper:hover::before {
+
+        opacity: 1;
+    }
+
+
+    .movie-wrapper:hover {
+
+        transform:
+            translateY(-8px)
+            scale(1.025);
+
+        border-color:
+            #e50914;
+
+        box-shadow:
+            0 18px 40px
+            rgba(229, 9, 20, 0.22);
+
+        z-index: 20;
+    }
+
+
+    /* =====================================================
+       MOVIE POSTER
+       ===================================================== */
+
+    .movie-poster-container {
+
+        position: relative;
+
+        overflow: hidden;
+
+        border-radius: 8px;
+
+        z-index: 1;
+    }
+
+
+    .movie-poster {
+
+        width: 100%;
+
+        aspect-ratio: 2 / 3;
+
+        object-fit: cover;
+
+        display: block;
+
+        transition:
+            transform 0.5s ease,
+            filter 0.5s ease;
+    }
+
+
+    .movie-wrapper:hover
+    .movie-poster {
+
+        transform:
+            scale(1.08);
+
+        filter:
+            brightness(0.55);
+    }
+
+
+    /* =====================================================
+       PLAY BUTTON
+       ===================================================== */
+
+    .movie-overlay {
+
+        position: absolute;
+
+        inset: 0;
 
         display: flex;
+
         align-items: center;
+
         justify-content: center;
 
         opacity: 0;
@@ -152,74 +388,174 @@ st.html(
         background:
             linear-gradient(
                 to bottom,
-                rgba(0, 0, 0, 0.05),
-                rgba(0, 0, 0, 0.80)
+                rgba(0,0,0,0.05),
+                rgba(0,0,0,0.85)
             );
 
-        transition: opacity 0.3s ease;
+        transition:
+            opacity 0.35s ease;
     }
 
 
-    .movie-card:hover .movie-card-overlay {
+    .movie-wrapper:hover
+    .movie-overlay {
+
         opacity: 1;
     }
 
 
-    .play-button {
-        width: 55px;
-        height: 55px;
+    .play-circle {
+
+        width: 58px;
+
+        height: 58px;
 
         display: flex;
-        align-items: center;
-        justify-content: center;
 
-        background: #e50914;
-        color: white;
+        align-items: center;
+
+        justify-content: center;
 
         border-radius: 50%;
 
-        font-size: 22px;
-        font-weight: bold;
-
-        box-shadow:
-            0 5px 20px rgba(0, 0, 0, 0.5);
-    }
-
-
-    .movie-title {
-        margin-top: 8px;
-        margin-bottom: 20px;
+        background:
+            #e50914;
 
         color: white;
 
-        font-size: 14px;
+        font-size: 23px;
+
+        box-shadow:
+            0 5px 25px
+            rgba(229, 9, 20, 0.55);
+
+        animation:
+            playPulse 1.7s
+            infinite;
+    }
+
+
+    @keyframes playPulse {
+
+        0% {
+            box-shadow:
+                0 0 0 0
+                rgba(229, 9, 20, 0.55);
+        }
+
+        70% {
+            box-shadow:
+                0 0 0 14px
+                rgba(229, 9, 20, 0);
+        }
+
+        100% {
+            box-shadow:
+                0 0 0 0
+                rgba(229, 9, 20, 0);
+        }
+
+    }
+
+
+    /* =====================================================
+       MOVIE TITLE
+       ===================================================== */
+
+    .movie-title {
+
+        position: relative;
+
+        z-index: 2;
+
+        color: white;
+
+        font-size: 13px;
+
         font-weight: 700;
 
         text-align: center;
 
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        padding:
+            10px 5px 7px;
+
+        min-height: 42px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
     }
 
 
-    /* =========================================
+    /* =====================================================
+       SECTION TITLE
+       ===================================================== */
+
+    .section-title {
+
+        font-size: 32px;
+
+        font-weight: 900;
+
+        margin-top: 25px;
+
+        margin-bottom: 5px;
+    }
+
+
+    .section-subtitle {
+
+        color: #999;
+
+        margin-bottom: 25px;
+    }
+
+
+    /* =====================================================
        MOBILE
-       ========================================= */
+       ===================================================== */
 
     @media (max-width: 700px) {
 
         .block-container {
+
             padding-left: 12px;
+
             padding-right: 12px;
         }
 
-        .movie-card:hover {
-            transform: none;
+
+        .movie-wrapper {
+
+            border-radius: 10px;
+
+            padding: 5px;
+
+            margin-bottom: 16px;
         }
 
-        .movie-card:hover .movie-card-image {
-            transform: none;
+
+        .movie-wrapper:hover {
+
+            transform:
+                translateY(-3px)
+                scale(1.01);
+        }
+
+
+        .movie-title {
+
+            font-size: 11px;
+
+            min-height: 38px;
+        }
+
+
+        .section-title {
+
+            font-size: 25px;
         }
 
     }
@@ -255,7 +591,10 @@ SIMILARITY_FILE = os.path.join(
 @st.cache_data(show_spinner=False)
 def load_data():
 
-    with open(MOVIES_FILE, "rb") as file:
+    with open(
+        MOVIES_FILE,
+        "rb"
+    ) as file:
 
         movies_data = pickle.load(file)
 
@@ -285,17 +624,22 @@ TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
 
 
 # ============================================================
-# 6. TMDB REQUEST HELPER
+# 6. TMDB REQUEST
 # ============================================================
 
-def tmdb_request(endpoint, params=None):
+def tmdb_request(
+    endpoint,
+    params=None
+):
 
     url = (
         "https://api.themoviedb.org/3/"
         + endpoint
     )
 
+
     if params is None:
+
         params = {}
 
 
@@ -325,14 +669,16 @@ def tmdb_request(endpoint, params=None):
 
 
 # ============================================================
-# 7. FETCH MOVIE DETAILS
+# 7. MOVIE DETAILS
 # ============================================================
 
 @st.cache_data(
     show_spinner=False,
     ttl=86400
 )
-def fetch_movie_details(movie_id):
+def fetch_movie_details(
+    movie_id
+):
 
     return tmdb_request(
         f"movie/{movie_id}",
@@ -343,14 +689,16 @@ def fetch_movie_details(movie_id):
 
 
 # ============================================================
-# 8. FETCH POSTER
+# 8. POSTER
 # ============================================================
 
 @st.cache_data(
     show_spinner=False,
     ttl=86400
 )
-def fetch_poster(movie_id):
+def fetch_poster(
+    movie_id
+):
 
     details = fetch_movie_details(
         movie_id
@@ -379,14 +727,16 @@ def fetch_poster(movie_id):
 
 
 # ============================================================
-# 9. FETCH TRAILER
+# 9. TRAILER
 # ============================================================
 
 @st.cache_data(
     show_spinner=False,
     ttl=86400
 )
-def fetch_trailer(movie_id):
+def fetch_trailer(
+    movie_id
+):
 
     data = tmdb_request(
         f"movie/{movie_id}/videos",
@@ -407,21 +757,25 @@ def fetch_trailer(movie_id):
     )
 
 
-    # --------------------------------------------------------
-    # First priority: official YouTube trailer
-    # --------------------------------------------------------
+    # Official trailer first
 
     for video in videos:
 
         if (
-            video.get("site") == "YouTube"
+            video.get("site")
+            == "YouTube"
             and
-            video.get("type") == "Trailer"
+            video.get("type")
+            == "Trailer"
             and
-            video.get("official") is True
+            video.get("official")
+            is True
         ):
 
-            key = video.get("key")
+            key = video.get(
+                "key"
+            )
+
 
             if key:
 
@@ -431,19 +785,22 @@ def fetch_trailer(movie_id):
                 )
 
 
-    # --------------------------------------------------------
-    # Second priority: any YouTube trailer
-    # --------------------------------------------------------
+    # Any YouTube trailer
 
     for video in videos:
 
         if (
-            video.get("site") == "YouTube"
+            video.get("site")
+            == "YouTube"
             and
-            video.get("type") == "Trailer"
+            video.get("type")
+            == "Trailer"
         ):
 
-            key = video.get("key")
+            key = video.get(
+                "key"
+            )
+
 
             if key:
 
@@ -457,30 +814,28 @@ def fetch_trailer(movie_id):
 
 
 # ============================================================
-# 10. RECOMMEND MOVIES
+# 10. RECOMMENDATION
 # ============================================================
 
 def recommend(movie):
 
-    movie_indexes = movies[
+    indexes = movies[
         movies["title"] == movie
     ].index
 
 
-    if len(movie_indexes) == 0:
+    if len(indexes) == 0:
 
         return [], [], []
 
 
-    index = movie_indexes[0]
+    index = indexes[0]
 
 
     names = []
     posters = []
     ids = []
 
-
-    # First 20 similar movies
 
     similar_movies = similarity_indices[
         index
@@ -510,7 +865,9 @@ def recommend(movie):
 
 
         posters.append(
-            fetch_poster(movie_id)
+            fetch_poster(
+                movie_id
+            )
         )
 
 
@@ -536,10 +893,6 @@ def movie_card_html(
     movie_id
 ):
 
-    # --------------------------------------------------------
-    # Fallback poster
-    # --------------------------------------------------------
-
     if not poster_url:
 
         poster_url = (
@@ -547,14 +900,6 @@ def movie_card_html(
             "500x750?text=No+Poster"
         )
 
-
-    # --------------------------------------------------------
-    # IMPORTANT:
-    #
-    # No CSS block inside this f-string.
-    # Therefore previous transform syntax error
-    # cannot happen here.
-    # --------------------------------------------------------
 
     html = f"""
     <a
@@ -567,27 +912,34 @@ def movie_card_html(
         "
     >
 
-        <div class="movie-card">
+        <div class="movie-wrapper">
 
-            <img
-                class="movie-card-image"
-                src="{poster_url}"
-                alt="{movie_name}"
-            >
+            <div class="movie-poster-container">
 
-            <div class="movie-card-overlay">
+                <img
+                    class="movie-poster"
+                    src="{poster_url}"
+                    alt="{movie_name}"
+                >
 
-                <div class="play-button">
-                    ▶
+
+                <div class="movie-overlay">
+
+                    <div class="play-circle">
+                        ▶
+                    </div>
+
                 </div>
 
             </div>
 
-        </div>
 
+            <div class="movie-title">
 
-        <div class="movie-title">
-            {movie_name}
+                {movie_name}
+
+            </div>
+
         </div>
 
     </a>
@@ -601,7 +953,9 @@ def movie_card_html(
 # 12. DETAILS PAGE
 # ============================================================
 
-def show_movie_details(movie_id):
+def show_movie_details(
+    movie_id
+):
 
     # --------------------------------------------------------
     # BACK BUTTON
@@ -621,7 +975,7 @@ def show_movie_details(movie_id):
 
 
     # --------------------------------------------------------
-    # MOVIE DETAILS
+    # GET DETAILS
     # --------------------------------------------------------
 
     details = fetch_movie_details(
@@ -685,7 +1039,7 @@ def show_movie_details(movie_id):
 
 
     # ========================================================
-    # MOVIE BACKDROP
+    # BACKDROP
     # ========================================================
 
     if backdrop_path:
@@ -701,20 +1055,27 @@ def show_movie_details(movie_id):
             <div
                 style="
                     width:100%;
-                    height:400px;
+                    height:420px;
 
-                    border-radius:12px;
+                    border-radius:15px;
 
                     background-image:
                         linear-gradient(
                             to top,
                             #050505 0%,
-                            rgba(5,5,5,0.15) 70%
+                            rgba(5,5,5,0.15) 75%
                         ),
                         url('{backdrop_url}');
 
                     background-size:cover;
+
                     background-position:center;
+
+                    border:1px solid #292929;
+
+                    box-shadow:
+                        0 15px 45px
+                        rgba(0,0,0,0.55);
                 "
             >
             </div>
@@ -732,10 +1093,10 @@ def show_movie_details(movie_id):
 
 
     # ========================================================
-    # POSTER + INFORMATION
+    # POSTER + DETAILS
     # ========================================================
 
-    poster_column, info_column = st.columns(
+    poster_col, info_col = st.columns(
         [1, 2],
         gap="large"
     )
@@ -745,7 +1106,7 @@ def show_movie_details(movie_id):
     # POSTER
     # ========================================================
 
-    with poster_column:
+    with poster_col:
 
         if poster_path:
 
@@ -760,7 +1121,6 @@ def show_movie_details(movie_id):
                 use_container_width=True
             )
 
-
         else:
 
             st.info(
@@ -772,7 +1132,7 @@ def show_movie_details(movie_id):
     # INFORMATION
     # ========================================================
 
-    with info_column:
+    with info_col:
 
         st.subheader(
             "⭐ Rating"
@@ -799,7 +1159,7 @@ def show_movie_details(movie_id):
 
 
         # ----------------------------------------------------
-        # RUNTIME
+        # Runtime
         # ----------------------------------------------------
 
         if runtime:
@@ -836,7 +1196,7 @@ def show_movie_details(movie_id):
 
 
         # ----------------------------------------------------
-        # GENRES
+        # Genres
         # ----------------------------------------------------
 
         if genres:
@@ -854,15 +1214,15 @@ def show_movie_details(movie_id):
 
             for genre in genres:
 
-                genre_name = genre.get(
+                name = genre.get(
                     "name"
                 )
 
 
-                if genre_name:
+                if name:
 
                     genre_names.append(
-                        genre_name
+                        name
                     )
 
 
@@ -874,7 +1234,7 @@ def show_movie_details(movie_id):
 
 
         # ----------------------------------------------------
-        # STORY
+        # Story
         # ----------------------------------------------------
 
         st.divider()
@@ -891,7 +1251,7 @@ def show_movie_details(movie_id):
 
 
         # ----------------------------------------------------
-        # TRAILER
+        # Trailer
         # ----------------------------------------------------
 
         st.divider()
@@ -915,7 +1275,6 @@ def show_movie_details(movie_id):
                 use_container_width=True
             )
 
-
         else:
 
             st.info(
@@ -924,7 +1283,7 @@ def show_movie_details(movie_id):
 
 
 # ============================================================
-# 13. CHECK URL
+# 13. CHECK MOVIE ID
 # ============================================================
 
 movie_id_from_url = st.query_params.get(
@@ -933,7 +1292,7 @@ movie_id_from_url = st.query_params.get(
 
 
 # ============================================================
-# 14. MOVIE DETAILS PAGE
+# 14. DETAILS PAGE
 # ============================================================
 
 if movie_id_from_url:
@@ -964,80 +1323,94 @@ if movie_id_from_url:
 else:
 
     # ========================================================
-    # HERO SECTION
+    # HERO
     # ========================================================
 
     st.html(
         """
         <div
+            class="hero-box"
             style="
-                min-height:380px;
+                min-height:390px;
 
                 display:flex;
+
                 align-items:flex-end;
 
-                padding:45px;
+                padding:50px;
 
-                border-radius:14px;
+                border-radius:16px;
 
                 background:
                     linear-gradient(
                         90deg,
                         #050505 0%,
-                        #090909 45%,
-                        rgba(5,5,5,0.55) 100%
+                        #080808 50%,
+                        rgba(5,5,5,0.5) 100%
                     );
 
-                box-shadow:
-                    0 20px 60px
-                    rgba(0,0,0,0.65);
-
-                margin-bottom:35px;
+                margin-bottom:40px;
             "
         >
 
-            <div>
+            <div
+                class="hero-content"
+            >
 
                 <div
                     style="
                         color:#e50914;
+
                         font-size:14px;
-                        font-weight:800;
-                        letter-spacing:3px;
-                        margin-bottom:10px;
+
+                        font-weight:900;
+
+                        letter-spacing:4px;
+
+                        margin-bottom:12px;
                     "
                 >
-                    🎬 MOVIE RECOMMENDATION
+                    🎬 NETFLIX STYLE
                 </div>
 
 
                 <div
                     style="
                         color:white;
-                        font-size:clamp(
-                            34px,
-                            6vw,
-                            64px
-                        );
+
+                        font-size:
+                            clamp(
+                                36px,
+                                6vw,
+                                68px
+                            );
+
                         font-weight:900;
+
                         line-height:1.05;
-                        margin-bottom:15px;
+
+                        margin-bottom:18px;
                     "
                 >
-                    Movie Recommendation System
+                    Movie Recommendation
+                    System
                 </div>
 
 
                 <div
                     style="
                         color:#bdbdbd;
+
                         font-size:17px;
-                        max-width:650px;
+
                         line-height:1.6;
+
+                        max-width:650px;
                     "
                 >
-                    Discover movies you will love
-                    with AI-powered recommendations.
+                    Discover movies similar to
+                    your favourite movies using
+                    AI-powered recommendations.
                 </div>
 
             </div>
@@ -1048,11 +1421,11 @@ else:
 
 
     # ========================================================
-    # CHOOSE MOVIE
+    # SELECT MOVIE
     # ========================================================
 
-    st.header(
-        "🎥 Choose Your Movie"
+    st.markdown(
+        "## 🎥 Choose Your Movie"
     )
 
 
@@ -1060,10 +1433,6 @@ else:
         "title"
     ].values
 
-
-    # --------------------------------------------------------
-    # Avatar as default
-    # --------------------------------------------------------
 
     default_index = 0
 
@@ -1076,14 +1445,14 @@ else:
 
 
     selected_movie = st.selectbox(
-        "Select a movie",
+        "Choose movie",
         movie_list,
         index=default_index
     )
 
 
     # ========================================================
-    # GET RECOMMENDATIONS
+    # RECOMMENDATIONS
     # ========================================================
 
     names, posters, ids = recommend(
@@ -1094,22 +1463,22 @@ else:
     st.divider()
 
 
-    # ========================================================
-    # RECOMMENDATION HEADER
-    # ========================================================
+    st.markdown(
+        f"""
+        <div class="section-title">
+            🔥 Recommended Movies
+        </div>
 
-    st.header(
-        "🔥 Recommended Movies"
-    )
-
-
-    st.write(
-        f"Movies similar to **{selected_movie}**"
-    )
-
-
-    st.caption(
-        "👆 Tap any movie poster to view complete details."
+        <div class="section-subtitle">
+            Because you selected
+            <b style="color:#ffffff;">
+                {selected_movie}
+            </b>
+            <br>
+            👆 Tap any poster to open movie details
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
 
@@ -1126,38 +1495,37 @@ else:
         COLS_PER_ROW
     ):
 
-        columns = st.columns(
+        cols = st.columns(
             COLS_PER_ROW,
-            gap="small"
+            gap="medium"
         )
 
 
-        for column_number in range(
+        for j in range(
             COLS_PER_ROW
         ):
 
-            movie_position = (
-                row_start
-                + column_number
+            position = (
+                row_start + j
             )
 
 
-            if movie_position >= len(names):
+            if position >= len(names):
 
                 continue
 
 
-            with columns[column_number]:
+            with cols[j]:
 
-                card = movie_card_html(
-                    names[movie_position],
-                    posters[movie_position],
-                    ids[movie_position]
+                movie_html = movie_card_html(
+                    names[position],
+                    posters[position],
+                    ids[position]
                 )
 
 
                 st.html(
-                    card
+                    movie_html
                 )
 
 
@@ -1173,15 +1541,19 @@ else:
         <div
             style="
                 text-align:center;
-                padding:35px 10px;
+
+                padding:40px 10px;
+
                 color:#777;
             "
         >
 
             <div
                 style="
-                    color:white;
-                    font-size:21px;
+                    color:#ffffff;
+
+                    font-size:22px;
+
                     font-weight:800;
                 "
             >
@@ -1192,7 +1564,8 @@ else:
             <div
                 style="
                     margin-top:12px;
-                    color:#999;
+
+                    color:#888;
                 "
             >
                 Developed By
@@ -1201,10 +1574,13 @@ else:
 
             <div
                 style="
-                    margin-top:7px;
+                    margin-top:8px;
+
                     color:#cccccc;
+
                     font-size:16px;
-                    font-weight:600;
+
+                    font-weight:700;
                 "
             >
                 Anish Kumar • Abhishek • Vishal
@@ -1214,8 +1590,10 @@ else:
             <div
                 style="
                     margin-top:15px;
+
+                    color:#555;
+
                     font-size:12px;
-                    color:#666;
                 "
             >
                 Machine Learning & Web Application Project
