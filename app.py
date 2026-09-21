@@ -18,321 +18,309 @@ st.set_page_config(
 
 
 # ============================================================
-# 2. CUSTOM CSS
+# 2. CSS
 # ============================================================
 
-st.markdown(
-    """
-    <style>
+st.markdown("""
+<style>
 
-    /* ================================
-       MAIN BACKGROUND
-       ================================ */
+.stApp {
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255, 0, 80, 0.12),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(80, 30, 180, 0.12),
+            transparent 30%
+        ),
+        #08090d;
+}
 
-    .stApp {
-        background:
-            radial-gradient(
-                circle at top left,
-                rgba(255, 0, 80, 0.12),
-                transparent 30%
-            ),
-            radial-gradient(
-                circle at bottom right,
-                rgba(90, 40, 200, 0.12),
-                transparent 30%
-            ),
-            #08090d;
+.block-container {
+    max-width: 1450px;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.hero-container {
+    text-align: center;
+    padding: 35px 20px;
+    margin-bottom: 30px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 20, 70, 0.16),
+            rgba(100, 30, 180, 0.14)
+        );
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,0.35);
+}
+
+
+.hero-title {
+    font-size: 48px;
+    font-weight: 900;
+
+    background:
+        linear-gradient(
+            90deg,
+            white,
+            #ff416c,
+            #ff4b2b,
+            white
+        );
+
+    background-size: 300%;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: gradientMove 5s linear infinite;
+}
+
+
+.hero-subtitle {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #bdbdbd;
+}
+
+
+@keyframes gradientMove {
+
+    0% {
+        background-position: 0%;
     }
 
-
-    /* ================================
-       PAGE WIDTH
-       ================================ */
-
-    .block-container {
-        max-width: 1500px;
-        padding-top: 2rem;
-        padding-bottom: 3rem;
+    100% {
+        background-position: 300%;
     }
 
+}
 
-    /* ================================
-       HERO
-       ================================ */
 
-    .hero-box {
-        padding: 35px 20px;
-        text-align: center;
+/* ============================================================
+   MOVIE POSTERS
+   ============================================================ */
 
-        border-radius: 25px;
+[data-testid="stImage"] img {
 
-        background:
-            linear-gradient(
-                135deg,
-                rgba(255, 20, 70, 0.16),
-                rgba(100, 30, 180, 0.14)
-            );
+    border-radius: 14px;
 
-        border: 1px solid rgba(255,255,255,0.08);
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.45);
 
-        box-shadow:
-            0 20px 60px rgba(0,0,0,0.40);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
 
-        margin-bottom: 30px;
-    }
 
+[data-testid="stImage"] img:hover {
+
+    transform: translateY(-6px) scale(1.03);
+
+    box-shadow:
+        0 15px 35px
+        rgba(255,60,100,0.25);
+}
+
+
+/* ============================================================
+   SELECT BOX
+   ============================================================ */
+
+div[data-baseweb="select"] > div {
+
+    background: #171920 !important;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.10) !important;
+
+    border-radius: 12px !important;
+}
+
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.stButton > button {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff416c,
+            #ff4b2b
+        );
+
+    color: white;
+
+    font-weight: 700;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.stButton > button:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 25px
+        rgba(255,65,108,0.35);
+}
+
+
+/* ============================================================
+   MOVIE NAME
+   ============================================================ */
+
+.movie-name {
+
+    text-align: center;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    color: white;
+
+    min-height: 42px;
+
+    padding-top: 8px;
+
+    padding-bottom: 5px;
+}
+
+
+/* ============================================================
+   DETAILS PAGE
+   ============================================================ */
+
+.details-title {
+
+    font-size: 45px;
+
+    font-weight: 900;
+
+    margin-bottom: 20px;
+}
+
+
+.detail-box {
+
+    background:
+        rgba(255,255,255,0.045);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.08);
+
+    border-radius: 16px;
+
+    padding: 18px;
+
+    margin-bottom: 15px;
+}
+
+
+.rating-box {
+
+    display: inline-block;
+
+    padding: 8px 18px;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffb300,
+            #ff6f00
+        );
+
+    color: white;
+
+    font-weight: 800;
+}
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.footer-box {
+
+    text-align: center;
+
+    margin-top: 50px;
+
+    padding: 30px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,0.08);
+
+    color: #999;
+}
+
+
+.footer-name {
+
+    color: white;
+
+    font-size: 20px;
+
+    font-weight: 800;
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 700px) {
 
     .hero-title {
-        font-size: 48px;
-        font-weight: 900;
-        margin-bottom: 10px;
-
-        background:
-            linear-gradient(
-                90deg,
-                #ffffff,
-                #ff416c,
-                #ff4b2b,
-                #ffffff
-            );
-
-        background-size: 300%;
-
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-
-        animation: gradientAnimation 5s linear infinite;
+        font-size: 34px;
     }
-
 
     .hero-subtitle {
-        font-size: 18px;
-        color: #bdbdbd;
+        font-size: 15px;
     }
-
-
-    @keyframes gradientAnimation {
-
-        0% {
-            background-position: 0%;
-        }
-
-        100% {
-            background-position: 300%;
-        }
-
-    }
-
-
-    /* ================================
-       SELECT BOX
-       ================================ */
-
-    div[data-baseweb="select"] > div {
-
-        background: #171920 !important;
-
-        border:
-            1px solid
-            rgba(255,255,255,0.10) !important;
-
-        border-radius: 12px !important;
-    }
-
-
-    /* ================================
-       MOVIE IMAGE
-       ================================ */
-
-    [data-testid="stImage"] img {
-
-        border-radius: 14px;
-
-        transition:
-            transform 0.3s ease,
-            box-shadow 0.3s ease;
-
-        box-shadow:
-            0 8px 25px rgba(0,0,0,0.45);
-    }
-
-
-    [data-testid="stImage"] img:hover {
-
-        transform: scale(1.03);
-
-        box-shadow:
-            0 15px 35px
-            rgba(255,50,90,0.25);
-    }
-
-
-    /* ================================
-       BUTTON
-       ================================ */
-
-    .stButton > button {
-
-        width: 100%;
-
-        border-radius: 10px;
-
-        border: none;
-
-        background:
-            linear-gradient(
-                135deg,
-                #ff416c,
-                #ff4b2b
-            );
-
-        color: white;
-
-        font-weight: 700;
-
-        transition:
-            transform 0.2s ease,
-            box-shadow 0.2s ease;
-    }
-
-
-    .stButton > button:hover {
-
-        transform: translateY(-3px);
-
-        box-shadow:
-            0 8px 25px
-            rgba(255,65,108,0.35);
-    }
-
-
-    /* ================================
-       MOVIE TITLE
-       ================================ */
-
-    .movie-title-text {
-
-        font-size: 16px;
-
-        font-weight: 700;
-
-        text-align: center;
-
-        color: white;
-
-        margin-top: 8px;
-
-        min-height: 45px;
-    }
-
-
-    /* ================================
-       DETAILS PAGE
-       ================================ */
 
     .details-title {
-
-        font-size: 45px;
-
-        font-weight: 900;
-
-        margin-bottom: 20px;
-
-        background:
-            linear-gradient(
-                90deg,
-                white,
-                #ff416c
-            );
-
-        -webkit-background-clip: text;
-
-        -webkit-text-fill-color: transparent;
+        font-size: 32px;
     }
 
+}
 
-    .detail-box {
-
-        background:
-            rgba(255,255,255,0.045);
-
-        border:
-            1px solid
-            rgba(255,255,255,0.08);
-
-        border-radius: 16px;
-
-        padding: 18px;
-
-        margin-bottom: 15px;
-    }
-
-
-    .rating {
-
-        display: inline-block;
-
-        padding: 8px 18px;
-
-        border-radius: 30px;
-
-        background:
-            linear-gradient(
-                135deg,
-                #ffb300,
-                #ff6f00
-            );
-
-        color: white;
-
-        font-weight: 800;
-    }
-
-
-    /* ================================
-       FOOTER
-       ================================ */
-
-    .footer-line {
-
-        margin-top: 50px;
-
-        border-top:
-            1px solid
-            rgba(255,255,255,0.08);
-
-        padding-top: 25px;
-
-        text-align: center;
-
-        color: #999;
-    }
-
-
-    /* ================================
-       MOBILE
-       ================================ */
-
-    @media (max-width: 700px) {
-
-        .hero-title {
-            font-size: 34px;
-        }
-
-        .hero-subtitle {
-            font-size: 15px;
-        }
-
-        .details-title {
-            font-size: 32px;
-        }
-
-    }
-
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+</style>
+""", unsafe_allow_html=True)
 
 
 # ============================================================
@@ -355,18 +343,16 @@ SIMILARITY_FILE = os.path.join(
 
 
 # ============================================================
-# 4. LOAD MOVIE DATA
+# 4. LOAD DATA
 # ============================================================
 
 @st.cache_data(show_spinner=False)
 def load_data():
 
     with open(MOVIES_FILE, "rb") as f:
-
         movies_data = pickle.load(f)
 
     with gzip.open(SIMILARITY_FILE, "rb") as f:
-
         similarity_data = pickle.load(f)
 
     return (
@@ -379,14 +365,14 @@ movies, similarity_indices = load_data()
 
 
 # ============================================================
-# 5. TMDB API KEY
+# 5. TMDB API
 # ============================================================
 
 TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
 
 
 # ============================================================
-# 6. FETCH MOVIE DETAILS
+# 6. MOVIE DETAILS
 # ============================================================
 
 @st.cache_data(
@@ -424,7 +410,7 @@ def fetch_movie_details(movie_id):
 
 
 # ============================================================
-# 7. FETCH POSTER
+# 7. POSTER
 # ============================================================
 
 @st.cache_data(
@@ -453,7 +439,7 @@ def fetch_poster(movie_id):
 
 
 # ============================================================
-# 8. FETCH TRAILER
+# 8. TRAILER
 # ============================================================
 
 @st.cache_data(
@@ -487,10 +473,7 @@ def fetch_trailer(movie_id):
                 []
             )
 
-            # ----------------------------------------
-            # Official trailer first
-            # ----------------------------------------
-
+            # Official trailer
             for video in videos:
 
                 if (
@@ -510,10 +493,7 @@ def fetch_trailer(movie_id):
                             + key
                         )
 
-            # ----------------------------------------
-            # Any YouTube trailer
-            # ----------------------------------------
-
+            # Any trailer
             for video in videos:
 
                 if (
@@ -539,7 +519,7 @@ def fetch_trailer(movie_id):
 
 
 # ============================================================
-# 9. RECOMMEND MOVIES
+# 9. RECOMMENDATION
 # ============================================================
 
 def recommend(movie):
@@ -578,26 +558,18 @@ def recommend(movie):
 
         ids.append(movie_id)
 
-    return (
-        names,
-        posters,
-        ids
-    )
+    return names, posters, ids
 
 
 # ============================================================
-# 10. DETAILS PAGE
+# 10. MOVIE DETAILS PAGE
 # ============================================================
 
 def movie_details_page(movie_id):
 
-    # ----------------------------------------
-    # Back button
-    # ----------------------------------------
-
     if st.button(
         "⬅️ Back to Recommendations",
-        key="back_button"
+        key="back"
     ):
 
         st.query_params.clear()
@@ -607,10 +579,6 @@ def movie_details_page(movie_id):
 
     st.divider()
 
-
-    # ----------------------------------------
-    # Get movie details
-    # ----------------------------------------
 
     details = fetch_movie_details(
         movie_id
@@ -625,10 +593,6 @@ def movie_details_page(movie_id):
 
         return
 
-
-    # ----------------------------------------
-    # Information
-    # ----------------------------------------
 
     title = details.get(
         "title",
@@ -690,8 +654,8 @@ def movie_details_page(movie_id):
     # TITLE
     # ========================================================
 
-    st.markdown(
-        f"## 🎬 {title}"
+    st.title(
+        "🎬 " + title
     )
 
 
@@ -704,10 +668,6 @@ def movie_details_page(movie_id):
         gap="large"
     )
 
-
-    # ========================================================
-    # POSTER
-    # ========================================================
 
     with col1:
 
@@ -730,20 +690,17 @@ def movie_details_page(movie_id):
             )
 
 
-    # ========================================================
-    # INFORMATION
-    # ========================================================
-
     with col2:
 
         # Rating
+
         st.markdown(
             f"""
             <div class="detail-box">
 
-                <div class="rating">
+                <span class="rating-box">
                     ⭐ {rating:.1f}/10
-                </div>
+                </span>
 
             </div>
             """,
@@ -752,13 +709,16 @@ def movie_details_page(movie_id):
 
 
         # Release date
+
         st.markdown(
             f"""
             <div class="detail-box">
 
-                <h3>📅 Release Date</h3>
+                <b>📅 Release Date</b>
 
-                <p>{release_date}</p>
+                <br><br>
+
+                {release_date}
 
             </div>
             """,
@@ -767,12 +727,12 @@ def movie_details_page(movie_id):
 
 
         # Runtime
+
         if runtime:
 
             hours = runtime // 60
 
             minutes = runtime % 60
-
 
             if hours > 0:
 
@@ -791,9 +751,11 @@ def movie_details_page(movie_id):
                 f"""
                 <div class="detail-box">
 
-                    <h3>⏱️ Runtime</h3>
+                    <b>⏱️ Runtime</b>
 
-                    <p>{runtime_text}</p>
+                    <br><br>
+
+                    {runtime_text}
 
                 </div>
                 """,
@@ -802,28 +764,27 @@ def movie_details_page(movie_id):
 
 
         # Genres
+
         if genres:
 
-            genre_names = []
-
-            for genre in genres:
-
-                genre_names.append(
-                    genre.get("name", "")
-                )
+            genre_names = [
+                genre.get("name", "")
+                for genre in genres
+            ]
 
             genre_text = " • ".join(
                 genre_names
             )
 
-
             st.markdown(
                 f"""
                 <div class="detail-box">
 
-                    <h3>🎭 Genres</h3>
+                    <b>🎭 Genres</b>
 
-                    <p>{genre_text}</p>
+                    <br><br>
+
+                    {genre_text}
 
                 </div>
                 """,
@@ -832,13 +793,16 @@ def movie_details_page(movie_id):
 
 
         # Story
+
         st.markdown(
             f"""
             <div class="detail-box">
 
-                <h3>📝 Story</h3>
+                <b>📝 Story</b>
 
-                <p>{overview}</p>
+                <br><br>
+
+                {overview}
 
             </div>
             """,
@@ -847,6 +811,7 @@ def movie_details_page(movie_id):
 
 
         # Trailer
+
         trailer_url = fetch_trailer(
             movie_id
         )
@@ -868,7 +833,7 @@ def movie_details_page(movie_id):
 
 
 # ============================================================
-# 11. CHECK URL
+# 11. CHECK MOVIE DETAILS URL
 # ============================================================
 
 movie_id_from_url = st.query_params.get(
@@ -877,7 +842,7 @@ movie_id_from_url = st.query_params.get(
 
 
 # ============================================================
-# 12. SHOW DETAILS PAGE
+# 12. DETAILS PAGE
 # ============================================================
 
 if movie_id_from_url:
@@ -900,28 +865,25 @@ if movie_id_from_url:
 
 
 # ============================================================
-# 13. MAIN RECOMMENDATION PAGE
+# 13. MAIN PAGE
 # ============================================================
 
 else:
 
     # ========================================================
-    # HERO SECTION
+    # HERO
     # ========================================================
 
     st.markdown(
         """
-        <div class="hero-box">
-
+        <div class="hero-container">
             <div class="hero-title">
                 🎬 CineMatch AI
             </div>
-
             <div class="hero-subtitle">
                 Discover movies you'll love
                 with AI-powered recommendations.
             </div>
-
         </div>
         """,
         unsafe_allow_html=True
@@ -974,18 +936,14 @@ else:
     )
 
 
-    st.write(
-        "Click **View Details** to explore the movie."
+    st.caption(
+        "Choose a movie and open its details."
     )
 
 
     # ========================================================
-    # RESPONSIVE GRID
+    # MOVIE GRID
     # ========================================================
-
-    # Desktop: 5 columns
-    # Mobile: Streamlit automatically stacks
-    # columns more naturally
 
     COLS_PER_ROW = 5
 
@@ -1020,9 +978,7 @@ else:
 
             with cols[j]:
 
-                # ------------------------------------
-                # POSTER
-                # ------------------------------------
+                # Poster
 
                 if poster:
 
@@ -1038,13 +994,11 @@ else:
                     )
 
 
-                # ------------------------------------
-                # MOVIE NAME
-                # ------------------------------------
+                # Movie name
 
                 st.markdown(
                     f"""
-                    <div class="movie-title-text">
+                    <div class="movie-name">
                         {name}
                     </div>
                     """,
@@ -1052,13 +1006,11 @@ else:
                 )
 
 
-                # ------------------------------------
-                # DETAILS BUTTON
-                # ------------------------------------
+                # Details button
 
                 if st.button(
                     "🎬 View Details",
-                    key=f"movie_{movie_id}_{i}_{j}",
+                    key=f"details_{movie_id}_{i}_{j}",
                     use_container_width=True
                 ):
 
@@ -1073,15 +1025,19 @@ else:
     # FOOTER
     # ========================================================
 
+    st.divider()
+
     st.markdown(
         """
-        <div class="footer-line">
+        <div class="footer-box">
 
-            <h3>👨‍💻 Developed By</h3>
+            <div class="footer-name">
+                👨‍💻 Developed By
+            </div>
 
-            <strong>
-                Anish Kumar • Abhishek • Vishal
-            </strong>
+            <br>
+
+            Anish Kumar • Abhishek • Vishal
 
             <br><br>
 
