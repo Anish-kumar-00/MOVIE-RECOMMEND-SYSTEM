@@ -603,12 +603,20 @@ else:
             "### 👨‍💻 Developed By"
         )
 
-        st.subheader(
-            "Anish Kumar ,Abhishek ,Vishal"
+        st.markdown(
+            "**Anish Kumar** — Code Manager"
         )
 
         st.markdown(
-            "**Project Lead & Developer**"
+            "**Abrar Ahmed** — Project Manager"
+        )
+
+        st.markdown(
+            "**Abhishek Kumar** — Mathematical"
+        )
+
+        st.markdown(
+            "**Vishal Kumar** — Front Developer"
         )
 
         st.write(
