@@ -1370,7 +1370,7 @@ else:
                         margin-bottom:12px;
                     "
                 >
-                    
+                    DEVELOPED BY ANISH-ABRAR-ABHISHEK-VISHAL
                 </div>
 
 
