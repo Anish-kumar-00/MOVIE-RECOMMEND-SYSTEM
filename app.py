@@ -2,6 +2,7 @@ import gzip
 import os
 import pickle
 import requests
+import html
 import streamlit as st
 
 
@@ -10,56 +11,655 @@ import streamlit as st
 # ============================================================
 
 st.set_page_config(
-    page_title="Movie Recommendation System",
+    page_title="CineMatch AI",
     page_icon="🎬",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
 
 # ============================================================
-# 2. FILE PATHS
+# 2. GLOBAL CSS
 # ============================================================
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+st.markdown(
+    """
+    <style>
 
-MOVIES_FILE = os.path.join(BASE_DIR, "movies.pkl")
-SIMILARITY_FILE = os.path.join(BASE_DIR, "similarity.pkl.gz")
+    /* ======================================================
+       MAIN PAGE
+       ====================================================== */
+
+    .stApp {
+        background:
+            radial-gradient(
+                circle at 10% 10%,
+                rgba(255, 0, 80, 0.10),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 90% 20%,
+                rgba(100, 50, 255, 0.10),
+                transparent 30%
+            ),
+            #080808;
+        color: white;
+    }
+
+
+    /* ======================================================
+       REMOVE DEFAULT PADDING
+       ====================================================== */
+
+    .block-container {
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+        max-width: 1500px;
+    }
+
+
+    /* ======================================================
+       HERO SECTION
+       ====================================================== */
+
+    .hero {
+        text-align: center;
+        padding: 35px 20px 45px 20px;
+        margin-bottom: 25px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(255, 0, 70, 0.16),
+                rgba(70, 20, 120, 0.12)
+            );
+
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 25px;
+
+        box-shadow:
+            0 20px 60px rgba(0,0,0,0.45);
+
+        animation: heroFade 1s ease;
+    }
+
+
+    .hero-title {
+        font-size: 55px;
+        font-weight: 900;
+
+        background:
+            linear-gradient(
+                90deg,
+                #ffffff,
+                #ff416c,
+                #ff4b2b,
+                #ffffff
+            );
+
+        background-size: 300%;
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        animation: gradientMove 5s infinite linear;
+
+        margin-bottom: 10px;
+    }
+
+
+    .hero-subtitle {
+        color: #bdbdbd;
+        font-size: 19px;
+    }
+
+
+    @keyframes gradientMove {
+
+        0% {
+            background-position: 0%;
+        }
+
+        100% {
+            background-position: 300%;
+        }
+
+    }
+
+
+    @keyframes heroFade {
+
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    }
+
+
+    /* ======================================================
+       SEARCH / SELECTBOX
+       ====================================================== */
+
+    div[data-baseweb="select"] > div {
+
+        background: rgba(25,25,25,0.85) !important;
+
+        border: 1px solid
+        rgba(255,255,255,0.12) !important;
+
+        border-radius: 14px !important;
+
+        min-height: 52px;
+
+        transition: 0.3s;
+    }
+
+
+    div[data-baseweb="select"] > div:hover {
+
+        border-color:
+        rgba(255,65,108,0.8) !important;
+
+        box-shadow:
+        0 0 20px rgba(255,65,108,0.15);
+    }
+
+
+    /* ======================================================
+       MOVIE CARD
+       ====================================================== */
+
+    .movie-card {
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(30,30,30,0.95),
+                rgba(14,14,14,0.98)
+            );
+
+        border-radius: 18px;
+
+        padding: 8px;
+
+        margin-bottom: 15px;
+
+        border: 1px solid
+        rgba(255,255,255,0.08);
+
+        box-shadow:
+            0 8px 30px rgba(0,0,0,0.35);
+
+        transition:
+            transform 0.35s ease,
+            box-shadow 0.35s ease,
+            border-color 0.35s ease;
+
+        animation: cardAppear 0.6s ease;
+    }
+
+
+    .movie-card:hover {
+
+        transform:
+            translateY(-12px)
+            scale(1.025);
+
+        border-color:
+            rgba(255,65,108,0.65);
+
+        box-shadow:
+            0 18px 45px
+            rgba(255,30,80,0.18);
+    }
+
+
+    @keyframes cardAppear {
+
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    }
+
+
+    /* ======================================================
+       CLICKABLE POSTER
+       ====================================================== */
+
+    .poster-link {
+
+        display: block;
+
+        position: relative;
+
+        overflow: hidden;
+
+        border-radius: 14px;
+
+        text-decoration: none;
+    }
+
+
+    .poster-link img {
+
+        width: 100%;
+
+        aspect-ratio: 2 / 3;
+
+        object-fit: cover;
+
+        display: block;
+
+        transition:
+            transform 0.45s ease,
+            filter 0.45s ease;
+    }
+
+
+    .poster-link:hover img {
+
+        transform: scale(1.09);
+
+        filter:
+            brightness(0.55)
+            saturate(1.15);
+    }
+
+
+    .poster-overlay {
+
+        position: absolute;
+
+        inset: 0;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        opacity: 0;
+
+        transition: 0.35s;
+
+        background:
+            linear-gradient(
+                rgba(0,0,0,0.05),
+                rgba(0,0,0,0.65)
+            );
+    }
+
+
+    .poster-link:hover .poster-overlay {
+
+        opacity: 1;
+    }
+
+
+    .view-text {
+
+        background:
+            rgba(255,65,108,0.95);
+
+        color: white;
+
+        padding: 10px 18px;
+
+        border-radius: 25px;
+
+        font-weight: 700;
+
+        box-shadow:
+            0 8px 25px
+            rgba(255,65,108,0.35);
+    }
+
+
+    /* ======================================================
+       MOVIE NAME
+       ====================================================== */
+
+    .movie-name {
+
+        font-size: 17px;
+
+        font-weight: 700;
+
+        margin-top: 12px;
+
+        margin-bottom: 8px;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        color: white;
+    }
+
+
+    /* ======================================================
+       DETAILS BUTTON
+       ====================================================== */
+
+    .stButton > button {
+
+        border-radius: 12px !important;
+
+        border: 1px solid
+        rgba(255,255,255,0.10) !important;
+
+        background:
+            linear-gradient(
+                135deg,
+                #ff416c,
+                #ff4b2b
+            ) !important;
+
+        color: white !important;
+
+        font-weight: 700 !important;
+
+        transition: 0.3s !important;
+    }
+
+
+    .stButton > button:hover {
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 8px 25px
+            rgba(255,65,108,0.30);
+    }
+
+
+    /* ======================================================
+       DETAILS PAGE
+       ====================================================== */
+
+    .details-title {
+
+        font-size: 50px;
+
+        font-weight: 900;
+
+        margin-bottom: 20px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #ffffff,
+                #ff416c
+            );
+
+        -webkit-background-clip: text;
+
+        -webkit-text-fill-color: transparent;
+    }
+
+
+    .info-box {
+
+        background:
+            rgba(255,255,255,0.045);
+
+        border:
+            1px solid rgba(255,255,255,0.08);
+
+        border-radius: 18px;
+
+        padding: 20px;
+
+        margin-bottom: 15px;
+
+        backdrop-filter: blur(10px);
+
+        animation: fadeUp 0.7s ease;
+    }
+
+
+    .rating-box {
+
+        display: inline-block;
+
+        padding: 10px 18px;
+
+        border-radius: 30px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #ffb300,
+                #ff6f00
+            );
+
+        color: white;
+
+        font-weight: 800;
+
+        font-size: 18px;
+
+        box-shadow:
+            0 8px 25px
+            rgba(255,150,0,0.20);
+    }
+
+
+    @keyframes fadeUp {
+
+        from {
+            opacity: 0;
+            transform: translateY(25px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    }
+
+
+    /* ======================================================
+       BACKDROP
+       ====================================================== */
+
+    .movie-banner {
+
+        width: 100%;
+
+        height: 380px;
+
+        background-size: cover;
+
+        background-position: center;
+
+        border-radius: 24px;
+
+        margin-bottom: 30px;
+
+        position: relative;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 20px 60px
+            rgba(0,0,0,0.55);
+
+        animation: bannerAppear 1s ease;
+    }
+
+
+    .movie-banner::after {
+
+        content: "";
+
+        position: absolute;
+
+        inset: 0;
+
+        background:
+            linear-gradient(
+                to top,
+                #080808 0%,
+                transparent 60%
+            );
+    }
+
+
+    @keyframes bannerAppear {
+
+        from {
+            opacity: 0;
+            transform: scale(0.97);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+    }
+
+
+    /* ======================================================
+       FOOTER
+       ====================================================== */
+
+    .footer {
+
+        text-align: center;
+
+        padding: 35px;
+
+        margin-top: 50px;
+
+        border-top:
+            1px solid
+            rgba(255,255,255,0.08);
+
+        color: #999;
+    }
+
+
+    .developer {
+
+        color: white;
+
+        font-size: 20px;
+
+        font-weight: 800;
+    }
+
+
+    /* ======================================================
+       MOBILE
+       ====================================================== */
+
+    @media (max-width: 768px) {
+
+        .hero-title {
+            font-size: 36px;
+        }
+
+        .hero-subtitle {
+            font-size: 15px;
+        }
+
+        .movie-banner {
+            height: 220px;
+        }
+
+        .details-title {
+            font-size: 35px;
+        }
+
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 
 # ============================================================
-# 3. LOAD DATA
+# 3. FILE PATHS
+# ============================================================
+
+BASE_DIR = os.path.dirname(
+    os.path.abspath(__file__)
+)
+
+MOVIES_FILE = os.path.join(
+    BASE_DIR,
+    "movies.pkl"
+)
+
+SIMILARITY_FILE = os.path.join(
+    BASE_DIR,
+    "similarity.pkl.gz"
+)
+
+
+# ============================================================
+# 4. LOAD DATA
 # ============================================================
 
 @st.cache_data(show_spinner=False)
 def load_data():
 
     with open(MOVIES_FILE, "rb") as f:
+
         movies_data = pickle.load(f)
 
     with gzip.open(SIMILARITY_FILE, "rb") as f:
+
         similarity_data = pickle.load(f)
 
-    return movies_data, similarity_data["indices"]
+    return (
+        movies_data,
+        similarity_data["indices"]
+    )
 
 
 movies, similarity_indices = load_data()
 
 
 # ============================================================
-# 4. TMDB API KEY
+# 5. TMDB API KEY
 # ============================================================
 
 TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
 
 
 # ============================================================
-# 5. FETCH POSTER
+# 6. FETCH POSTER
 # ============================================================
 
-@st.cache_data(show_spinner=False, ttl=86400)
+@st.cache_data(
+    show_spinner=False,
+    ttl=86400
+)
 def fetch_poster(movie_id):
 
-    url = f"https://api.themoviedb.org/3/movie/{movie_id}"
+    url = (
+        f"https://api.themoviedb.org/3/movie/{movie_id}"
+    )
 
     params = {
         "api_key": TMDB_API_KEY,
@@ -78,7 +678,9 @@ def fetch_poster(movie_id):
 
             data = response.json()
 
-            poster_path = data.get("poster_path")
+            poster_path = data.get(
+                "poster_path"
+            )
 
             if poster_path:
 
@@ -88,19 +690,25 @@ def fetch_poster(movie_id):
                 )
 
     except Exception:
+
         return None
 
     return None
 
 
 # ============================================================
-# 6. FETCH MOVIE DETAILS
+# 7. FETCH MOVIE DETAILS
 # ============================================================
 
-@st.cache_data(show_spinner=False, ttl=86400)
+@st.cache_data(
+    show_spinner=False,
+    ttl=86400
+)
 def fetch_movie_details(movie_id):
 
-    url = f"https://api.themoviedb.org/3/movie/{movie_id}"
+    url = (
+        f"https://api.themoviedb.org/3/movie/{movie_id}"
+    )
 
     params = {
         "api_key": TMDB_API_KEY,
@@ -120,19 +728,26 @@ def fetch_movie_details(movie_id):
             return response.json()
 
     except Exception:
+
         return None
 
     return None
 
 
 # ============================================================
-# 7. FETCH TRAILER
+# 8. FETCH TRAILER
 # ============================================================
 
-@st.cache_data(show_spinner=False, ttl=86400)
+@st.cache_data(
+    show_spinner=False,
+    ttl=86400
+)
 def fetch_trailer(movie_id):
 
-    url = f"https://api.themoviedb.org/3/movie/{movie_id}/videos"
+    url = (
+        f"https://api.themoviedb.org/3/movie/"
+        f"{movie_id}/videos"
+    )
 
     params = {
         "api_key": TMDB_API_KEY,
@@ -149,48 +764,71 @@ def fetch_trailer(movie_id):
 
         if response.status_code == 200:
 
-            videos = response.json().get("results", [])
+            videos = response.json().get(
+                "results",
+                []
+            )
 
-            # Official trailer
+            # ------------------------------------------
+            # Official Trailer
+            # ------------------------------------------
+
             for video in videos:
 
                 if (
                     video.get("site") == "YouTube"
-                    and video.get("type") == "Trailer"
-                    and video.get("official") is True
+                    and
+                    video.get("type") == "Trailer"
+                    and
+                    video.get("official") is True
                 ):
 
-                    return (
-                        "https://www.youtube.com/watch?v="
-                        + video.get("key")
-                    )
+                    key = video.get("key")
 
-            # Any YouTube trailer
+                    if key:
+
+                        return (
+                            "https://www.youtube.com/watch?v="
+                            + key
+                        )
+
+            # ------------------------------------------
+            # Any Trailer
+            # ------------------------------------------
+
             for video in videos:
 
                 if (
                     video.get("site") == "YouTube"
-                    and video.get("type") == "Trailer"
+                    and
+                    video.get("type") == "Trailer"
                 ):
 
-                    return (
-                        "https://www.youtube.com/watch?v="
-                        + video.get("key")
-                    )
+                    key = video.get("key")
+
+                    if key:
+
+                        return (
+                            "https://www.youtube.com/watch?v="
+                            + key
+                        )
 
     except Exception:
+
         return None
 
     return None
 
 
 # ============================================================
-# 8. RECOMMENDATION FUNCTION
+# 9. RECOMMENDATION FUNCTION
 # ============================================================
 
 def recommend(movie):
 
-    index = movies[movies["title"] == movie].index[0]
+    index = movies[
+        movies["title"] == movie
+    ].index[0]
 
     names = []
     posters = []
@@ -200,38 +838,72 @@ def recommend(movie):
 
         movie_index = int(movie_index)
 
-        movie_id = movies.iloc[movie_index]["movie_id"]
-        movie_name = movies.iloc[movie_index]["title"]
+        movie_id = movies.iloc[
+            movie_index
+        ]["movie_id"]
+
+        movie_name = movies.iloc[
+            movie_index
+        ]["title"]
 
         names.append(movie_name)
-        posters.append(fetch_poster(movie_id))
+
+        posters.append(
+            fetch_poster(movie_id)
+        )
+
         ids.append(movie_id)
 
-    return names, posters, ids
+    return (
+        names,
+        posters,
+        ids
+    )
 
 
 # ============================================================
-# 9. MOVIE DETAILS PAGE
+# 10. DETAILS PAGE
 # ============================================================
 
 def movie_details_page(movie_id):
 
+    # ------------------------------------------
+    # Back Button
+    # ------------------------------------------
+
     if st.button(
-        "⬅️ Back to Recommendations",
-        use_container_width=False
+        "⬅️ Back to Recommendations"
     ):
 
         st.query_params.clear()
+
         st.rerun()
+
 
     st.divider()
 
-    details = fetch_movie_details(movie_id)
+
+    # ------------------------------------------
+    # Fetch Details
+    # ------------------------------------------
+
+    details = fetch_movie_details(
+        movie_id
+    )
+
 
     if not details:
 
-        st.error("Movie information could not be loaded.")
+        st.error(
+            "Movie information could not be loaded."
+        )
+
         return
+
+
+    # ------------------------------------------
+    # Basic Information
+    # ------------------------------------------
 
     title = details.get(
         "title",
@@ -285,24 +957,18 @@ def movie_details_page(movie_id):
 
         st.markdown(
             f"""
-            <style>
-            .movie-banner {{
-                width: 100%;
-                height: 300px;
-                background-image:
+            <div
+                class="movie-banner"
+                style="
+                    background-image:
                     linear-gradient(
-                        rgba(0,0,0,0.35),
-                        rgba(0,0,0,0.85)
+                        rgba(0,0,0,0.15),
+                        rgba(0,0,0,0.88)
                     ),
-                    url("{backdrop_url}");
-                background-size: cover;
-                background-position: center;
-                border-radius: 15px;
-                margin-bottom: 25px;
-            }}
-            </style>
-
-            <div class="movie-banner"></div>
+                    url('{backdrop_url}');
+                "
+            >
+            </div>
             """,
             unsafe_allow_html=True
         )
@@ -312,11 +978,20 @@ def movie_details_page(movie_id):
     # TITLE
     # ========================================================
 
-    st.title("🎬 " + title)
+    safe_title = html.escape(title)
+
+    st.markdown(
+        f"""
+        <div class="details-title">
+            🎬 {safe_title}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 
     # ========================================================
-    # POSTER + INFORMATION
+    # POSTER + DETAILS
     # ========================================================
 
     col1, col2 = st.columns(
@@ -345,7 +1020,9 @@ def movie_details_page(movie_id):
 
         else:
 
-            st.info("Poster not available.")
+            st.info(
+                "Poster not available."
+            )
 
 
     # ========================================================
@@ -354,12 +1031,33 @@ def movie_details_page(movie_id):
 
     with col2:
 
+        # Rating
         st.markdown(
-            f"### ⭐ Rating: {rating:.1f}/10"
+            f"""
+            <div class="info-box">
+
+                <div class="rating-box">
+                    ⭐ {rating:.1f}/10
+                </div>
+
+            </div>
+            """,
+            unsafe_allow_html=True
         )
 
+
+        # Release Date
         st.markdown(
-            f"### 📅 Release Date: {release_date}"
+            f"""
+            <div class="info-box">
+
+                <h3>📅 Release Date</h3>
+
+                <p>{html.escape(str(release_date))}</p>
+
+            </div>
+            """,
+            unsafe_allow_html=True
         )
 
 
@@ -367,7 +1065,9 @@ def movie_details_page(movie_id):
         if runtime:
 
             hours = runtime // 60
+
             minutes = runtime % 60
+
 
             if hours > 0:
 
@@ -381,8 +1081,18 @@ def movie_details_page(movie_id):
                     f"{minutes}min"
                 )
 
+
             st.markdown(
-                f"### ⏱️ Runtime: {runtime_text}"
+                f"""
+                <div class="info-box">
+
+                    <h3>⏱️ Runtime</h3>
+
+                    <p>{runtime_text}</p>
+
+                </div>
+                """,
+                unsafe_allow_html=True
             )
 
 
@@ -390,37 +1100,65 @@ def movie_details_page(movie_id):
         if genres:
 
             genre_names = [
-                genre["name"]
+                genre.get("name", "")
                 for genre in genres
             ]
 
+            genre_text = " • ".join(
+                genre_names
+            )
+
+
             st.markdown(
-                "### 🎭 Genres"
+                f"""
+                <div class="info-box">
+
+                    <h3>🎭 Genres</h3>
+
+                    <p>
+                        {html.escape(genre_text)}
+                    </p>
+
+                </div>
+                """,
+                unsafe_allow_html=True
             )
 
-            st.write(
-                " • ".join(genre_names)
-            )
 
-
-        # Overview
+        # Story
         st.markdown(
-            "### 📝 Story"
-        )
+            f"""
+            <div class="info-box">
 
-        st.write(
-            overview
+                <h3>📝 Story</h3>
+
+                <p>
+                    {html.escape(overview)}
+                </p>
+
+            </div>
+            """,
+            unsafe_allow_html=True
         )
 
 
         # Trailer
         st.markdown(
-            "### ▶️ Trailer"
+            """
+            <div class="info-box">
+
+                <h3>▶️ Trailer</h3>
+
+            </div>
+            """,
+            unsafe_allow_html=True
         )
+
 
         trailer_url = fetch_trailer(
             movie_id
         )
+
 
         if trailer_url:
 
@@ -438,7 +1176,7 @@ def movie_details_page(movie_id):
 
 
 # ============================================================
-# 10. CHECK DETAILS PAGE
+# 11. GET MOVIE ID FROM URL
 # ============================================================
 
 movie_id_from_url = st.query_params.get(
@@ -447,7 +1185,7 @@ movie_id_from_url = st.query_params.get(
 
 
 # ============================================================
-# 11. DETAILS PAGE
+# 12. DETAILS PAGE
 # ============================================================
 
 if movie_id_from_url:
@@ -470,17 +1208,31 @@ if movie_id_from_url:
 
 
 # ============================================================
-# 12. MAIN RECOMMENDATION PAGE
+# 13. MAIN PAGE
 # ============================================================
 
 else:
 
-    st.title(
-        "🎬 Movie Recommendation System"
-    )
+    # ========================================================
+    # HERO
+    # ========================================================
 
-    st.write(
-        "Find movies similar to your favourite movie."
+    st.markdown(
+        """
+        <div class="hero">
+
+            <div class="hero-title">
+                🎬 CineMatch AI
+            </div>
+
+            <div class="hero-subtitle">
+                Discover movies you'll love
+                with AI-powered recommendations.
+            </div>
+
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
 
@@ -488,21 +1240,33 @@ else:
     # MOVIE SELECTOR
     # ========================================================
 
-    movie_list = movies["title"].values
+    st.markdown(
+        "### 🎥 Choose Your Movie"
+    )
+
+
+    movie_list = movies[
+        "title"
+    ].values
+
 
     default_index = 0
+
 
     if "Avatar" in movie_list:
 
         default_index = int(
-            list(movie_list).index("Avatar")
+            list(movie_list).index(
+                "Avatar"
+            )
         )
 
 
     selected_movie = st.selectbox(
-        "🎥 Select a movie",
+        "Select a movie",
         movie_list,
-        index=default_index
+        index=default_index,
+        label_visibility="collapsed"
     )
 
 
@@ -515,8 +1279,14 @@ else:
     )
 
 
-    st.subheader(
-        f"✨ Recommended Movies for '{selected_movie}'"
+    st.markdown(
+        f"""
+        ### ✨ Recommended Movies
+
+        Showing movies similar to
+        **{html.escape(selected_movie)}**
+        """,
+        unsafe_allow_html=True
     )
 
 
@@ -534,7 +1304,8 @@ else:
     ):
 
         cols = st.columns(
-            COLS_PER_ROW
+            COLS_PER_ROW,
+            gap="medium"
         )
 
 
@@ -542,75 +1313,143 @@ else:
             COLS_PER_ROW
         ):
 
-            if i + j < len(names):
+            if i + j >= len(names):
 
-                name = names[i + j]
-                poster = posters[i + j]
-                movie_id = ids[i + j]
+                continue
 
 
-                with cols[j]:
+            name = names[i + j]
 
-                    # Poster
-                    if poster:
+            poster = posters[i + j]
 
-                        st.image(
-                            poster,
-                            use_container_width=True
-                        )
-
-                    else:
-
-                        st.info(
-                            "Poster not available"
-                        )
+            movie_id = ids[i + j]
 
 
-                    # Movie name
+            with cols[j]:
+
+                safe_name = html.escape(
+                    str(name)
+                )
+
+
+                # ==================================================
+                # MOVIE CARD
+                # ==================================================
+
+                if poster:
+
+                    # ----------------------------------------------
+                    # CLICKABLE POSTER
+                    # ----------------------------------------------
+
                     st.markdown(
-                        f"**{name}**"
+                        f"""
+                        <div class="movie-card">
+
+                            <a
+                                class="poster-link"
+                                href="?movie_id={movie_id}"
+                            >
+
+                                <img
+                                    src="{poster}"
+                                    alt="{safe_name}"
+                                >
+
+                                <div class="poster-overlay">
+
+                                    <div class="view-text">
+                                        🎬 View Details
+                                    </div>
+
+                                </div>
+
+                            </a>
+
+                            <div class="movie-name">
+                                {safe_name}
+                            </div>
+
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+
+                else:
+
+                    st.markdown(
+                        f"""
+                        <div class="movie-card">
+
+                            <div
+                                style="
+                                height:350px;
+                                display:flex;
+                                align-items:center;
+                                justify-content:center;
+                                background:#151515;
+                                border-radius:14px;
+                                "
+                            >
+
+                                🎬 Poster Not Available
+
+                            </div>
+
+                            <div class="movie-name">
+                                {safe_name}
+                            </div>
+
+                        </div>
+                        """,
+                        unsafe_allow_html=True
                     )
 
 
-                    # View details button
-                    if st.button(
-                        "🎬 View Details",
-                        key=f"details_{movie_id}_{i}_{j}",
-                        use_container_width=True
-                    ):
+                # ==================================================
+                # DETAILS BUTTON
+                # ==================================================
 
-                        st.query_params[
-                            "movie_id"
-                        ] = str(movie_id)
+                if st.button(
+                    "🎬 View Details",
+                    key=f"details_{movie_id}_{i}_{j}",
+                    use_container_width=True
+                ):
 
-                        st.rerun()
+                    st.query_params[
+                        "movie_id"
+                    ] = str(movie_id)
+
+                    st.rerun()
 
 
     # ========================================================
     # FOOTER
     # ========================================================
 
-    st.divider()
+    st.markdown(
+        """
+        <div class="footer">
 
-    dev_col1, dev_col2, dev_col3 = st.columns(
-        [1, 2, 1]
+            <div class="developer">
+                👨‍💻 Developed By
+            </div>
+
+            <br>
+
+            <strong>
+                Anish Kumar • Abhishek • Vishal
+            </strong>
+
+            <br><br>
+
+            Machine Learning & Web Application Project
+
+            <br><br>
+
+            🎬 CineMatch AI
+
+        </div>
+        """,
+        unsafe_allow_html=True
     )
-
-
-    with dev_col2:
-
-        st.markdown(
-            "### 👨‍💻 Developed By"
-        )
-
-        st.subheader(
-            "Anish Kumar ,Abhishek ,Vishal"
-        )
-
-        st.markdown(
-            "**Project Lead & Developer**"
-        )
-
-        st.write(
-            "Machine Learning & Web Application Project"
-        )
