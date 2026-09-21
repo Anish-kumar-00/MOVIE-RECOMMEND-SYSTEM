@@ -476,7 +476,7 @@ if movie_id_from_url:
 else:
 
     st.title(
-        "🎬 Movie Recommendation System MADE BY ANISH and SWEET"
+        "🎬 Movie Recommendation System"
     )
 
     st.write(
