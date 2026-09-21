@@ -514,6 +514,26 @@ st.html(
 
 
     /* =====================================================
+       TRAILER PLAYER
+       ===================================================== */
+
+    .stVideo {
+
+        border-radius: 14px;
+
+        overflow: hidden;
+
+        border: 1px solid #333;
+
+        box-shadow:
+            0 15px 40px
+            rgba(0, 0, 0, 0.45);
+
+        margin-top: 10px;
+    }
+
+
+    /* =====================================================
        MOBILE
        ===================================================== */
 
@@ -757,7 +777,9 @@ def fetch_trailer(
     )
 
 
-    # Official trailer first
+    # --------------------------------------------------------
+    # OFFICIAL YOUTUBE TRAILER FIRST
+    # --------------------------------------------------------
 
     for video in videos:
 
@@ -785,7 +807,9 @@ def fetch_trailer(
                 )
 
 
-    # Any YouTube trailer
+    # --------------------------------------------------------
+    # ANY YOUTUBE TRAILER
+    # --------------------------------------------------------
 
     for video in videos:
 
@@ -1148,6 +1172,10 @@ def show_movie_details(
         st.divider()
 
 
+        # ----------------------------------------------------
+        # Release Date
+        # ----------------------------------------------------
+
         st.subheader(
             "📅 Release Date"
         )
@@ -1250,36 +1278,40 @@ def show_movie_details(
         )
 
 
+    # ========================================================
+    # TRAILER
+    # ========================================================
+
+    st.divider()
+
+    st.subheader(
+        "▶️ Trailer"
+    )
+
+
+    trailer_url = fetch_trailer(
+        movie_id
+    )
+
+
+    if trailer_url:
+
         # ----------------------------------------------------
-        # Trailer
+        # IMPORTANT:
+        # Trailer Streamlit ke andar hi play hoga.
+        # User ko manually YouTube website par forward
+        # karne ke liye link/button nahi diya gaya hai.
         # ----------------------------------------------------
 
-        st.divider()
-
-
-        st.subheader(
-            "▶️ Trailer"
+        st.video(
+            trailer_url
         )
 
+    else:
 
-        trailer_url = fetch_trailer(
-            movie_id
+        st.info(
+            "Trailer not available."
         )
-
-
-        if trailer_url:
-
-            st.link_button(
-                "▶️ Watch Trailer on YouTube",
-                trailer_url,
-                use_container_width=True
-            )
-
-        else:
-
-            st.info(
-                "Trailer not available."
-            )
 
 
 # ============================================================
@@ -1602,3 +1634,4 @@ else:
         </div>
         """
     )
+
