@@ -9,18 +9,20 @@
   <a href="https://github.com/Anish-kumar-00/movie-recommend-system">
     <img src="https://img.shields.io/badge/💻%20GitHub-Repository-black?style=for-the-badge&logo=github">
   </a>
+  <a href="https://bucket.appilix.com/app-apk-99b859c1feda45fda665795b71b0328f-1790006148.apk">
+    <img src="https://img.shields.io/badge/📱%20Android%20App-Download-green?style=for-the-badge">
+  </a>
 </p>---
 
 🎞️ Movie Showcase
 
 <p align="center">
   <table>
-    <tr>  <td align="center">
-    <img src="https://upload.wikimedia.org/wikipedia/en/3/39/Jawan_film_poster.jpg" width="260"><br><br>
-    <b>Jawan</b>
-  </td>
-
-  <td align="center">
+    <tr>
+      <td align="center">
+        <img src="https://upload.wikimedia.org/wikipedia/en/3/39/Jawan_film_poster.jpg" width="260"><br><br>
+        <b>Jawan</b>
+      </td>  <td align="center">
     <img src="https://upload.wikimedia.org/wikipedia/en/d/df/3_idiots_poster.jpg" width="260"><br><br>
     <b>3 Idiots</b>
   </td>
@@ -34,7 +36,6 @@
     <img src="https://upload.wikimedia.org/wikipedia/en/6/6f/Stanley_Ka_Dabba_Poster.jpg" width="260"><br><br>
     <b>Stanley Ka Dabba</b>
   </td>
-
 </tr>
 
   </table>
@@ -48,6 +49,7 @@
 - 🖼️ TMDB movie posters
 - ⚡ Precomputed similarity
 - 🌐 Streamlit Web Application
+- 📱 Android App
 - 🔐 Secure API configuration
 
 ---
@@ -128,6 +130,17 @@ The API key is loaded securely using Streamlit Secrets.
     <img src="https://img.shields.io/badge/🎬%20Open%20Movie%20Recommendation%20System-red?style=for-the-badge">
   </a>
 </p>---
+
+📱 Android App
+
+<p align="center">
+  <a href="https://bucket.appilix.com/app-apk-99b859c1feda45fda665795b71b0328f-1790006148.apk">
+    <img src="https://img.shields.io/badge/📱%20Download%20Android%20App-green?style=for-the-badge">
+  </a>
+</p>Android APK:
+"Download Movie Recommendation System for Android" (https://bucket.appilix.com/app-apk-99b859c1feda45fda665795b71b0328f-1790006148.apk)
+
+---
 
 👨‍💻 Author
 
