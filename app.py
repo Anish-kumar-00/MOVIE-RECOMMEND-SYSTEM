@@ -1370,7 +1370,7 @@ else:
                         margin-bottom:12px;
                     "
                 >
-                    🎬 NETFLIX STYLE
+                    
                 </div>
 
 
