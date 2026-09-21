@@ -6,18 +6,93 @@ import streamlit as st
 
 
 # ============================================================
-# 1. PAGE SETTINGS
+# 1. PAGE CONFIG
 # ============================================================
 
 st.set_page_config(
-    page_title="CineMatch AI",
+    page_title="Movie Recommendation System",
     page_icon="🎬",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
 
 # ============================================================
-# 2. FILE PATHS
+# 2. GLOBAL STREAMLIT STYLE
+# ============================================================
+
+st.html("""
+<style>
+
+    /* Main background */
+
+    .stApp {
+        background:
+            linear-gradient(
+                180deg,
+                #050505 0%,
+                #0b0b0b 45%,
+                #050505 100%
+            );
+        color: white;
+    }
+
+
+    /* Remove extra top space */
+
+    .block-container {
+        padding-top: 1rem;
+        max-width: 1600px;
+    }
+
+
+    /* Selectbox */
+
+    div[data-baseweb="select"] > div {
+        background-color: #181818 !important;
+        border: 1px solid #333 !important;
+        border-radius: 6px !important;
+    }
+
+
+    /* Normal Streamlit buttons */
+
+    .stButton > button {
+        background-color: #e50914 !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 5px !important;
+        font-weight: 700 !important;
+    }
+
+
+    .stButton > button:hover {
+        background-color: #f40612 !important;
+    }
+
+
+    /* Link button */
+
+    .stLinkButton > a {
+        background-color: #e50914 !important;
+        color: white !important;
+        border-radius: 6px !important;
+        font-weight: 700 !important;
+    }
+
+
+    /* Divider */
+
+    hr {
+        border-color: #292929 !important;
+    }
+
+</style>
+""")
+
+
+# ============================================================
+# 3. FILE PATHS
 # ============================================================
 
 BASE_DIR = os.path.dirname(
@@ -36,7 +111,7 @@ SIMILARITY_FILE = os.path.join(
 
 
 # ============================================================
-# 3. LOAD DATA
+# 4. LOAD DATA
 # ============================================================
 
 @st.cache_data(show_spinner=False)
@@ -58,14 +133,14 @@ movies, similarity_indices = load_data()
 
 
 # ============================================================
-# 4. TMDB API KEY
+# 5. TMDB API KEY
 # ============================================================
 
 TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
 
 
 # ============================================================
-# 5. FETCH MOVIE DETAILS
+# 6. FETCH MOVIE DETAILS
 # ============================================================
 
 @st.cache_data(
@@ -95,13 +170,13 @@ def fetch_movie_details(movie_id):
             return response.json()
 
     except Exception:
-        pass
+        return None
 
     return None
 
 
 # ============================================================
-# 6. FETCH POSTER
+# 7. FETCH POSTER
 # ============================================================
 
 @st.cache_data(
@@ -115,7 +190,9 @@ def fetch_poster(movie_id):
     if not details:
         return None
 
-    poster_path = details.get("poster_path")
+    poster_path = details.get(
+        "poster_path"
+    )
 
     if poster_path:
 
@@ -128,7 +205,36 @@ def fetch_poster(movie_id):
 
 
 # ============================================================
-# 7. FETCH TRAILER
+# 8. FETCH BACKDROP
+# ============================================================
+
+@st.cache_data(
+    show_spinner=False,
+    ttl=86400
+)
+def fetch_backdrop(movie_id):
+
+    details = fetch_movie_details(movie_id)
+
+    if not details:
+        return None
+
+    backdrop_path = details.get(
+        "backdrop_path"
+    )
+
+    if backdrop_path:
+
+        return (
+            "https://image.tmdb.org/t/p/original"
+            + backdrop_path
+        )
+
+    return None
+
+
+# ============================================================
+# 9. FETCH TRAILER
 # ============================================================
 
 @st.cache_data(
@@ -163,9 +269,7 @@ def fetch_trailer(movie_id):
             []
         )
 
-        # ------------------------------------------
         # Official trailer
-        # ------------------------------------------
 
         for video in videos:
 
@@ -180,14 +284,14 @@ def fetch_trailer(movie_id):
                 key = video.get("key")
 
                 if key:
+
                     return (
                         "https://www.youtube.com/watch?v="
                         + key
                     )
 
-        # ------------------------------------------
+
         # Any trailer
-        # ------------------------------------------
 
         for video in videos:
 
@@ -200,19 +304,20 @@ def fetch_trailer(movie_id):
                 key = video.get("key")
 
                 if key:
+
                     return (
                         "https://www.youtube.com/watch?v="
                         + key
                     )
 
     except Exception:
-        pass
+        return None
 
     return None
 
 
 # ============================================================
-# 8. RECOMMENDATION FUNCTION
+# 10. RECOMMENDATION
 # ============================================================
 
 def recommend(movie):
@@ -254,17 +359,161 @@ def recommend(movie):
 
 
 # ============================================================
-# 9. MOVIE DETAILS PAGE
+# 11. MOVIE CARD HTML
+# ============================================================
+
+def movie_card_html(
+    movie_name,
+    poster_url,
+    movie_id
+):
+
+    if not poster_url:
+
+        poster_url = (
+            "https://via.placeholder.com/500x750"
+            "?text=No+Poster"
+        )
+
+
+    return f"""
+    <a
+        href="?movie_id={movie_id}"
+        target="_self"
+        style="
+            text-decoration:none;
+            color:white;
+            display:block;
+        "
+    >
+
+        <div
+            class="movie-card"
+            style="
+                position:relative;
+                overflow:hidden;
+                border-radius:7px;
+                background:#181818;
+                transition:
+                    transform 0.3s ease,
+                    box-shadow 0.3s ease;
+            "
+        >
+
+            <img
+                src="{poster_url}"
+                style="
+                    width:100%;
+                    aspect-ratio:2/3;
+                    object-fit:cover;
+                    display:block;
+                    transition:
+                        transform 0.4s ease,
+                        filter 0.4s ease;
+                "
+            >
+
+
+            <div
+                class="movie-overlay"
+                style="
+                    position:absolute;
+                    inset:0;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    opacity:0;
+                    background:
+                        linear-gradient(
+                            rgba(0,0,0,0.15),
+                            rgba(0,0,0,0.80)
+                        );
+                    transition:opacity 0.3s ease;
+                "
+            >
+
+                <div
+                    style="
+                        background:#e50914;
+                        padding:10px 15px;
+                        border-radius:50%;
+                        font-size:20px;
+                    "
+                >
+                    ▶
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            style="
+                padding-top:8px;
+                padding-bottom:18px;
+                font-size:14px;
+                font-weight:600;
+                color:#ffffff;
+                white-space:nowrap;
+                overflow:hidden;
+                text-overflow:ellipsis;
+            "
+        >
+            {movie_name}
+        </div>
+
+    </a>
+
+
+    <style>
+
+        .movie-card:hover {
+
+            transform:
+                scale(1.06);
+
+            box-shadow:
+                0 15px 40px
+                rgba(0,0,0,0.75);
+
+            z-index:5;
+        }
+
+
+        .movie-card:hover img {
+
+            transform:
+                scale(1.08);
+
+            filter:
+                brightness(0.65);
+        }
+
+
+        .movie-card:hover
+        .movie-overlay {
+
+            opacity:1;
+        }
+
+    </style>
+    """
+
+
+# ============================================================
+# 12. MOVIE DETAILS PAGE
 # ============================================================
 
 def movie_details_page(movie_id):
 
     # --------------------------------------------------------
-    # BACK BUTTON
+    # BACK
     # --------------------------------------------------------
 
     if st.button(
-        "⬅️ Back to Recommendations"
+        "← Back",
+        key="back_button"
     ):
 
         st.query_params.clear()
@@ -272,11 +521,8 @@ def movie_details_page(movie_id):
         st.rerun()
 
 
-    st.divider()
-
-
     # --------------------------------------------------------
-    # GET DETAILS
+    # FETCH DETAILS
     # --------------------------------------------------------
 
     details = fetch_movie_details(
@@ -332,9 +578,9 @@ def movie_details_page(movie_id):
     )
 
 
-    # --------------------------------------------------------
-    # BACKDROP
-    # --------------------------------------------------------
+    # ========================================================
+    # DETAILS HERO
+    # ========================================================
 
     if backdrop_path:
 
@@ -343,24 +589,42 @@ def movie_details_page(movie_id):
             + backdrop_path
         )
 
-        st.image(
-            backdrop_url,
-            use_container_width=True
+        st.html(
+            f"""
+            <div
+                style="
+                    height:420px;
+                    border-radius:12px;
+                    background:
+                        linear-gradient(
+                            to top,
+                            #080808 5%,
+                            rgba(0,0,0,0.1)
+                        ),
+                        url('{backdrop_url}');
+                    background-size:cover;
+                    background-position:center;
+                    margin-top:15px;
+                    margin-bottom:25px;
+                "
+            >
+            </div>
+            """
         )
 
 
-    # --------------------------------------------------------
+    # ========================================================
     # TITLE
-    # --------------------------------------------------------
+    # ========================================================
 
     st.title(
         "🎬 " + title
     )
 
 
-    # --------------------------------------------------------
-    # POSTER + INFORMATION
-    # --------------------------------------------------------
+    # ========================================================
+    # POSTER + DETAILS
+    # ========================================================
 
     col1, col2 = st.columns(
         [1, 2],
@@ -389,7 +653,7 @@ def movie_details_page(movie_id):
         else:
 
             st.info(
-                "Poster not available."
+                "Poster unavailable"
             )
 
 
@@ -399,12 +663,8 @@ def movie_details_page(movie_id):
 
     with col2:
 
-        st.subheader(
-            "⭐ Rating"
-        )
-
         st.metric(
-            "TMDB Rating",
+            "⭐ Rating",
             f"{rating:.1f}/10"
         )
 
@@ -421,20 +681,15 @@ def movie_details_page(movie_id):
         )
 
 
-        st.divider()
-
-
-        # ----------------------------------------------------
-        # RUNTIME
-        # ----------------------------------------------------
-
         if runtime:
+
+            st.divider()
 
             hours = runtime // 60
 
             minutes = runtime % 60
 
-            if hours > 0:
+            if hours:
 
                 runtime_text = (
                     f"{hours}h {minutes}min"
@@ -455,26 +710,18 @@ def movie_details_page(movie_id):
             )
 
 
-        st.divider()
-
-
-        # ----------------------------------------------------
-        # GENRES
-        # ----------------------------------------------------
-
         if genres:
+
+            st.divider()
 
             st.subheader(
                 "🎭 Genres"
             )
 
-            genre_names = []
-
-            for genre in genres:
-
-                genre_names.append(
-                    genre.get("name", "")
-                )
+            genre_names = [
+                genre.get("name", "")
+                for genre in genres
+            ]
 
             st.write(
                 " • ".join(genre_names)
@@ -483,10 +730,6 @@ def movie_details_page(movie_id):
 
         st.divider()
 
-
-        # ----------------------------------------------------
-        # STORY
-        # ----------------------------------------------------
 
         st.subheader(
             "📝 Story"
@@ -500,13 +743,10 @@ def movie_details_page(movie_id):
         st.divider()
 
 
-        # ----------------------------------------------------
-        # TRAILER
-        # ----------------------------------------------------
-
         st.subheader(
             "▶️ Trailer"
         )
+
 
         trailer_url = fetch_trailer(
             movie_id
@@ -516,7 +756,7 @@ def movie_details_page(movie_id):
         if trailer_url:
 
             st.link_button(
-                "▶️ Watch Trailer on YouTube",
+                "▶️ Watch Trailer",
                 trailer_url,
                 use_container_width=True
             )
@@ -529,7 +769,7 @@ def movie_details_page(movie_id):
 
 
 # ============================================================
-# 10. CHECK MOVIE ID
+# 13. CHECK DETAILS URL
 # ============================================================
 
 movie_id_from_url = st.query_params.get(
@@ -538,7 +778,7 @@ movie_id_from_url = st.query_params.get(
 
 
 # ============================================================
-# 11. DETAILS PAGE
+# 14. DETAILS PAGE
 # ============================================================
 
 if movie_id_from_url:
@@ -561,37 +801,91 @@ if movie_id_from_url:
 
 
 # ============================================================
-# 12. MAIN PAGE
+# 15. MAIN PAGE
 # ============================================================
 
 else:
 
-    # --------------------------------------------------------
-    # HEADER
-    # --------------------------------------------------------
+    # ========================================================
+    # NETFLIX STYLE HERO
+    # ========================================================
 
-    st.title(
-        "🎬 CineMatch AI"
-    )
+    st.html("""
+    <div
+        style="
+            position:relative;
+            min-height:360px;
+            border-radius:12px;
+            overflow:hidden;
+            margin-bottom:30px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #050505 0%,
+                    rgba(5,5,5,0.85) 35%,
+                    rgba(5,5,5,0.20) 75%,
+                    #050505 100%
+                );
+        "
+    >
+
+        <div
+            style="
+                position:absolute;
+                bottom:45px;
+                left:35px;
+                max-width:600px;
+            "
+        >
+
+            <div
+                style="
+                    color:#e50914;
+                    font-size:14px;
+                    font-weight:800;
+                    letter-spacing:2px;
+                "
+            >
+                NETFLIX STYLE
+            </div>
+
+
+            <div
+                style="
+                    color:white;
+                    font-size:clamp(32px,5vw,65px);
+                    font-weight:900;
+                    margin-top:8px;
+                "
+            >
+                Movie Recommendation System
+            </div>
+
+
+            <div
+                style="
+                    color:#d0d0d0;
+                    font-size:18px;
+                    margin-top:12px;
+                "
+            >
+                Discover movies similar to
+                your favourite movies.
+            </div>
+
+        </div>
+
+    </div>
+    """)
+
+
+    # ========================================================
+    # SELECT MOVIE
+    # ========================================================
 
     st.subheader(
-        "Movie Recommendation System"
-    )
-
-    st.write(
-        "Discover movies similar to your favourite movie."
-    )
-
-
-    st.divider()
-
-
-    # --------------------------------------------------------
-    # MOVIE SELECTOR
-    # --------------------------------------------------------
-
-    st.header(
-        "🎥 Choose Your Movie"
+        "🎬 Choose a Movie"
     )
 
 
@@ -611,15 +905,15 @@ else:
 
 
     selected_movie = st.selectbox(
-        "Select a movie",
+        "Choose movie",
         movie_list,
         index=default_index
     )
 
 
-    # --------------------------------------------------------
+    # ========================================================
     # RECOMMENDATIONS
-    # --------------------------------------------------------
+    # ========================================================
 
     names, posters, ids = recommend(
         selected_movie
@@ -630,18 +924,21 @@ else:
 
 
     st.header(
-        "✨ Recommended Movies"
+        "🔥 Recommended Movies"
     )
 
 
-    st.write(
-        f"Movies similar to **{selected_movie}**"
+    st.caption(
+        f"Because you selected {selected_movie}"
     )
 
 
-    # --------------------------------------------------------
+    # ========================================================
     # MOVIE GRID
-    # --------------------------------------------------------
+    # ========================================================
+
+    # 5 columns on desktop
+    # Streamlit will stack them on smaller screens
 
     COLS_PER_ROW = 5
 
@@ -654,7 +951,7 @@ else:
 
         cols = st.columns(
             COLS_PER_ROW,
-            gap="medium"
+            gap="small"
         )
 
 
@@ -669,77 +966,67 @@ else:
                 continue
 
 
-            name = names[position]
-
-            poster = posters[position]
-
-            movie_id = ids[position]
-
-
             with cols[j]:
 
-                # --------------------------------------------
-                # POSTER
-                # --------------------------------------------
-
-                if poster:
-
-                    st.image(
-                        poster,
-                        use_container_width=True
-                    )
-
-                else:
-
-                    st.info(
-                        "Poster unavailable"
-                    )
-
-
-                # --------------------------------------------
-                # MOVIE NAME
-                # --------------------------------------------
-
-                st.write(
-                    f"**{name}**"
+                movie_html = movie_card_html(
+                    names[position],
+                    posters[position],
+                    ids[position]
                 )
 
 
-                # --------------------------------------------
-                # DETAILS BUTTON
-                # --------------------------------------------
-
-                if st.button(
-                    "🎬 View Details",
-                    key=f"details_{movie_id}_{position}",
-                    use_container_width=True
-                ):
-
-                    st.query_params[
-                        "movie_id"
-                    ] = str(movie_id)
-
-                    st.rerun()
+                st.html(
+                    movie_html
+                )
 
 
-    # --------------------------------------------------------
+    # ========================================================
     # FOOTER
-    # --------------------------------------------------------
+    # ========================================================
 
     st.divider()
 
-    st.header(
-        "👨‍💻 Developed By"
-    )
 
-    st.write(
-        "Anish Kumar • Abhishek • Vishal"
-    )
+    st.html("""
+    <div
+        style="
+            text-align:center;
+            padding:30px 10px;
+            color:#777;
+        "
+    >
 
-    st.write(
-        "Machine Learning & Web Application Project"
-    )
+        <div
+            style="
+                color:white;
+                font-size:20px;
+                font-weight:800;
+            "
+        >
+            🎬 Movie Recommendation System
+        </div>
 
-    st.caption(
-        "🎬 CineMatch AI"
-    )
+        <div style="margin-top:10px;">
+            Developed By
+        </div>
+
+        <div
+            style="
+                color:#aaa;
+                margin-top:5px;
+            "
+        >
+            Anish Kumar • Abhishek • Vishal
+        </div>
+
+        <div
+            style="
+                margin-top:15px;
+                font-size:12px;
+            "
+        >
+            Machine Learning & Web Application Project
+        </div>
+
+    </div>
+    """)
