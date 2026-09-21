@@ -25,10 +25,6 @@ st.html(
     """
     <style>
 
-    /* =====================================================
-       MAIN APP
-       ===================================================== */
-
     .stApp {
         background:
             radial-gradient(
@@ -46,17 +42,11 @@ st.html(
         color: #ffffff;
     }
 
-
     .block-container {
         max-width: 1500px;
         padding-top: 25px;
         padding-bottom: 50px;
     }
-
-
-    /* =====================================================
-       SELECT BOX
-       ===================================================== */
 
     div[data-baseweb="select"] > div {
         background-color: #181818 !important;
@@ -65,13 +55,7 @@ st.html(
         color: white !important;
     }
 
-
-    /* =====================================================
-       NORMAL STREAMLIT BUTTON
-       ===================================================== */
-
     .stButton > button {
-
         background:
             linear-gradient(
                 135deg,
@@ -80,11 +64,8 @@ st.html(
             ) !important;
 
         color: white !important;
-
         border: 1px solid #ff3441 !important;
-
         border-radius: 7px !important;
-
         font-weight: 700 !important;
 
         transition:
@@ -92,9 +73,7 @@ st.html(
             box-shadow 0.2s ease !important;
     }
 
-
     .stButton > button:hover {
-
         transform: translateY(-2px);
 
         box-shadow:
@@ -102,41 +81,12 @@ st.html(
             rgba(229, 9, 20, 0.35) !important;
     }
 
-
-    /* =====================================================
-       LINK BUTTON
-       ===================================================== */
-
-    .stLinkButton > a {
-
-        background:
-            linear-gradient(
-                135deg,
-                #e50914,
-                #b20710
-            ) !important;
-
-        color: white !important;
-
-        border: 1px solid #ff3441 !important;
-
-        border-radius: 7px !important;
-
-        font-weight: 700 !important;
-    }
-
-
-    /* =====================================================
-       DIVIDER
-       ===================================================== */
-
     hr {
         border-color: #292929 !important;
     }
 
-
     /* =====================================================
-       HERO ANIMATION
+       HERO
        ===================================================== */
 
     @keyframes heroGlow {
@@ -160,9 +110,7 @@ st.html(
         }
     }
 
-
     .hero-box {
-
         animation:
             heroGlow 4s
             ease-in-out
@@ -172,10 +120,6 @@ st.html(
             rgba(229, 9, 20, 0.25);
     }
 
-
-    /* =====================================================
-       TITLE ANIMATION
-       ===================================================== */
 
     @keyframes titleFade {
 
@@ -188,12 +132,9 @@ st.html(
             opacity: 1;
             transform: translateY(0);
         }
-
     }
 
-
     .hero-content {
-
         animation:
             titleFade 1s
             ease-out;
@@ -215,8 +156,7 @@ st.html(
                 #111111
             );
 
-        border: 1px solid
-            #333333;
+        border: 1px solid #333333;
 
         border-radius: 12px;
 
@@ -237,10 +177,6 @@ st.html(
     }
 
 
-    /* =====================================================
-       ANIMATED BORDER
-       ===================================================== */
-
     .movie-wrapper::before {
 
         content: "";
@@ -249,7 +185,6 @@ st.html(
 
         top: -2px;
         left: -2px;
-
         right: -2px;
         bottom: -2px;
 
@@ -284,25 +219,20 @@ st.html(
     @keyframes borderMove {
 
         0% {
-            background-position:
-                0% 50%;
+            background-position: 0% 50%;
         }
 
         50% {
-            background-position:
-                100% 50%;
+            background-position: 100% 50%;
         }
 
         100% {
-            background-position:
-                0% 50%;
+            background-position: 0% 50%;
         }
-
     }
 
 
     .movie-wrapper:hover::before {
-
         opacity: 1;
     }
 
@@ -313,8 +243,7 @@ st.html(
             translateY(-8px)
             scale(1.025);
 
-        border-color:
-            #e50914;
+        border-color: #e50914;
 
         box-shadow:
             0 18px 40px
@@ -325,7 +254,7 @@ st.html(
 
 
     /* =====================================================
-       MOVIE POSTER
+       POSTER
        ===================================================== */
 
     .movie-poster-container {
@@ -356,14 +285,11 @@ st.html(
     }
 
 
-    .movie-wrapper:hover
-    .movie-poster {
+    .movie-wrapper:hover .movie-poster {
 
-        transform:
-            scale(1.08);
+        transform: scale(1.08);
 
-        filter:
-            brightness(0.55);
+        filter: brightness(0.55);
     }
 
 
@@ -397,9 +323,7 @@ st.html(
     }
 
 
-    .movie-wrapper:hover
-    .movie-overlay {
-
+    .movie-wrapper:hover .movie-overlay {
         opacity: 1;
     }
 
@@ -407,19 +331,16 @@ st.html(
     .play-circle {
 
         width: 58px;
-
         height: 58px;
 
         display: flex;
 
         align-items: center;
-
         justify-content: center;
 
         border-radius: 50%;
 
-        background:
-            #e50914;
+        background: #e50914;
 
         color: white;
 
@@ -454,7 +375,6 @@ st.html(
                 0 0 0 0
                 rgba(229, 9, 20, 0);
         }
-
     }
 
 
@@ -476,8 +396,7 @@ st.html(
 
         text-align: center;
 
-        padding:
-            10px 5px 7px;
+        padding: 10px 5px 7px;
 
         min-height: 42px;
 
@@ -490,7 +409,7 @@ st.html(
 
 
     /* =====================================================
-       SECTION TITLE
+       SECTION
        ===================================================== */
 
     .section-title {
@@ -514,7 +433,7 @@ st.html(
 
 
     /* =====================================================
-       TRAILER PLAYER
+       VIDEO PLAYER
        ===================================================== */
 
     .stVideo {
@@ -527,7 +446,7 @@ st.html(
 
         box-shadow:
             0 15px 40px
-            rgba(0, 0, 0, 0.45);
+            rgba(0, 0, 0, 0.55);
 
         margin-top: 10px;
     }
@@ -540,44 +459,30 @@ st.html(
     @media (max-width: 700px) {
 
         .block-container {
-
             padding-left: 12px;
-
             padding-right: 12px;
         }
 
-
         .movie-wrapper {
-
             border-radius: 10px;
-
             padding: 5px;
-
             margin-bottom: 16px;
         }
 
-
         .movie-wrapper:hover {
-
             transform:
                 translateY(-3px)
                 scale(1.01);
         }
 
-
         .movie-title {
-
             font-size: 11px;
-
             min-height: 38px;
         }
 
-
         .section-title {
-
             font-size: 25px;
         }
-
     }
 
     </style>
@@ -657,14 +562,10 @@ def tmdb_request(
         + endpoint
     )
 
-
     if params is None:
-
         params = {}
 
-
     params["api_key"] = TMDB_API_KEY
-
 
     try:
 
@@ -674,16 +575,12 @@ def tmdb_request(
             timeout=8
         )
 
-
         if response.status_code == 200:
-
             return response.json()
-
 
     except Exception:
 
         return None
-
 
     return None
 
@@ -696,9 +593,7 @@ def tmdb_request(
     show_spinner=False,
     ttl=86400
 )
-def fetch_movie_details(
-    movie_id
-):
+def fetch_movie_details(movie_id):
 
     return tmdb_request(
         f"movie/{movie_id}",
@@ -716,29 +611,19 @@ def fetch_movie_details(
     show_spinner=False,
     ttl=86400
 )
-def fetch_poster(
-    movie_id
-):
+def fetch_poster(movie_id):
 
-    details = fetch_movie_details(
-        movie_id
-    )
-
+    details = fetch_movie_details(movie_id)
 
     if not details:
-
         return None
-
 
     poster_path = details.get(
         "poster_path"
     )
 
-
     if not poster_path:
-
         return None
-
 
     return (
         "https://image.tmdb.org/t/p/w500"
@@ -754,9 +639,7 @@ def fetch_poster(
     show_spinner=False,
     ttl=86400
 )
-def fetch_trailer(
-    movie_id
-):
+def fetch_trailer(movie_id):
 
     data = tmdb_request(
         f"movie/{movie_id}/videos",
@@ -765,11 +648,8 @@ def fetch_trailer(
         }
     )
 
-
     if not data:
-
         return None
-
 
     videos = data.get(
         "results",
@@ -777,27 +657,19 @@ def fetch_trailer(
     )
 
 
-    # --------------------------------------------------------
-    # OFFICIAL YOUTUBE TRAILER FIRST
-    # --------------------------------------------------------
+    # Official trailer first
 
     for video in videos:
 
         if (
-            video.get("site")
-            == "YouTube"
+            video.get("site") == "YouTube"
             and
-            video.get("type")
-            == "Trailer"
+            video.get("type") == "Trailer"
             and
-            video.get("official")
-            is True
+            video.get("official") is True
         ):
 
-            key = video.get(
-                "key"
-            )
-
+            key = video.get("key")
 
             if key:
 
@@ -807,24 +679,17 @@ def fetch_trailer(
                 )
 
 
-    # --------------------------------------------------------
-    # ANY YOUTUBE TRAILER
-    # --------------------------------------------------------
+    # Any YouTube trailer
 
     for video in videos:
 
         if (
-            video.get("site")
-            == "YouTube"
+            video.get("site") == "YouTube"
             and
-            video.get("type")
-            == "Trailer"
+            video.get("type") == "Trailer"
         ):
 
-            key = video.get(
-                "key"
-            )
-
+            key = video.get("key")
 
             if key:
 
@@ -838,7 +703,42 @@ def fetch_trailer(
 
 
 # ============================================================
-# 10. RECOMMENDATION
+# 10. FULL MOVIE SOURCE
+# ============================================================
+
+def get_full_movie_url(movie_id):
+
+    """
+    IMPORTANT:
+
+    Yahan sirf apni ya authorized/licensed
+    full-movie video URL use karo.
+
+    Example:
+
+    return "https://your-server.com/movies/movie.mp4"
+
+    Agar movie available nahi hai:
+    return None
+    """
+
+    FULL_MOVIE_URLS = {
+
+        # Example:
+        # 19995: "https://your-authorized-server.com/avatar.mp4",
+
+        # Apni authorized movie URLs yahan add karo.
+
+    }
+
+
+    return FULL_MOVIE_URLS.get(
+        int(movie_id)
+    )
+
+
+# ============================================================
+# 11. RECOMMENDATION
 # ============================================================
 
 def recommend(movie):
@@ -849,12 +749,10 @@ def recommend(movie):
 
 
     if len(indexes) == 0:
-
         return [], [], []
 
 
     index = indexes[0]
-
 
     names = []
     posters = []
@@ -889,9 +787,7 @@ def recommend(movie):
 
 
         posters.append(
-            fetch_poster(
-                movie_id
-            )
+            fetch_poster(movie_id)
         )
 
 
@@ -908,7 +804,7 @@ def recommend(movie):
 
 
 # ============================================================
-# 11. MOVIE CARD
+# 12. MOVIE CARD
 # ============================================================
 
 def movie_card_html(
@@ -925,7 +821,7 @@ def movie_card_html(
         )
 
 
-    html = f"""
+    return f"""
     <a
         href="?movie_id={movie_id}"
         target="_self"
@@ -945,7 +841,6 @@ def movie_card_html(
                     src="{poster_url}"
                     alt="{movie_name}"
                 >
-
 
                 <div class="movie-overlay">
 
@@ -970,16 +865,11 @@ def movie_card_html(
     """
 
 
-    return html
-
-
 # ============================================================
-# 12. DETAILS PAGE
+# 13. DETAILS PAGE
 # ============================================================
 
-def show_movie_details(
-    movie_id
-):
+def show_movie_details(movie_id):
 
     # --------------------------------------------------------
     # BACK BUTTON
@@ -1117,7 +1007,7 @@ def show_movie_details(
 
 
     # ========================================================
-    # POSTER + DETAILS
+    # POSTER + INFORMATION
     # ========================================================
 
     poster_col, info_col = st.columns(
@@ -1196,7 +1086,6 @@ def show_movie_details(
 
 
             hours = runtime // 60
-
             minutes = runtime % 60
 
 
@@ -1296,13 +1185,7 @@ def show_movie_details(
 
     if trailer_url:
 
-        # ----------------------------------------------------
-        # IMPORTANT:
-        # Trailer Streamlit ke andar hi play hoga.
-        # User ko manually YouTube website par forward
-        # karne ke liye link/button nahi diya gaya hai.
-        # ----------------------------------------------------
-
+        # Trailer app ke andar
         st.video(
             trailer_url
         )
@@ -1314,8 +1197,40 @@ def show_movie_details(
         )
 
 
+    # ========================================================
+    # FULL MOVIE
+    # ========================================================
+
+    st.divider()
+
+    st.subheader(
+        "🎬 Watch Full Movie"
+    )
+
+
+    full_movie_url = get_full_movie_url(
+        movie_id
+    )
+
+
+    if full_movie_url:
+
+        # Authorized full movie
+        # Streamlit ke andar play hogi.
+
+        st.video(
+            full_movie_url
+        )
+
+    else:
+
+        st.info(
+            "Full movie is not available for this title."
+        )
+
+
 # ============================================================
-# 13. CHECK MOVIE ID
+# 14. CHECK MOVIE ID
 # ============================================================
 
 movie_id_from_url = st.query_params.get(
@@ -1324,7 +1239,7 @@ movie_id_from_url = st.query_params.get(
 
 
 # ============================================================
-# 14. DETAILS PAGE
+# 15. DETAILS PAGE
 # ============================================================
 
 if movie_id_from_url:
@@ -1349,7 +1264,7 @@ if movie_id_from_url:
 
 
 # ============================================================
-# 15. MAIN PAGE
+# 16. MAIN PAGE
 # ============================================================
 
 else:
@@ -1385,20 +1300,14 @@ else:
             "
         >
 
-            <div
-                class="hero-content"
-            >
+            <div class="hero-content">
 
                 <div
                     style="
                         color:#e50914;
-
                         font-size:14px;
-
                         font-weight:900;
-
                         letter-spacing:4px;
-
                         margin-bottom:12px;
                     "
                 >
@@ -1502,12 +1411,18 @@ else:
         </div>
 
         <div class="section-subtitle">
+
             Because you selected
+
             <b style="color:#ffffff;">
                 {selected_movie}
             </b>
+
             <br>
-            👆 Tap any poster to open movie details
+
+            👆 Tap any poster to open
+            movie details
+
         </div>
         """,
         unsafe_allow_html=True
@@ -1543,7 +1458,6 @@ else:
 
 
             if position >= len(names):
-
                 continue
 
 
@@ -1573,9 +1487,7 @@ else:
         <div
             style="
                 text-align:center;
-
                 padding:40px 10px;
-
                 color:#777;
             "
         >
@@ -1583,9 +1495,7 @@ else:
             <div
                 style="
                     color:#ffffff;
-
                     font-size:22px;
-
                     font-weight:800;
                 "
             >
@@ -1596,7 +1506,6 @@ else:
             <div
                 style="
                     margin-top:12px;
-
                     color:#888;
                 "
             >
@@ -1607,11 +1516,8 @@ else:
             <div
                 style="
                     margin-top:8px;
-
                     color:#cccccc;
-
                     font-size:16px;
-
                     font-weight:700;
                 "
             >
@@ -1622,9 +1528,7 @@ else:
             <div
                 style="
                     margin-top:15px;
-
                     color:#555;
-
                     font-size:12px;
                 "
             >
