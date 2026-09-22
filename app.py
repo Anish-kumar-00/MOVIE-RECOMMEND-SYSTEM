@@ -77,7 +77,6 @@ body {
    ============================================================ */
 
 div[data-baseweb="select"] > div {
-
     background:
         linear-gradient(
             135deg,
@@ -85,20 +84,17 @@ div[data-baseweb="select"] > div {
             rgba(25, 0, 25, 0.95)
         ) !important;
 
-    border: 2px solid #006cff !important;
-
+    border: 2px solid transparent !important;
     border-radius: 12px !important;
-
     color: white !important;
 
     box-shadow:
-        0 0 10px rgba(0, 110, 255, 0.30),
-        0 0 15px rgba(255, 0, 60, 0.20) !important;
+        0 0 10px rgba(0, 110, 255, 0.25),
+        0 0 10px rgba(255, 0, 60, 0.18) !important;
 }
 
 div[data-baseweb="select"] > div:focus-within {
-
-    border-color: #ff0066 !important;
+    border-color: #008cff !important;
 
     box-shadow:
         0 0 15px rgba(0, 140, 255, 0.65),
@@ -111,7 +107,6 @@ div[data-baseweb="select"] > div:focus-within {
    ============================================================ */
 
 .stButton > button {
-
     background:
         linear-gradient(
             135deg,
@@ -121,11 +116,8 @@ div[data-baseweb="select"] > div:focus-within {
         ) !important;
 
     color: white !important;
-
     border: 1px solid #ff174f !important;
-
     border-radius: 10px !important;
-
     font-weight: 800 !important;
 
     transition: all 0.3s ease !important;
@@ -136,7 +128,6 @@ div[data-baseweb="select"] > div:focus-within {
 }
 
 .stButton > button:hover {
-
     transform: translateY(-3px);
 
     box-shadow:
@@ -150,9 +141,7 @@ div[data-baseweb="select"] > div:focus-within {
    ============================================================ */
 
 hr {
-
     border: none !important;
-
     height: 1px !important;
 
     background:
@@ -174,35 +163,29 @@ hr {
    ============================================================ */
 
 .hero-box {
-
     position: relative;
 
     min-height: 390px;
 
     display: flex;
-
     align-items: flex-end;
 
     padding: 55px;
 
     border-radius: 20px;
-
     overflow: hidden;
 
     background:
-
         radial-gradient(
             circle at 75% 45%,
             rgba(0, 100, 255, 0.30),
             transparent 30%
         ),
-
         radial-gradient(
             circle at 90% 55%,
             rgba(255, 0, 70, 0.28),
             transparent 30%
         ),
-
         linear-gradient(
             110deg,
             #02030a,
@@ -211,7 +194,6 @@ hr {
         );
 
     border: 2px solid transparent;
-
     background-clip: padding-box;
 
     box-shadow:
@@ -224,15 +206,12 @@ hr {
 }
 
 .hero-box::before {
-
     content: "";
 
     position: absolute;
-
     inset: 0;
 
     border-radius: 20px;
-
     padding: 2px;
 
     background:
@@ -255,24 +234,20 @@ hr {
         linear-gradient(#fff 0 0);
 
     -webkit-mask-composite: xor;
-
     mask-composite: exclude;
 
     pointer-events: none;
 }
 
 .hero-box::after {
-
     content: "";
 
     position: absolute;
 
     width: 450px;
-
     height: 450px;
 
     right: -100px;
-
     top: -120px;
 
     background:
@@ -339,9 +314,7 @@ hr {
 }
 
 .hero-content {
-
     position: relative;
-
     z-index: 5;
 
     animation: titleFade 1s ease-out;
@@ -360,17 +333,10 @@ hr {
     }
 }
 
-
-/* ============================================================
-   HERO TITLE
-   ============================================================ */
-
 .hero-title {
-
     font-size: clamp(38px, 6vw, 72px);
 
     font-weight: 950;
-
     line-height: 0.98;
 
     margin: 10px 0 20px;
@@ -382,7 +348,6 @@ hr {
 }
 
 .gradient-text {
-
     background:
         linear-gradient(
             90deg,
@@ -392,9 +357,7 @@ hr {
         );
 
     -webkit-background-clip: text;
-
     -webkit-text-fill-color: transparent;
-
     background-clip: text;
 }
 
@@ -404,13 +367,10 @@ hr {
    ============================================================ */
 
 .section-title {
-
     font-size: 32px;
-
     font-weight: 950;
 
     margin-top: 15px;
-
     margin-bottom: 5px;
 
     background:
@@ -423,18 +383,13 @@ hr {
         );
 
     -webkit-background-clip: text;
-
     -webkit-text-fill-color: transparent;
-
     background-clip: text;
 }
 
 .section-subtitle {
-
     color: #aeb4c5;
-
     margin-bottom: 25px;
-
     font-size: 15px;
 }
 
@@ -444,11 +399,9 @@ hr {
    ============================================================ */
 
 .selected-movie-box {
-
     position: relative;
 
     display: flex;
-
     align-items: center;
 
     gap: 28px;
@@ -458,7 +411,6 @@ hr {
     min-height: 180px;
 
     margin-top: 25px;
-
     margin-bottom: 30px;
 
     border-radius: 18px;
@@ -472,7 +424,6 @@ hr {
         );
 
     border: 2px solid transparent;
-
     background-clip: padding-box;
 
     box-shadow:
@@ -483,15 +434,12 @@ hr {
 }
 
 .selected-movie-box::before {
-
     content: "";
 
     position: absolute;
-
     inset: 0;
 
     border-radius: 18px;
-
     padding: 2px;
 
     background:
@@ -514,16 +462,13 @@ hr {
         linear-gradient(#fff 0 0);
 
     -webkit-mask-composite: xor;
-
     mask-composite: exclude;
 
     pointer-events: none;
 }
 
 .selected-poster {
-
     width: 120px;
-
     height: 175px;
 
     object-fit: cover;
@@ -531,7 +476,6 @@ hr {
     border-radius: 12px;
 
     position: relative;
-
     z-index: 2;
 
     box-shadow:
@@ -540,14 +484,11 @@ hr {
 }
 
 .selected-info {
-
     position: relative;
-
     z-index: 2;
 }
 
 .selected-badge {
-
     display: inline-block;
 
     padding: 5px 12px;
@@ -557,7 +498,6 @@ hr {
     color: #ffffff;
 
     font-size: 12px;
-
     font-weight: 800;
 
     background:
@@ -573,21 +513,45 @@ hr {
 }
 
 .selected-title {
-
     font-size: 32px;
-
     font-weight: 900;
 
     margin: 8px 0;
 }
 
 .selected-overview {
-
     color: #c5cad5;
-
     line-height: 1.6;
-
     max-width: 750px;
+}
+
+
+/* ============================================================
+   MOVIE ROW
+   ============================================================ */
+
+div[data-testid="stHorizontalBlock"] {
+    position: relative;
+
+    padding: 7px 4px;
+
+    border-radius: 18px;
+
+    background:
+        radial-gradient(
+            circle at 0% 50%,
+            rgba(0, 100, 255, 0.25),
+            transparent 23%
+        ),
+        radial-gradient(
+            circle at 100% 50%,
+            rgba(255, 0, 70, 0.25),
+            transparent 23%
+        );
+
+    margin-bottom: 8px;
+
+    overflow: visible;
 }
 
 
@@ -596,7 +560,6 @@ hr {
    ============================================================ */
 
 .movie-wrapper {
-
     position: relative;
 
     background:
@@ -627,7 +590,6 @@ hr {
 }
 
 .movie-wrapper::before {
-
     content: "";
 
     position: absolute;
@@ -658,7 +620,6 @@ hr {
         linear-gradient(#fff 0 0);
 
     -webkit-mask-composite: xor;
-
     mask-composite: exclude;
 
     opacity: 0.95;
@@ -689,8 +650,27 @@ hr {
     }
 }
 
-.movie-wrapper:hover {
+.movie-wrapper::after {
+    content: "";
 
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(0, 100, 255, 0.08),
+            transparent 35%,
+            rgba(255, 0, 70, 0.08)
+        );
+
+    pointer-events: none;
+}
+
+.movie-wrapper:hover {
     transform:
         translateY(-9px)
         scale(1.035);
@@ -704,7 +684,6 @@ hr {
 }
 
 .movie-poster-container {
-
     position: relative;
 
     overflow: hidden;
@@ -715,7 +694,6 @@ hr {
 }
 
 .movie-poster {
-
     width: 100%;
 
     aspect-ratio: 2 / 3;
@@ -730,7 +708,6 @@ hr {
 }
 
 .movie-wrapper:hover .movie-poster {
-
     transform: scale(1.08);
 
     filter:
@@ -739,7 +716,6 @@ hr {
 }
 
 .movie-overlay {
-
     position: absolute;
 
     inset: 0;
@@ -747,7 +723,6 @@ hr {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     opacity: 0;
@@ -759,7 +734,8 @@ hr {
             rgba(0,0,0,0.88)
         );
 
-    transition: opacity 0.35s ease;
+    transition:
+        opacity 0.35s ease;
 }
 
 .movie-wrapper:hover .movie-overlay {
@@ -767,15 +743,12 @@ hr {
 }
 
 .play-circle {
-
     width: 60px;
-
     height: 60px;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     border-radius: 50%;
@@ -815,7 +788,6 @@ hr {
 }
 
 .movie-title {
-
     position: relative;
 
     z-index: 5;
@@ -823,7 +795,6 @@ hr {
     color: #ffffff;
 
     font-size: 13px;
-
     font-weight: 800;
 
     text-align: center;
@@ -835,8 +806,35 @@ hr {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
+
+    text-shadow:
+        0 0 8px rgba(255,255,255,0.12);
+}
+
+
+/* ============================================================
+   DETAILS PAGE
+   ============================================================ */
+
+.details-page-title {
+    font-size: 40px;
+    font-weight: 950;
+
+    margin-top: 18px;
+    margin-bottom: 25px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #00b7ff,
+            #9d00ff,
+            #ff0066
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 
@@ -844,63 +842,36 @@ hr {
    TRAILER SECTION
    ============================================================ */
 
-.trailer-section {
-
-    margin-top: 25px;
-
-    width: 100%;
-
-    position: relative;
-}
-
 .trailer-heading {
+    font-size: 32px;
+    font-weight: 950;
 
-    font-size: 27px;
-
-    font-weight: 900;
-
+    margin-top: 10px;
     margin-bottom: 15px;
 
     background:
         linear-gradient(
             90deg,
             #ffffff,
-            #00aaff,
+            #00b7ff,
             #9d00ff,
             #ff0066
         );
 
     -webkit-background-clip: text;
-
     -webkit-text-fill-color: transparent;
-
-    background-clip: text;
 }
 
-
-/*
-   Main 16:9 YouTube-style player
-*/
-
-.trailer-player {
-
+.trailer-box {
     width: 100%;
-
-    aspect-ratio: 16 / 9;
 
     position: relative;
 
-    overflow: hidden;
+    padding: 3px;
 
     border-radius: 18px;
 
-    border: 2px solid transparent;
-
     background:
-        linear-gradient(
-            #050510,
-            #050510
-        ) padding-box,
         linear-gradient(
             90deg,
             #006cff,
@@ -909,51 +880,257 @@ hr {
             #ff0066,
             #ff1744,
             #006cff
-        ) border-box;
+        );
+
+    background-size: 300% 100%;
+
+    animation:
+        neonBorder 4s linear infinite;
 
     box-shadow:
-        0 0 18px rgba(0, 110, 255, 0.50),
-        0 0 35px rgba(255, 0, 70, 0.30);
-
-    animation: trailerGlow 4s ease-in-out infinite;
+        0 0 20px rgba(0,110,255,0.55),
+        0 0 35px rgba(255,0,70,0.40);
 }
 
-.trailer-player iframe {
+.trailer-inner {
+    width: 100%;
+
+    background: #000;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    line-height: 0;
+}
+
+.trailer-inner iframe {
+    display: block;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    min-height: 0;
+
+    border: 0;
+}
+
+
+/* ============================================================
+   POSTER CENTER
+   ============================================================ */
+
+.details-poster-box {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 35px;
+    margin-bottom: 30px;
+}
+
+.details-poster {
+    width: 300px;
+
+    max-width: 80vw;
+
+    height: auto;
+
+    border-radius: 16px;
+
+    border: 2px solid transparent;
+
+    box-shadow:
+        0 0 15px rgba(0,110,255,0.80),
+        0 0 30px rgba(255,0,70,0.55);
+
+    transition:
+        transform 0.4s ease;
+}
+
+.details-poster:hover {
+    transform:
+        scale(1.025)
+        translateY(-5px);
+}
+
+
+/* ============================================================
+   DETAILS INFO BOX
+   ============================================================ */
+
+.movie-details-box {
+    position: relative;
+
+    padding: 28px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(5,15,35,0.95),
+            rgba(20,5,35,0.94),
+            rgba(35,3,18,0.94)
+        );
+
+    border: 2px solid transparent;
+
+    box-shadow:
+        0 0 18px rgba(0,110,255,0.45),
+        0 0 30px rgba(255,0,70,0.30);
+
+    overflow: hidden;
+}
+
+.movie-details-box::before {
+    content: "";
 
     position: absolute;
 
     inset: 0;
 
-    width: 100%;
+    padding: 2px;
 
-    height: 100%;
+    border-radius: 20px;
 
-    border: 0;
+    background:
+        linear-gradient(
+            90deg,
+            #006cff,
+            #00c8ff,
+            #9d00ff,
+            #ff0066,
+            #ff1744,
+            #006cff
+        );
 
-    display: block;
+    background-size: 300% 100%;
 
-    border-radius: 16px;
+    animation:
+        neonBorder 4s linear infinite;
+
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    pointer-events: none;
 }
 
-@keyframes trailerGlow {
+.info-heading {
+    position: relative;
+    z-index: 2;
 
-    0% {
-        box-shadow:
-            0 0 15px rgba(0, 110, 255, 0.40),
-            0 0 20px rgba(255, 0, 70, 0.20);
-    }
+    font-size: 20px;
+    font-weight: 900;
 
-    50% {
-        box-shadow:
-            0 0 30px rgba(0, 110, 255, 0.70),
-            0 0 45px rgba(255, 0, 70, 0.45);
-    }
+    color: white;
 
-    100% {
-        box-shadow:
-            0 0 15px rgba(0, 110, 255, 0.40),
-            0 0 20px rgba(255, 0, 70, 0.20);
-    }
+    margin-bottom: 8px;
+}
+
+.info-value {
+    position: relative;
+    z-index: 2;
+
+    color: #d8dce8;
+
+    font-size: 16px;
+}
+
+.info-grid {
+    position: relative;
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+.info-item {
+    padding: 18px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,90,180,0.15),
+            rgba(120,0,120,0.12),
+            rgba(255,0,70,0.12)
+        );
+
+    border: 1px solid rgba(0,150,255,0.30);
+
+    box-shadow:
+        inset 0 0 15px rgba(0,100,255,0.05);
+}
+
+.genre-list {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 12px;
+}
+
+.genre-pill {
+    padding: 7px 14px;
+
+    border-radius: 50px;
+
+    border: 1px solid #008cff;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,110,255,0.18),
+            rgba(157,0,255,0.18),
+            rgba(255,0,102,0.18)
+        );
+
+    color: white;
+
+    box-shadow:
+        0 0 10px rgba(0,110,255,0.25);
+}
+
+.story-box {
+    position: relative;
+    z-index: 2;
+
+    margin-top: 25px;
+
+    padding-top: 22px;
+
+    border-top:
+        1px solid
+        rgba(0,150,255,0.40);
+}
+
+.story-text {
+    color: #d0d4df;
+
+    font-size: 16px;
+
+    line-height: 1.7;
+
+    margin-top: 10px;
 }
 
 
@@ -962,7 +1139,6 @@ hr {
    ============================================================ */
 
 .footer {
-
     position: relative;
 
     text-align: center;
@@ -975,7 +1151,6 @@ hr {
 }
 
 .footer-title {
-
     font-size: 22px;
 
     font-weight: 900;
@@ -984,7 +1159,6 @@ hr {
 }
 
 .footer-line {
-
     width: 180px;
 
     height: 2px;
@@ -1000,8 +1174,8 @@ hr {
         );
 
     box-shadow:
-        0 0 12px rgba(0, 110, 255, 0.5),
-        0 0 12px rgba(255, 0, 70, 0.5);
+        0 0 12px rgba(0,110,255,0.5),
+        0 0 12px rgba(255,0,70,0.5);
 }
 
 
@@ -1017,7 +1191,6 @@ hr {
     }
 
     .hero-box {
-
         min-height: 300px;
 
         padding: 28px 24px;
@@ -1026,14 +1199,11 @@ hr {
     }
 
     .hero-title {
-
         font-size: 42px;
-
         line-height: 1;
     }
 
     .selected-movie-box {
-
         gap: 15px;
 
         padding: 12px;
@@ -1042,9 +1212,7 @@ hr {
     }
 
     .selected-poster {
-
         width: 85px;
-
         height: 125px;
     }
 
@@ -1053,7 +1221,6 @@ hr {
     }
 
     .selected-overview {
-
         font-size: 12px;
 
         line-height: 1.45;
@@ -1072,7 +1239,6 @@ hr {
     }
 
     .movie-wrapper {
-
         border-radius: 11px;
 
         padding: 4px;
@@ -1081,14 +1247,12 @@ hr {
     }
 
     .movie-wrapper:hover {
-
         transform:
             translateY(-4px)
             scale(1.015);
     }
 
     .movie-title {
-
         font-size: 10px;
 
         min-height: 36px;
@@ -1097,26 +1261,47 @@ hr {
     }
 
     .play-circle {
-
         width: 44px;
-
         height: 44px;
 
         font-size: 18px;
     }
 
-    .trailer-player {
+    div[data-testid="stHorizontalBlock"] {
+        padding: 4px 2px;
 
         border-radius: 12px;
-    }
 
-    .trailer-player iframe {
-
-        border-radius: 10px;
+        margin-bottom: 5px;
     }
 
     .trailer-heading {
-        font-size: 23px;
+        font-size: 27px;
+    }
+
+    .details-page-title {
+        font-size: 32px;
+    }
+
+    .details-poster {
+        width: 250px;
+    }
+
+    .movie-details-box {
+        padding: 18px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .info-item {
+        padding: 15px;
+    }
+
+    .story-text {
+        font-size: 14px;
     }
 }
 
@@ -1128,7 +1313,9 @@ hr {
 # 3. FILE PATHS
 # ============================================================
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(
+    os.path.abspath(__file__)
+)
 
 MOVIES_FILE = os.path.join(
     BASE_DIR,
@@ -1148,10 +1335,18 @@ SIMILARITY_FILE = os.path.join(
 @st.cache_data(show_spinner=False)
 def load_data():
 
-    with open(MOVIES_FILE, "rb") as file:
+    with open(
+        MOVIES_FILE,
+        "rb"
+    ) as file:
+
         movies_data = pickle.load(file)
 
-    with gzip.open(SIMILARITY_FILE, "rb") as file:
+    with gzip.open(
+        SIMILARITY_FILE,
+        "rb"
+    ) as file:
+
         similarity_data = pickle.load(file)
 
     return (
@@ -1167,24 +1362,17 @@ movies, similarity_indices = load_data()
 # 5. TMDB API KEY
 # ============================================================
 
-try:
-
-    TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
-
-except Exception:
-
-    st.error(
-        "TMDB_API_KEY is missing from Streamlit Secrets."
-    )
-
-    st.stop()
+TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
 
 
 # ============================================================
 # 6. TMDB REQUEST
 # ============================================================
 
-def tmdb_request(endpoint, params=None):
+def tmdb_request(
+    endpoint,
+    params=None
+):
 
     url = (
         "https://api.themoviedb.org/3/"
@@ -1207,11 +1395,9 @@ def tmdb_request(endpoint, params=None):
         )
 
         if response.status_code == 200:
-
             return response.json()
 
-    except requests.RequestException:
-
+    except Exception:
         return None
 
     return None
@@ -1245,12 +1431,16 @@ def fetch_movie_details(movie_id):
 )
 def fetch_poster(movie_id):
 
-    details = fetch_movie_details(movie_id)
+    details = fetch_movie_details(
+        movie_id
+    )
 
     if not details:
         return None
 
-    poster_path = details.get("poster_path")
+    poster_path = details.get(
+        "poster_path"
+    )
 
     if not poster_path:
         return None
@@ -1262,14 +1452,14 @@ def fetch_poster(movie_id):
 
 
 # ============================================================
-# 9. GET ALL YOUTUBE VIDEOS
+# 9. TRAILER KEY
 # ============================================================
 
 @st.cache_data(
     show_spinner=False,
     ttl=86400
 )
-def fetch_youtube_videos(movie_id):
+def fetch_trailer_key(movie_id):
 
     data = tmdb_request(
         f"movie/{movie_id}/videos",
@@ -1279,145 +1469,127 @@ def fetch_youtube_videos(movie_id):
     )
 
     if not data:
-        return []
-
-    videos = data.get("results", [])
-
-    youtube_videos = []
-
-    for video in videos:
-
-        if video.get("site") != "YouTube":
-            continue
-
-        key = video.get("key")
-
-        if not key:
-            continue
-
-        youtube_videos.append({
-            "key": key,
-            "name": video.get("name", ""),
-            "type": video.get("type", ""),
-            "official": video.get("official", False),
-            "published_at": video.get("published_at", "")
-        })
-
-    return youtube_videos
-
-
-# ============================================================
-# 10. FIND BEST TRAILER
-# ============================================================
-
-def get_best_trailer(movie_id):
-
-    videos = fetch_youtube_videos(movie_id)
-
-    if not videos:
         return None
+
+    videos = data.get(
+        "results",
+        []
+    )
 
 
     # --------------------------------------------------------
-    # 1. Official Trailer
+    # FIRST: OFFICIAL TRAILER
     # --------------------------------------------------------
 
     for video in videos:
 
         if (
-            video["type"] == "Trailer"
-            and video["official"] is True
+            video.get("site") == "YouTube"
+            and
+            video.get("type") == "Trailer"
+            and
+            video.get("official") is True
         ):
 
-            return video
+            key = video.get("key")
+
+            if key:
+                return key
 
 
     # --------------------------------------------------------
-    # 2. Any Trailer
-    # --------------------------------------------------------
-
-    for video in videos:
-
-        if video["type"] == "Trailer":
-
-            return video
-
-
-    # --------------------------------------------------------
-    # 3. Teaser
+    # SECOND: ANY TRAILER
     # --------------------------------------------------------
 
     for video in videos:
 
-        if video["type"] == "Teaser":
+        if (
+            video.get("site") == "YouTube"
+            and
+            video.get("type") == "Trailer"
+        ):
 
-            return video
+            key = video.get("key")
+
+            if key:
+                return key
 
 
     # --------------------------------------------------------
-    # 4. Clip
+    # THIRD: OFFICIAL TEASER
     # --------------------------------------------------------
 
     for video in videos:
 
-        if video["type"] == "Clip":
+        if (
+            video.get("site") == "YouTube"
+            and
+            video.get("type") == "Teaser"
+            and
+            video.get("official") is True
+        ):
 
-            return video
+            key = video.get("key")
+
+            if key:
+                return key
 
 
-    return videos[0]
+    return None
 
 
 # ============================================================
-# 11. YOUTUBE EMBED PLAYER
+# 10. YOUTUBE TRAILER PLAYER
 # ============================================================
 
-def show_youtube_trailer(movie_id):
+def show_youtube_trailer(video_key):
 
-    trailer = get_best_trailer(movie_id)
-
-    if not trailer:
-
-        st.info(
-            "🎬 Trailer not available for this movie."
-        )
-
+    if not video_key:
+        st.info("Trailer not available.")
         return
 
 
-    youtube_key = trailer["key"]
-
-    video_name = html.escape(
-        trailer.get("name", "Movie Trailer")
-    )
-
-
     # --------------------------------------------------------
-    # YOUTUBE NO-COOKIE EMBED
+    # YOUTUBE EMBED URL
     # --------------------------------------------------------
 
     embed_url = (
-        "https://www.youtube-nocookie.com/embed/"
-        + youtube_key
+        "https://www.youtube.com/embed/"
+        + str(video_key)
         + "?rel=0"
-        + "&modestbranding=1"
-        + "&playsinline=1"
-        + "&controls=1"
-        + "&fs=1"
-        + "&iv_load_policy=3"
+        "&modestbranding=1"
+        "&playsinline=1"
+        "&iv_load_policy=3"
+        "&enablejsapi=1"
     )
 
 
     # --------------------------------------------------------
-    # HEADING
+    # REAL 16:9 YOUTUBE PLAYER
     # --------------------------------------------------------
 
     st.html(
         f"""
-        <div class="trailer-section">
+        <div class="trailer-box">
 
-            <div class="trailer-heading">
-                ▶️ Trailer
+            <div class="trailer-inner">
+
+                <iframe
+                    src="{html.escape(embed_url, quote=True)}"
+                    title="Movie Trailer"
+                    allow="
+                        accelerometer;
+                        autoplay;
+                        clipboard-write;
+                        encrypted-media;
+                        gyroscope;
+                        picture-in-picture;
+                        web-share
+                    "
+                    allowfullscreen
+                    loading="eager">
+                </iframe>
+
             </div>
 
         </div>
@@ -1425,104 +1597,8 @@ def show_youtube_trailer(movie_id):
     )
 
 
-    # --------------------------------------------------------
-    # ACTUAL YOUTUBE PLAYER
-    # --------------------------------------------------------
-
-    iframe_html = f"""
-    <div class="trailer-player">
-
-        <iframe
-            src="{embed_url}"
-            title="{video_name}"
-            allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-                web-share
-            "
-            allowfullscreen>
-        </iframe>
-
-    </div>
-    """
-
-
-    components.html(
-        iframe_html,
-        height=0,
-        scrolling=False
-    )
-
-
-    # --------------------------------------------------------
-    # FALLBACK DIRECT STREAMLIT PLAYER
-    # --------------------------------------------------------
-
-    # A normal Streamlit player is also placed below only as
-    # a fallback option if YouTube iframe doesn't load.
-    #
-    # User can click the direct YouTube link.
-
-    youtube_watch_url = (
-        "https://www.youtube.com/watch?v="
-        + youtube_key
-    )
-
-
-    st.html(
-        f"""
-        <div
-            style="
-                margin-top:12px;
-                text-align:center;
-                color:#888;
-                font-size:12px;
-            "
-        >
-            🎬 {video_name}
-        </div>
-
-        <div
-            style="
-                margin-top:8px;
-                text-align:center;
-            "
-        >
-            <a
-                href="{youtube_watch_url}"
-                target="_blank"
-                style="
-                    display:inline-block;
-                    padding:8px 18px;
-                    border-radius:30px;
-                    text-decoration:none;
-                    color:white;
-                    font-weight:800;
-                    background:
-                        linear-gradient(
-                            90deg,
-                            #006cff,
-                            #8b00ff,
-                            #ff0066
-                        );
-                    box-shadow:
-                        0 0 15px
-                        rgba(0,110,255,0.45);
-                "
-            >
-                ▶ Open Trailer on YouTube
-            </a>
-        </div>
-        """
-    )
-
-
 # ============================================================
-# 12. RECOMMENDATION
+# 11. RECOMMENDATION
 # ============================================================
 
 def recommend(movie):
@@ -1540,14 +1616,20 @@ def recommend(movie):
     posters = []
     ids = []
 
-    similar_movies = similarity_indices[index][0:20]
+    similar_movies = similarity_indices[
+        index
+    ][0:20]
 
     for movie_index in similar_movies:
 
         try:
-            movie_index = int(movie_index)
+
+            movie_index = int(
+                movie_index
+            )
 
         except Exception:
+
             continue
 
         try:
@@ -1561,15 +1643,20 @@ def recommend(movie):
             ]["title"]
 
         except Exception:
+
             continue
 
-        names.append(movie_name)
+        names.append(
+            movie_name
+        )
 
         posters.append(
             fetch_poster(movie_id)
         )
 
-        ids.append(movie_id)
+        ids.append(
+            movie_id
+        )
 
     return (
         names,
@@ -1579,7 +1666,7 @@ def recommend(movie):
 
 
 # ============================================================
-# 13. MOVIE CARD
+# 12. MOVIE CARD
 # ============================================================
 
 def movie_card_html(
@@ -1642,7 +1729,7 @@ def movie_card_html(
 
 
 # ============================================================
-# 14. SELECTED MOVIE PREVIEW
+# 13. SELECTED MOVIE PREVIEW
 # ============================================================
 
 def selected_movie_preview(movie_name):
@@ -1666,7 +1753,9 @@ def selected_movie_preview(movie_name):
 
         return
 
-    details = fetch_movie_details(movie_id)
+    details = fetch_movie_details(
+        movie_id
+    )
 
     if not details:
         return
@@ -1739,7 +1828,7 @@ def selected_movie_preview(movie_name):
 
 
 # ============================================================
-# 15. DETAILS PAGE
+# 14. DETAILS PAGE
 # ============================================================
 
 def show_movie_details(movie_id):
@@ -1754,10 +1843,9 @@ def show_movie_details(movie_id):
         st.rerun()
 
 
-    st.divider()
-
-
-    details = fetch_movie_details(movie_id)
+    details = fetch_movie_details(
+        movie_id
+    )
 
     if not details:
 
@@ -1802,181 +1890,245 @@ def show_movie_details(movie_id):
         "poster_path"
     )
 
-    backdrop_path = details.get(
-        "backdrop_path"
+
+    # ========================================================
+    # 1. TRAILER FIRST
+    # ========================================================
+
+    st.html(
+        """
+        <div class="trailer-heading">
+            ▶️ Trailer
+        </div>
+        """
     )
 
 
+    trailer_key = fetch_trailer_key(
+        movie_id
+    )
+
+
+    if trailer_key:
+
+        show_youtube_trailer(
+            trailer_key
+        )
+
+    else:
+
+        st.info(
+            "Trailer not available for this movie."
+        )
+
+
     # ========================================================
-    # BACKDROP
+    # 2. POSTER BELOW TRAILER
     # ========================================================
 
-    if backdrop_path:
+    if poster_path:
 
-        backdrop_url = (
-            "https://image.tmdb.org/t/p/original"
-            + backdrop_path
+        poster_url = (
+            "https://image.tmdb.org/t/p/w500"
+            + poster_path
         )
 
         st.html(
             f"""
-            <div
-                style="
-                    width:100%;
-                    height:420px;
-                    border-radius:18px;
+            <div class="details-poster-box">
 
-                    background-image:
+                <img
+                    class="details-poster"
+                    src="{poster_url}"
+                    alt="{html.escape(str(title))}"
+                >
 
-                        linear-gradient(
-                            to top,
-                            #03030a 0%,
-                            rgba(3,3,10,0.10) 80%
-                        ),
-
-                        url('{backdrop_url}');
-
-                    background-size:cover;
-
-                    background-position:center;
-
-                    border:2px solid #222;
-
-                    box-shadow:
-                        0 0 20px
-                        rgba(0,110,255,0.25),
-
-                        0 0 25px
-                        rgba(255,0,70,0.20);
-                "
-            >
             </div>
             """
         )
 
 
-    st.title(
-        "🎬 " + title
+    # ========================================================
+    # 3. MOVIE DETAILS
+    # ========================================================
+
+    safe_title = html.escape(
+        str(title)
+    )
+
+    safe_overview = html.escape(
+        str(overview)
     )
 
 
-    # ========================================================
-    # POSTER + BASIC INFO
-    # ========================================================
+    # Runtime text
 
-    poster_col, info_col = st.columns(
-        [1, 2],
-        gap="large"
-    )
+    if runtime:
 
+        hours = runtime // 60
+        minutes = runtime % 60
 
-    with poster_col:
+        if hours:
 
-        if poster_path:
-
-            poster_url = (
-                "https://image.tmdb.org/t/p/w500"
-                + poster_path
-            )
-
-            st.image(
-                poster_url,
-                use_container_width=True
+            runtime_text = (
+                f"{hours}h {minutes}min"
             )
 
         else:
 
-            st.info(
-                "Poster not available."
+            runtime_text = (
+                f"{minutes}min"
+            )
+
+    else:
+
+        runtime_text = "Unknown"
+
+
+    # Genres
+
+    genre_html = ""
+
+    for genre in genres:
+
+        genre_name = genre.get(
+            "name"
+        )
+
+        if genre_name:
+
+            genre_html += (
+                f'<span class="genre-pill">'
+                f'{html.escape(str(genre_name))}'
+                f'</span>'
             )
 
 
-    with info_col:
+    st.html(
+        f"""
+        <div class="movie-details-box">
 
-        st.subheader("⭐ Rating")
-
-        st.metric(
-            "TMDB Rating",
-            f"{rating:.1f}/10"
-        )
-
-        st.divider()
-
-        st.subheader("📅 Release Date")
-
-        st.write(
-            release_date
-        )
+            <div
+                class="details-page-title"
+                style="
+                    position:relative;
+                    z-index:2;
+                    margin-top:0;
+                "
+            >
+                🎬 {safe_title}
+            </div>
 
 
-        if runtime:
+            <div class="info-grid">
 
-            st.divider()
+                <!-- RATING -->
 
-            hours = runtime // 60
+                <div class="info-item">
 
-            minutes = runtime % 60
+                    <div class="info-heading">
+                        ⭐ Rating
+                    </div>
 
-            if hours:
+                    <div class="info-value">
+                        <strong
+                            style="
+                                font-size:24px;
+                                color:#ffffff;
+                            "
+                        >
+                            {float(rating):.1f}/10
+                        </strong>
 
-                runtime_text = (
-                    f"{hours}h {minutes}min"
-                )
+                        <br>
 
-            else:
+                        <span
+                            style="
+                                color:#888;
+                                font-size:12px;
+                            "
+                        >
+                            TMDB Rating
+                        </span>
 
-                runtime_text = (
-                    f"{minutes}min"
-                )
+                    </div>
 
-            st.subheader("⏱️ Runtime")
-
-            st.write(
-                runtime_text
-            )
-
-
-        if genres:
-
-            st.divider()
-
-            st.subheader("🎭 Genres")
-
-            genre_names = []
-
-            for genre in genres:
-
-                name = genre.get("name")
-
-                if name:
-
-                    genre_names.append(name)
-
-            st.write(
-                " • ".join(genre_names)
-            )
+                </div>
 
 
-        st.divider()
+                <!-- RELEASE -->
 
-        st.subheader("📝 Story")
+                <div class="info-item">
 
-        st.write(
-            overview
-        )
+                    <div class="info-heading">
+                        📅 Release Date
+                    </div>
+
+                    <div class="info-value">
+                        {html.escape(str(release_date))}
+                    </div>
+
+                </div>
 
 
-    # ========================================================
-    # TRAILER
-    # ========================================================
+                <!-- RUNTIME -->
 
-    st.divider()
+                <div class="info-item">
 
-    show_youtube_trailer(movie_id)
+                    <div class="info-heading">
+                        ⏱️ Runtime
+                    </div>
+
+                    <div class="info-value">
+                        {runtime_text}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- GENRES -->
+
+            <div
+                class="story-box"
+                style="
+                    margin-top:10px;
+                "
+            >
+
+                <div class="info-heading">
+                    🎭 Genres
+                </div>
+
+                <div class="genre-list">
+                    {genre_html}
+                </div>
+
+            </div>
+
+
+            <!-- STORY -->
+
+            <div class="story-box">
+
+                <div class="info-heading">
+                    📝 Story
+                </div>
+
+                <div class="story-text">
+                    {safe_overview}
+                </div>
+
+            </div>
+
+        </div>
+        """
+    )
 
 
 # ============================================================
-# 16. QUERY PARAMETER
+# 15. QUERY PARAMETER
 # ============================================================
 
 movie_id_from_url = st.query_params.get(
@@ -1985,7 +2137,7 @@ movie_id_from_url = st.query_params.get(
 
 
 # ============================================================
-# 17. DETAILS PAGE
+# 16. DETAILS PAGE
 # ============================================================
 
 if movie_id_from_url:
@@ -2008,7 +2160,7 @@ if movie_id_from_url:
 
 
 # ============================================================
-# 18. MAIN PAGE
+# 17. MAIN PAGE
 # ============================================================
 
 else:
@@ -2035,6 +2187,7 @@ else:
                     ANISH-ABRAR-ABHISHEK-VISHAL
                 </div>
 
+
                 <div class="hero-title">
 
                     Movie
@@ -2050,6 +2203,7 @@ else:
                     System
 
                 </div>
+
 
                 <div
                     style="
@@ -2084,7 +2238,6 @@ else:
                 margin-bottom:8px;
             "
         >
-
             🎬
 
             <span style="color:white;">
@@ -2102,7 +2255,6 @@ else:
                     );
 
                     -webkit-background-clip:text;
-
                     -webkit-text-fill-color:transparent;
                 "
             >
@@ -2114,11 +2266,9 @@ else:
     )
 
 
-    movie_list = (
-        movies["title"]
-        .dropna()
-        .values
-    )
+    movie_list = movies[
+        "title"
+    ].dropna().values
 
 
     default_index = 0
@@ -2128,7 +2278,9 @@ else:
 
         default_index = list(
             movie_list
-        ).index("Avatar")
+        ).index(
+            "Avatar"
+        )
 
 
     selected_movie = st.selectbox(
@@ -2206,7 +2358,9 @@ else:
         )
 
 
-        for j in range(COLS_PER_ROW):
+        for j in range(
+            COLS_PER_ROW
+        ):
 
             position = (
                 row_start + j
@@ -2239,9 +2393,7 @@ else:
             <div class="footer-line"></div>
 
             <div class="footer-title">
-
                 🎬 Movie Recommendation System
-
             </div>
 
             <div
