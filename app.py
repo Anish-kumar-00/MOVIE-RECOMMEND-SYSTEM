@@ -875,6 +875,45 @@ st.html(
 
 
     /* =====================================================
+       ⭐ NEW: DETAILS POSTER — 16:9
+       ===================================================== */
+
+    .center-poster {
+        width: 70%;
+        max-width: 900px;
+
+        aspect-ratio: 16 / 9;
+
+        height: auto;
+
+        object-fit: cover;
+
+        display: block;
+
+        margin: 25px auto 35px;
+
+        border-radius: 16px;
+
+        box-shadow:
+            0 0 18px rgba(0,110,255,0.60),
+            0 0 35px rgba(255,0,70,0.40);
+
+        border: 3px solid transparent;
+
+        background:
+            linear-gradient(#03030a, #03030a) padding-box,
+            linear-gradient(
+                90deg,
+                #006cff,
+                #00c8ff,
+                #9d00ff,
+                #ff0066,
+                #ff1744
+            ) border-box;
+    }
+
+
+    /* =====================================================
        INFO PANEL
        ===================================================== */
 
@@ -1178,6 +1217,21 @@ st.html(
 
         .trailer-heading {
             font-size: 25px;
+        }
+
+        /* =================================================
+           MOBILE DETAILS POSTER — 16:9
+           ================================================= */
+
+        .center-poster {
+            width: 92%;
+            max-width: none;
+
+            aspect-ratio: 16 / 9;
+
+            height: auto;
+
+            margin: 20px auto 30px;
         }
 
         .details-panel {
@@ -1748,12 +1802,6 @@ def show_movie_details(movie_id):
 
     if trailer_url:
 
-        # ----------------------------------------------------
-        # IMPORTANT:
-        # st.video() creates an actual playable video player.
-        # Streamlit automatically keeps the 16:9 aspect ratio.
-        # ----------------------------------------------------
-
         st.html(
             '<div class="trailer-box">'
             '<div class="trailer-inner">'
@@ -1781,20 +1829,19 @@ def show_movie_details(movie_id):
     if poster_path:
 
         poster_url = (
-            "https://image.tmdb.org/t/p/w500"
+            "https://image.tmdb.org/t/p/w780"
             + poster_path
         )
 
-        poster_col, empty_col = st.columns(
-            [1, 2]
+        st.html(
+            f"""
+            <img
+                class="center-poster"
+                src="{poster_url}"
+                alt="{html.escape(str(title))}"
+            >
+            """
         )
-
-        with poster_col:
-
-            st.image(
-                poster_url,
-                use_container_width=True
-            )
 
 
     # ========================================================
