@@ -4,7 +4,6 @@ import pickle
 import requests
 import html
 import streamlit as st
-import streamlit.components.v1 as components
 
 
 # ============================================================
@@ -23,1290 +22,1180 @@ st.set_page_config(
 # 2. GLOBAL CSS
 # ============================================================
 
-st.html("""
-<style>
+st.html(
+    """
+    <style>
 
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    background: #03030a;
-}
-
-.stApp {
-    background:
-        radial-gradient(
-            circle at 0% 20%,
-            rgba(0, 75, 255, 0.20),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 100% 30%,
-            rgba(255, 0, 60, 0.20),
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(100, 0, 255, 0.12),
-            transparent 35%
-        ),
-        #03030a;
-
-    color: white;
-    overflow-x: hidden;
-}
-
-.block-container {
-    max-width: 1500px;
-    padding-top: 25px;
-    padding-bottom: 50px;
-}
-
-[data-testid="stVerticalBlock"] {
-    gap: 0.5rem;
-}
-
-
-/* ============================================================
-   SELECT BOX
-   ============================================================ */
-
-div[data-baseweb="select"] > div {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0, 20, 50, 0.95),
-            rgba(25, 0, 25, 0.95)
-        ) !important;
-
-    border: 2px solid transparent !important;
-    border-radius: 12px !important;
-    color: white !important;
-
-    box-shadow:
-        0 0 10px rgba(0, 110, 255, 0.25),
-        0 0 10px rgba(255, 0, 60, 0.18) !important;
-}
-
-div[data-baseweb="select"] > div:focus-within {
-    border-color: #008cff !important;
-
-    box-shadow:
-        0 0 15px rgba(0, 140, 255, 0.65),
-        0 0 25px rgba(255, 0, 80, 0.35) !important;
-}
-
-
-/* ============================================================
-   BUTTON
-   ============================================================ */
-
-.stButton > button {
-    background:
-        linear-gradient(
-            135deg,
-            #006cff,
-            #7b00ff,
-            #ff003c
-        ) !important;
-
-    color: white !important;
-    border: 1px solid #ff174f !important;
-    border-radius: 10px !important;
-    font-weight: 800 !important;
-
-    transition: all 0.3s ease !important;
-
-    box-shadow:
-        0 0 12px rgba(0, 110, 255, 0.25),
-        0 0 12px rgba(255, 0, 70, 0.20) !important;
-}
-
-.stButton > button:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 0 18px rgba(0, 110, 255, 0.60),
-        0 0 30px rgba(255, 0, 70, 0.50) !important;
-}
-
-
-/* ============================================================
-   DIVIDER
-   ============================================================ */
-
-hr {
-    border: none !important;
-    height: 1px !important;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            #006cff,
-            #ff0066,
-            transparent
-        ) !important;
-
-    box-shadow:
-        0 0 10px rgba(0, 100, 255, 0.5);
-}
-
-
-/* ============================================================
-   HERO
-   ============================================================ */
-
-.hero-box {
-    position: relative;
-
-    min-height: 390px;
-
-    display: flex;
-    align-items: flex-end;
-
-    padding: 55px;
-
-    border-radius: 20px;
-    overflow: hidden;
-
-    background:
-        radial-gradient(
-            circle at 75% 45%,
-            rgba(0, 100, 255, 0.30),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 90% 55%,
-            rgba(255, 0, 70, 0.28),
-            transparent 30%
-        ),
-        linear-gradient(
-            110deg,
-            #02030a,
-            #080814,
-            #11030a
-        );
-
-    border: 2px solid transparent;
-    background-clip: padding-box;
-
-    box-shadow:
-        0 0 15px rgba(0, 110, 255, 0.45),
-        0 0 30px rgba(255, 0, 70, 0.30);
-
-    margin-bottom: 40px;
-
-    animation: heroPulse 4s ease-in-out infinite;
-}
-
-.hero-box::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    border-radius: 20px;
-    padding: 2px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #006cff,
-            #00c8ff,
-            #9d00ff,
-            #ff0066,
-            #ff1744,
-            #006cff
-        );
-
-    background-size: 300% 100%;
-
-    animation: neonBorder 5s linear infinite;
-
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-
-    pointer-events: none;
-}
-
-.hero-box::after {
-    content: "";
-
-    position: absolute;
-
-    width: 450px;
-    height: 450px;
-
-    right: -100px;
-    top: -120px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(0, 100, 255, 0.25),
-            transparent 65%
-        );
-
-    filter: blur(25px);
-
-    animation: heroLight 5s ease-in-out infinite;
-}
-
-@keyframes heroPulse {
-
-    0% {
-        box-shadow:
-            0 0 15px rgba(0, 110, 255, 0.35),
-            0 0 20px rgba(255, 0, 70, 0.20);
+    * {
+        box-sizing: border-box;
     }
 
-    50% {
-        box-shadow:
-            0 0 30px rgba(0, 110, 255, 0.65),
-            0 0 45px rgba(255, 0, 70, 0.45);
+    html {
+        scroll-behavior: smooth;
     }
 
-    100% {
-        box-shadow:
-            0 0 15px rgba(0, 110, 255, 0.35),
-            0 0 20px rgba(255, 0, 70, 0.20);
-    }
-}
-
-@keyframes neonBorder {
-
-    0% {
-        background-position: 0% 50%;
+    body {
+        background: #03030a;
     }
 
-    50% {
-        background-position: 100% 50%;
+    .stApp {
+        background:
+            radial-gradient(
+                circle at 0% 20%,
+                rgba(0, 75, 255, 0.25),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 100% 30%,
+                rgba(255, 0, 60, 0.25),
+                transparent 32%
+            ),
+            radial-gradient(
+                circle at 50% 100%,
+                rgba(100, 0, 255, 0.15),
+                transparent 35%
+            ),
+            #03030a;
+
+        color: white;
+        overflow-x: hidden;
     }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-@keyframes heroLight {
-
-    0% {
-        transform: translateX(0) translateY(0);
-    }
-
-    50% {
-        transform: translateX(-100px) translateY(50px);
-    }
-
-    100% {
-        transform: translateX(0) translateY(0);
-    }
-}
-
-.hero-content {
-    position: relative;
-    z-index: 5;
-
-    animation: titleFade 1s ease-out;
-}
-
-@keyframes titleFade {
-
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.hero-title {
-    font-size: clamp(38px, 6vw, 72px);
-
-    font-weight: 950;
-    line-height: 0.98;
-
-    margin: 10px 0 20px;
-
-    color: white;
-
-    text-shadow:
-        0 0 15px rgba(255,255,255,0.15);
-}
-
-.gradient-text {
-    background:
-        linear-gradient(
-            90deg,
-            #00aaff,
-            #7b00ff,
-            #ff0077
-        );
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-
-/* ============================================================
-   SECTION TITLE
-   ============================================================ */
-
-.section-title {
-    font-size: 32px;
-    font-weight: 950;
-
-    margin-top: 15px;
-    margin-bottom: 5px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff 0%,
-            #00aaff 35%,
-            #9d00ff 65%,
-            #ff0066 100%
-        );
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.section-subtitle {
-    color: #aeb4c5;
-    margin-bottom: 25px;
-    font-size: 15px;
-}
-
-
-/* ============================================================
-   SELECTED MOVIE
-   ============================================================ */
-
-.selected-movie-box {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-    gap: 28px;
-
-    padding: 18px;
-
-    min-height: 180px;
-
-    margin-top: 25px;
-    margin-bottom: 30px;
-
-    border-radius: 18px;
-
-    background:
-        linear-gradient(
-            110deg,
-            rgba(0, 40, 90, 0.48),
-            rgba(25, 5, 50, 0.42),
-            rgba(80, 0, 25, 0.45)
-        );
-
-    border: 2px solid transparent;
-    background-clip: padding-box;
-
-    box-shadow:
-        0 0 18px rgba(0, 100, 255, 0.35),
-        0 0 30px rgba(255, 0, 70, 0.25);
-
-    overflow: hidden;
-}
-
-.selected-movie-box::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    border-radius: 18px;
-    padding: 2px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #0077ff,
-            #00ccff,
-            #9d00ff,
-            #ff0066,
-            #ff003c,
-            #0077ff
-        );
-
-    background-size: 300% 100%;
-
-    animation: neonBorder 4s linear infinite;
-
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-
-    pointer-events: none;
-}
-
-.selected-poster {
-    width: 120px;
-    height: 175px;
-
-    object-fit: cover;
-
-    border-radius: 12px;
-
-    position: relative;
-    z-index: 2;
-
-    box-shadow:
-        0 0 12px rgba(0, 110, 255, 0.65),
-        0 0 20px rgba(255, 0, 70, 0.35);
-}
-
-.selected-info {
-    position: relative;
-    z-index: 2;
-}
-
-.selected-badge {
-    display: inline-block;
-
-    padding: 5px 12px;
-
-    border-radius: 50px;
-
-    color: #ffffff;
-
-    font-size: 12px;
-    font-weight: 800;
-
-    background:
-        linear-gradient(
-            90deg,
-            #006cff,
-            #8b00ff,
-            #ff0066
-        );
-
-    box-shadow:
-        0 0 12px rgba(0, 120, 255, 0.45);
-}
-
-.selected-title {
-    font-size: 32px;
-    font-weight: 900;
-
-    margin: 8px 0;
-}
-
-.selected-overview {
-    color: #c5cad5;
-    line-height: 1.6;
-    max-width: 750px;
-}
-
-
-/* ============================================================
-   MOVIE ROW
-   ============================================================ */
-
-div[data-testid="stHorizontalBlock"] {
-    position: relative;
-
-    padding: 7px 4px;
-
-    border-radius: 18px;
-
-    background:
-        radial-gradient(
-            circle at 0% 50%,
-            rgba(0, 100, 255, 0.25),
-            transparent 23%
-        ),
-        radial-gradient(
-            circle at 100% 50%,
-            rgba(255, 0, 70, 0.25),
-            transparent 23%
-        );
-
-    margin-bottom: 8px;
-
-    overflow: visible;
-}
-
-
-/* ============================================================
-   MOVIE CARD
-   ============================================================ */
-
-.movie-wrapper {
-    position: relative;
-
-    background:
-        linear-gradient(
-            145deg,
-            #0d1425,
-            #0a0a12
-        );
-
-    border: 2px solid transparent;
-
-    border-radius: 14px;
-
-    padding: 5px;
-
-    margin-bottom: 18px;
-
-    overflow: hidden;
-
-    transition:
-        transform 0.35s ease,
-        box-shadow 0.35s ease;
-
-    box-shadow:
-        0 5px 15px rgba(0,0,0,0.5);
-
-    z-index: 2;
-}
-
-.movie-wrapper::before {
-    content: "";
-
-    position: absolute;
-
-    inset: -2px;
-
-    border-radius: 15px;
-
-    padding: 2px;
-
-    background:
-        linear-gradient(
-            130deg,
-            #006cff,
-            #00c8ff,
-            #7000ff,
-            #ff0066,
-            #ff1744,
-            #006cff
-        );
-
-    background-size: 350% 350%;
-
-    animation: cardLightning 3.5s linear infinite;
-
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-
-    opacity: 0.95;
-
-    pointer-events: none;
-}
-
-@keyframes cardLightning {
-
-    0% {
-        background-position: 0% 50%;
-    }
-
-    25% {
-        background-position: 50% 0%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    75% {
-        background-position: 50% 100%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-.movie-wrapper::after {
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            120deg,
-            rgba(0, 100, 255, 0.08),
-            transparent 35%,
-            rgba(255, 0, 70, 0.08)
-        );
-
-    pointer-events: none;
-}
-
-.movie-wrapper:hover {
-    transform:
-        translateY(-9px)
-        scale(1.035);
-
-    box-shadow:
-        0 0 15px rgba(0, 110, 255, 0.65),
-        0 0 25px rgba(255, 0, 70, 0.55),
-        0 18px 40px rgba(0,0,0,0.75);
-
-    z-index: 50;
-}
-
-.movie-poster-container {
-    position: relative;
-
-    overflow: hidden;
-
-    border-radius: 9px;
-
-    z-index: 3;
-}
-
-.movie-poster {
-    width: 100%;
-
-    aspect-ratio: 2 / 3;
-
-    object-fit: cover;
-
-    display: block;
-
-    transition:
-        transform 0.55s ease,
-        filter 0.55s ease;
-}
-
-.movie-wrapper:hover .movie-poster {
-    transform: scale(1.08);
-
-    filter:
-        brightness(0.48)
-        saturate(1.2);
-}
-
-.movie-overlay {
-    position: absolute;
-
-    inset: 0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    opacity: 0;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(0,0,0,0.05),
-            rgba(0,0,0,0.88)
-        );
-
-    transition:
-        opacity 0.35s ease;
-}
-
-.movie-wrapper:hover .movie-overlay {
-    opacity: 1;
-}
-
-.play-circle {
-    width: 60px;
-    height: 60px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #006cff,
-            #8b00ff,
-            #ff003c
-        );
-
-    color: white;
-
-    font-size: 24px;
-
-    box-shadow:
-        0 0 15px rgba(0, 110, 255, 0.8),
-        0 0 30px rgba(255, 0, 70, 0.65);
-
-    animation: playPulse 1.7s infinite;
-}
-
-@keyframes playPulse {
-
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.08);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-.movie-title {
-    position: relative;
-
-    z-index: 5;
-
-    color: #ffffff;
-
-    font-size: 13px;
-    font-weight: 800;
-
-    text-align: center;
-
-    padding: 10px 5px 8px;
-
-    min-height: 43px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    text-shadow:
-        0 0 8px rgba(255,255,255,0.12);
-}
-
-
-/* ============================================================
-   DETAILS PAGE
-   ============================================================ */
-
-.details-page-title {
-    font-size: 40px;
-    font-weight: 950;
-
-    margin-top: 18px;
-    margin-bottom: 25px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #00b7ff,
-            #9d00ff,
-            #ff0066
-        );
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-
-/* ============================================================
-   TRAILER SECTION
-   ============================================================ */
-
-.trailer-heading {
-    font-size: 32px;
-    font-weight: 950;
-
-    margin-top: 10px;
-    margin-bottom: 15px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #00b7ff,
-            #9d00ff,
-            #ff0066
-        );
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.trailer-box {
-    width: 100%;
-
-    position: relative;
-
-    padding: 3px;
-
-    border-radius: 18px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #006cff,
-            #00c8ff,
-            #8b00ff,
-            #ff0066,
-            #ff1744,
-            #006cff
-        );
-
-    background-size: 300% 100%;
-
-    animation:
-        neonBorder 4s linear infinite;
-
-    box-shadow:
-        0 0 20px rgba(0,110,255,0.55),
-        0 0 35px rgba(255,0,70,0.40);
-}
-
-.trailer-inner {
-    width: 100%;
-
-    background: #000;
-
-    border-radius: 15px;
-
-    overflow: hidden;
-
-    line-height: 0;
-}
-
-.trailer-inner iframe {
-    display: block;
-
-    width: 100%;
-
-    aspect-ratio: 16 / 9;
-
-    min-height: 0;
-
-    border: 0;
-}
-
-
-/* ============================================================
-   POSTER CENTER
-   ============================================================ */
-
-.details-poster-box {
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    margin-top: 35px;
-    margin-bottom: 30px;
-}
-
-.details-poster {
-    width: 300px;
-
-    max-width: 80vw;
-
-    height: auto;
-
-    border-radius: 16px;
-
-    border: 2px solid transparent;
-
-    box-shadow:
-        0 0 15px rgba(0,110,255,0.80),
-        0 0 30px rgba(255,0,70,0.55);
-
-    transition:
-        transform 0.4s ease;
-}
-
-.details-poster:hover {
-    transform:
-        scale(1.025)
-        translateY(-5px);
-}
-
-
-/* ============================================================
-   DETAILS INFO BOX
-   ============================================================ */
-
-.movie-details-box {
-    position: relative;
-
-    padding: 28px;
-
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(5,15,35,0.95),
-            rgba(20,5,35,0.94),
-            rgba(35,3,18,0.94)
-        );
-
-    border: 2px solid transparent;
-
-    box-shadow:
-        0 0 18px rgba(0,110,255,0.45),
-        0 0 30px rgba(255,0,70,0.30);
-
-    overflow: hidden;
-}
-
-.movie-details-box::before {
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    padding: 2px;
-
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #006cff,
-            #00c8ff,
-            #9d00ff,
-            #ff0066,
-            #ff1744,
-            #006cff
-        );
-
-    background-size: 300% 100%;
-
-    animation:
-        neonBorder 4s linear infinite;
-
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-
-    pointer-events: none;
-}
-
-.info-heading {
-    position: relative;
-    z-index: 2;
-
-    font-size: 20px;
-    font-weight: 900;
-
-    color: white;
-
-    margin-bottom: 8px;
-}
-
-.info-value {
-    position: relative;
-    z-index: 2;
-
-    color: #d8dce8;
-
-    font-size: 16px;
-}
-
-.info-grid {
-    position: relative;
-    z-index: 2;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 20px;
-
-    margin-bottom: 20px;
-}
-
-.info-item {
-    padding: 18px;
-
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0,90,180,0.15),
-            rgba(120,0,120,0.12),
-            rgba(255,0,70,0.12)
-        );
-
-    border: 1px solid rgba(0,150,255,0.30);
-
-    box-shadow:
-        inset 0 0 15px rgba(0,100,255,0.05);
-}
-
-.genre-list {
-    position: relative;
-    z-index: 2;
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 10px;
-
-    margin-top: 12px;
-}
-
-.genre-pill {
-    padding: 7px 14px;
-
-    border-radius: 50px;
-
-    border: 1px solid #008cff;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(0,110,255,0.18),
-            rgba(157,0,255,0.18),
-            rgba(255,0,102,0.18)
-        );
-
-    color: white;
-
-    box-shadow:
-        0 0 10px rgba(0,110,255,0.25);
-}
-
-.story-box {
-    position: relative;
-    z-index: 2;
-
-    margin-top: 25px;
-
-    padding-top: 22px;
-
-    border-top:
-        1px solid
-        rgba(0,150,255,0.40);
-}
-
-.story-text {
-    color: #d0d4df;
-
-    font-size: 16px;
-
-    line-height: 1.7;
-
-    margin-top: 10px;
-}
-
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-
-.footer {
-    position: relative;
-
-    text-align: center;
-
-    padding: 40px 10px;
-
-    margin-top: 20px;
-
-    color: #777;
-}
-
-.footer-title {
-    font-size: 22px;
-
-    font-weight: 900;
-
-    color: white;
-}
-
-.footer-line {
-    width: 180px;
-
-    height: 2px;
-
-    margin: 12px auto;
-
-    background:
-        linear-gradient(
-            90deg,
-            #006cff,
-            #9d00ff,
-            #ff0066
-        );
-
-    box-shadow:
-        0 0 12px rgba(0,110,255,0.5),
-        0 0 12px rgba(255,0,70,0.5);
-}
-
-
-/* ============================================================
-   MOBILE
-   ============================================================ */
-
-@media (max-width: 700px) {
 
     .block-container {
-        padding-left: 10px;
-        padding-right: 10px;
+        max-width: 1500px;
+        padding-top: 25px;
+        padding-bottom: 50px;
     }
 
+    [data-testid="stVerticalBlock"] {
+        gap: 0.5rem;
+    }
+
+
+    /* =====================================================
+       SELECT BOX
+       ===================================================== */
+
+    div[data-baseweb="select"] > div {
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0, 20, 50, 0.95),
+                rgba(25, 0, 25, 0.95)
+            ) !important;
+
+        border: 2px solid transparent !important;
+        border-radius: 12px !important;
+        color: white !important;
+
+        box-shadow:
+            0 0 10px rgba(0, 110, 255, 0.25),
+            0 0 10px rgba(255, 0, 60, 0.18) !important;
+    }
+
+    div[data-baseweb="select"] > div:focus-within {
+        border-color: #008cff !important;
+
+        box-shadow:
+            0 0 15px rgba(0, 140, 255, 0.65),
+            0 0 25px rgba(255, 0, 80, 0.35) !important;
+    }
+
+
+    /* =====================================================
+       BUTTON
+       ===================================================== */
+
+    .stButton > button {
+        background:
+            linear-gradient(
+                135deg,
+                #006cff,
+                #7b00ff,
+                #ff003c
+            ) !important;
+
+        color: white !important;
+        border: 1px solid #ff174f !important;
+        border-radius: 10px !important;
+        font-weight: 800 !important;
+
+        transition: all 0.3s ease !important;
+
+        box-shadow:
+            0 0 12px rgba(0, 110, 255, 0.25),
+            0 0 12px rgba(255, 0, 70, 0.20) !important;
+    }
+
+    .stButton > button:hover {
+        transform: translateY(-3px);
+
+        box-shadow:
+            0 0 18px rgba(0, 110, 255, 0.60),
+            0 0 30px rgba(255, 0, 70, 0.50) !important;
+    }
+
+
+    /* =====================================================
+       DIVIDER
+       ===================================================== */
+
+    hr {
+        border: none !important;
+        height: 1px !important;
+
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                #006cff,
+                #ff0066,
+                transparent
+            ) !important;
+
+        box-shadow:
+            0 0 10px rgba(0, 100, 255, 0.5);
+    }
+
+
+    /* =====================================================
+       HERO
+       ===================================================== */
+
     .hero-box {
-        min-height: 300px;
+        position: relative;
+        min-height: 390px;
 
-        padding: 28px 24px;
+        display: flex;
+        align-items: flex-end;
 
-        border-radius: 15px;
+        padding: 55px;
+
+        border-radius: 20px;
+        overflow: hidden;
+
+        background:
+            radial-gradient(
+                circle at 75% 45%,
+                rgba(0, 100, 255, 0.30),
+                transparent 30%
+            ),
+
+            radial-gradient(
+                circle at 90% 55%,
+                rgba(255, 0, 70, 0.28),
+                transparent 30%
+            ),
+
+            linear-gradient(
+                110deg,
+                #02030a,
+                #080814,
+                #11030a
+            );
+
+        border: 2px solid transparent;
+        background-clip: padding-box;
+
+        box-shadow:
+            0 0 15px rgba(0, 110, 255, 0.45),
+            0 0 30px rgba(255, 0, 70, 0.30);
+
+        margin-bottom: 40px;
+
+        animation: heroPulse 4s ease-in-out infinite;
+    }
+
+    .hero-box::before {
+        content: "";
+
+        position: absolute;
+        inset: 0;
+
+        border-radius: 20px;
+        padding: 2px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #006cff,
+                #00c8ff,
+                #9d00ff,
+                #ff0066,
+                #ff1744,
+                #006cff
+            );
+
+        background-size: 300% 100%;
+
+        animation: neonBorder 5s linear infinite;
+
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+
+        pointer-events: none;
+    }
+
+    .hero-box::after {
+        content: "";
+
+        position: absolute;
+
+        width: 450px;
+        height: 450px;
+
+        right: -100px;
+        top: -120px;
+
+        background:
+            radial-gradient(
+                circle,
+                rgba(0, 100, 255, 0.25),
+                transparent 65%
+            );
+
+        filter: blur(25px);
+
+        animation: heroLight 5s ease-in-out infinite;
+    }
+
+    @keyframes heroPulse {
+        0% {
+            box-shadow:
+                0 0 15px rgba(0, 110, 255, 0.35),
+                0 0 20px rgba(255, 0, 70, 0.20);
+        }
+
+        50% {
+            box-shadow:
+                0 0 30px rgba(0, 110, 255, 0.65),
+                0 0 45px rgba(255, 0, 70, 0.45);
+        }
+
+        100% {
+            box-shadow:
+                0 0 15px rgba(0, 110, 255, 0.35),
+                0 0 20px rgba(255, 0, 70, 0.20);
+        }
+    }
+
+    @keyframes neonBorder {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    @keyframes heroLight {
+        0% {
+            transform: translateX(0) translateY(0);
+        }
+
+        50% {
+            transform: translateX(-100px) translateY(50px);
+        }
+
+        100% {
+            transform: translateX(0) translateY(0);
+        }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 5;
+        animation: titleFade 1s ease-out;
+    }
+
+    @keyframes titleFade {
+        from {
+            opacity: 0;
+            transform: translateY(25px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .hero-title {
-        font-size: 42px;
-        line-height: 1;
+        font-size: clamp(38px, 6vw, 72px);
+        font-weight: 950;
+        line-height: 0.98;
+        margin: 10px 0 20px;
+
+        color: white;
+
+        text-shadow:
+            0 0 15px rgba(255,255,255,0.15);
     }
+
+    .gradient-text {
+        background:
+            linear-gradient(
+                90deg,
+                #00aaff,
+                #7b00ff,
+                #ff0077
+            );
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+
+    /* =====================================================
+       SECTION TITLE
+       ===================================================== */
+
+    .section-title {
+        font-size: 32px;
+        font-weight: 950;
+
+        margin-top: 15px;
+        margin-bottom: 5px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #ffffff 0%,
+                #00aaff 35%,
+                #9d00ff 65%,
+                #ff0066 100%
+            );
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .section-subtitle {
+        color: #aeb4c5;
+        margin-bottom: 25px;
+        font-size: 15px;
+    }
+
+
+    /* =====================================================
+       SELECTED MOVIE
+       ===================================================== */
 
     .selected-movie-box {
-        gap: 15px;
+        position: relative;
 
-        padding: 12px;
+        display: flex;
+        align-items: center;
 
-        min-height: 145px;
-    }
+        gap: 28px;
 
-    .selected-poster {
-        width: 85px;
-        height: 125px;
-    }
+        padding: 18px;
 
-    .selected-title {
-        font-size: 24px;
-    }
+        min-height: 180px;
 
-    .selected-overview {
-        font-size: 12px;
+        margin-top: 25px;
+        margin-bottom: 30px;
 
-        line-height: 1.45;
+        border-radius: 18px;
 
-        display: -webkit-box;
+        background:
+            linear-gradient(
+                110deg,
+                rgba(0, 40, 90, 0.48),
+                rgba(25, 5, 50, 0.42),
+                rgba(80, 0, 25, 0.45)
+            );
 
-        -webkit-line-clamp: 4;
+        border: 2px solid transparent;
+        background-clip: padding-box;
 
-        -webkit-box-orient: vertical;
+        box-shadow:
+            0 0 18px rgba(0, 100, 255, 0.35),
+            0 0 30px rgba(255, 0, 70, 0.25);
 
         overflow: hidden;
     }
 
-    .section-title {
-        font-size: 25px;
+    .selected-movie-box::before {
+        content: "";
+
+        position: absolute;
+        inset: 0;
+
+        border-radius: 18px;
+        padding: 2px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #0077ff,
+                #00ccff,
+                #9d00ff,
+                #ff0066,
+                #ff003c,
+                #0077ff
+            );
+
+        background-size: 300% 100%;
+
+        animation: neonBorder 4s linear infinite;
+
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+
+        pointer-events: none;
     }
 
+    .selected-poster {
+        width: 120px;
+        height: 175px;
+
+        object-fit: cover;
+
+        border-radius: 12px;
+
+        position: relative;
+        z-index: 2;
+
+        box-shadow:
+            0 0 12px rgba(0, 110, 255, 0.65),
+            0 0 20px rgba(255, 0, 70, 0.35);
+    }
+
+    .selected-info {
+        position: relative;
+        z-index: 2;
+    }
+
+    .selected-badge {
+        display: inline-block;
+
+        padding: 5px 12px;
+
+        border-radius: 50px;
+
+        color: white;
+
+        font-size: 12px;
+        font-weight: 800;
+
+        background:
+            linear-gradient(
+                90deg,
+                #006cff,
+                #8b00ff,
+                #ff0066
+            );
+
+        box-shadow:
+            0 0 12px rgba(0, 120, 255, 0.45);
+    }
+
+    .selected-title {
+        font-size: 32px;
+        font-weight: 900;
+        margin: 8px 0;
+    }
+
+    .selected-overview {
+        color: #c5cad5;
+        line-height: 1.6;
+        max-width: 750px;
+    }
+
+
+    /* =====================================================
+       MOVIE ROW
+       ===================================================== */
+
+    div[data-testid="stHorizontalBlock"] {
+        position: relative;
+
+        padding: 7px 4px;
+
+        border-radius: 18px;
+
+        background:
+            radial-gradient(
+                circle at 0% 50%,
+                rgba(0, 100, 255, 0.25),
+                transparent 23%
+            ),
+
+            radial-gradient(
+                circle at 100% 50%,
+                rgba(255, 0, 70, 0.25),
+                transparent 23%
+            );
+
+        margin-bottom: 8px;
+
+        overflow: visible;
+    }
+
+
+    /* =====================================================
+       MOVIE CARD
+       ===================================================== */
+
     .movie-wrapper {
-        border-radius: 11px;
+        position: relative;
 
-        padding: 4px;
+        background:
+            linear-gradient(
+                145deg,
+                #0d1425,
+                #0a0a12
+            );
 
-        margin-bottom: 12px;
+        border: 2px solid transparent;
+        border-radius: 14px;
+
+        padding: 5px;
+        margin-bottom: 18px;
+
+        overflow: hidden;
+
+        transition:
+            transform 0.35s ease,
+            box-shadow 0.35s ease;
+
+        box-shadow:
+            0 5px 15px rgba(0,0,0,0.5);
+
+        z-index: 2;
+    }
+
+    .movie-wrapper::before {
+        content: "";
+
+        position: absolute;
+        inset: -2px;
+
+        border-radius: 15px;
+        padding: 2px;
+
+        background:
+            linear-gradient(
+                130deg,
+                #006cff,
+                #00c8ff,
+                #7000ff,
+                #ff0066,
+                #ff1744,
+                #006cff
+            );
+
+        background-size: 350% 350%;
+
+        animation: cardLightning 3.5s linear infinite;
+
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+
+        opacity: 0.95;
+
+        pointer-events: none;
+    }
+
+    @keyframes cardLightning {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        25% {
+            background-position: 50% 0%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        75% {
+            background-position: 50% 100%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .movie-wrapper::after {
+        content: "";
+
+        position: absolute;
+        inset: 0;
+
+        border-radius: 14px;
+
+        background:
+            linear-gradient(
+                120deg,
+                rgba(0, 100, 255, 0.08),
+                transparent 35%,
+                rgba(255, 0, 70, 0.08)
+            );
+
+        pointer-events: none;
     }
 
     .movie-wrapper:hover {
         transform:
-            translateY(-4px)
-            scale(1.015);
+            translateY(-9px)
+            scale(1.035);
+
+        box-shadow:
+            0 0 15px rgba(0, 110, 255, 0.65),
+            0 0 25px rgba(255, 0, 70, 0.55),
+            0 18px 40px rgba(0,0,0,0.75);
+
+        z-index: 50;
     }
 
-    .movie-title {
-        font-size: 10px;
+    .movie-poster-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 9px;
+        z-index: 3;
+    }
 
-        min-height: 36px;
+    .movie-poster {
+        width: 100%;
+        aspect-ratio: 2 / 3;
 
-        padding: 7px 3px;
+        object-fit: cover;
+        display: block;
+
+        transition:
+            transform 0.55s ease,
+            filter 0.55s ease;
+    }
+
+    .movie-wrapper:hover .movie-poster {
+        transform: scale(1.08);
+
+        filter:
+            brightness(0.48)
+            saturate(1.2);
+    }
+
+    .movie-overlay {
+        position: absolute;
+        inset: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        opacity: 0;
+
+        background:
+            linear-gradient(
+                to bottom,
+                rgba(0,0,0,0.05),
+                rgba(0,0,0,0.88)
+            );
+
+        transition: opacity 0.35s ease;
+    }
+
+    .movie-wrapper:hover .movie-overlay {
+        opacity: 1;
     }
 
     .play-circle {
-        width: 44px;
-        height: 44px;
+        width: 60px;
+        height: 60px;
 
-        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background:
+            linear-gradient(
+                135deg,
+                #006cff,
+                #8b00ff,
+                #ff003c
+            );
+
+        color: white;
+        font-size: 24px;
+
+        box-shadow:
+            0 0 15px rgba(0, 110, 255, 0.8),
+            0 0 30px rgba(255, 0, 70, 0.65);
+
+        animation: playPulse 1.7s infinite;
     }
 
-    div[data-testid="stHorizontalBlock"] {
-        padding: 4px 2px;
+    @keyframes playPulse {
+        0% {
+            transform: scale(1);
+        }
 
-        border-radius: 12px;
+        50% {
+            transform: scale(1.08);
+        }
 
-        margin-bottom: 5px;
+        100% {
+            transform: scale(1);
+        }
     }
+
+    .movie-title {
+        position: relative;
+        z-index: 5;
+
+        color: white;
+
+        font-size: 13px;
+        font-weight: 800;
+
+        text-align: center;
+
+        padding: 10px 5px 8px;
+
+        min-height: 43px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        text-shadow:
+            0 0 8px rgba(255,255,255,0.12);
+    }
+
+
+    /* =====================================================
+       DETAILS PAGE
+       ===================================================== */
+
+    .details-title {
+        font-size: clamp(30px, 5vw, 55px);
+        font-weight: 950;
+
+        margin-top: 25px;
+        margin-bottom: 20px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #ffffff,
+                #00aaff,
+                #9d00ff,
+                #ff0066
+            );
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+
+    /* =====================================================
+       TRAILER CONTAINER
+       ===================================================== */
 
     .trailer-heading {
-        font-size: 27px;
-    }
-
-    .details-page-title {
         font-size: 32px;
+        font-weight: 950;
+
+        margin-top: 15px;
+        margin-bottom: 15px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #ffffff,
+                #00aaff,
+                #9d00ff,
+                #ff0066
+            );
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
-    .details-poster {
-        width: 250px;
+    .trailer-box {
+        width: 100%;
+
+        padding: 4px;
+
+        border-radius: 18px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #006cff,
+                #00c8ff,
+                #8b00ff,
+                #ff0066,
+                #ff1744
+            );
+
+        box-shadow:
+            0 0 20px rgba(0,110,255,0.55),
+            0 0 35px rgba(255,0,80,0.45);
+
+        margin-bottom: 35px;
     }
 
-    .movie-details-box {
-        padding: 18px;
+    .trailer-inner {
+        width: 100%;
+
+        border-radius: 14px;
+
+        overflow: hidden;
+
+        background: #000;
+    }
+
+
+    /* =====================================================
+       INFO PANEL
+       ===================================================== */
+
+    .details-panel {
+        position: relative;
+
+        padding: 28px;
+
+        border-radius: 20px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0,20,50,0.78),
+                rgba(15,5,30,0.78),
+                rgba(50,0,25,0.70)
+            );
+
+        border: 2px solid transparent;
+
+        background-clip: padding-box;
+
+        box-shadow:
+            0 0 20px rgba(0,110,255,0.35),
+            0 0 35px rgba(255,0,70,0.25);
+
+        overflow: hidden;
+    }
+
+    .details-panel::before {
+        content: "";
+
+        position: absolute;
+        inset: 0;
+
+        padding: 2px;
+
+        border-radius: 20px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #006cff,
+                #00c8ff,
+                #9d00ff,
+                #ff0066,
+                #ff1744,
+                #006cff
+            );
+
+        background-size: 300% 100%;
+
+        animation: neonBorder 4s linear infinite;
+
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+
+        pointer-events: none;
+    }
+
+    .info-heading {
+        font-size: 30px;
+        font-weight: 950;
+        color: white;
+
+        margin-bottom: 22px;
     }
 
     .info-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 18px;
+
+        margin-bottom: 25px;
     }
 
     .info-item {
-        padding: 15px;
+        padding: 18px;
+
+        border-radius: 14px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0,80,180,0.15),
+                rgba(255,0,80,0.12)
+            );
+
+        border: 1px solid rgba(0,160,255,0.35);
+
+        box-shadow:
+            0 0 12px rgba(0,110,255,0.12);
+    }
+
+    .info-label {
+        color: #aeb4c5;
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+
+    .info-value {
+        color: white;
+        font-size: 20px;
+        font-weight: 850;
+    }
+
+    .genre-section,
+    .story-section {
+        padding-top: 20px;
+        margin-top: 18px;
+
+        border-top:
+            1px solid
+            rgba(0,150,255,0.35);
+    }
+
+    .genre-title,
+    .story-title {
+        font-size: 20px;
+        font-weight: 900;
+
+        color: white;
+
+        margin-bottom: 10px;
+    }
+
+    .genre-tag {
+        display: inline-block;
+
+        padding: 7px 15px;
+
+        margin:
+            4px 5px 4px 0;
+
+        border-radius: 50px;
+
+        color: white;
+
+        border: 1px solid #008cff;
+
+        background:
+            linear-gradient(
+                90deg,
+                rgba(0,110,255,0.20),
+                rgba(150,0,255,0.20)
+            );
+
+        box-shadow:
+            0 0 10px rgba(0,110,255,0.25);
     }
 
     .story-text {
-        font-size: 14px;
-    }
-}
+        color: #c5cad5;
 
-</style>
-""")
+        line-height: 1.8;
+
+        font-size: 15px;
+    }
+
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    .footer {
+        position: relative;
+
+        text-align: center;
+
+        padding: 40px 10px;
+
+        margin-top: 20px;
+
+        color: #777;
+    }
+
+    .footer-title {
+        font-size: 22px;
+        font-weight: 900;
+        color: white;
+    }
+
+    .footer-line {
+        width: 180px;
+        height: 2px;
+
+        margin: 12px auto;
+
+        background:
+            linear-gradient(
+                90deg,
+                #006cff,
+                #9d00ff,
+                #ff0066
+            );
+
+        box-shadow:
+            0 0 12px rgba(0,110,255,0.5),
+            0 0 12px rgba(255,0,70,0.5);
+    }
+
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
+
+    @media (max-width: 700px) {
+
+        .block-container {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .hero-box {
+            min-height: 300px;
+            padding: 28px 24px;
+            border-radius: 15px;
+        }
+
+        .hero-title {
+            font-size: 42px;
+            line-height: 1;
+        }
+
+        .selected-movie-box {
+            gap: 15px;
+            padding: 12px;
+            min-height: 145px;
+        }
+
+        .selected-poster {
+            width: 85px;
+            height: 125px;
+        }
+
+        .selected-title {
+            font-size: 24px;
+        }
+
+        .selected-overview {
+            font-size: 12px;
+            line-height: 1.45;
+
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-size: 25px;
+        }
+
+        .movie-wrapper {
+            border-radius: 11px;
+            padding: 4px;
+            margin-bottom: 12px;
+        }
+
+        .movie-wrapper:hover {
+            transform:
+                translateY(-4px)
+                scale(1.015);
+        }
+
+        .movie-title {
+            font-size: 10px;
+            min-height: 36px;
+            padding: 7px 3px;
+        }
+
+        .play-circle {
+            width: 44px;
+            height: 44px;
+            font-size: 18px;
+        }
+
+        div[data-testid="stHorizontalBlock"] {
+            padding: 4px 2px;
+            border-radius: 12px;
+            margin-bottom: 5px;
+        }
+
+        /* Trailer remains 16:9 on mobile */
+        .trailer-box {
+            padding: 3px;
+            border-radius: 14px;
+        }
+
+        .trailer-inner {
+            border-radius: 11px;
+        }
+
+        .trailer-heading {
+            font-size: 25px;
+        }
+
+        .details-panel {
+            padding: 18px;
+        }
+
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .info-value {
+            font-size: 18px;
+        }
+    }
+
+    </style>
+    """
+)
 
 
 # ============================================================
@@ -1383,7 +1272,6 @@ def tmdb_request(
         params = {}
 
     params = params.copy()
-
     params["api_key"] = TMDB_API_KEY
 
     try:
@@ -1431,9 +1319,7 @@ def fetch_movie_details(movie_id):
 )
 def fetch_poster(movie_id):
 
-    details = fetch_movie_details(
-        movie_id
-    )
+    details = fetch_movie_details(movie_id)
 
     if not details:
         return None
@@ -1452,14 +1338,14 @@ def fetch_poster(movie_id):
 
 
 # ============================================================
-# 9. TRAILER KEY
+# 9. TRAILER
 # ============================================================
 
 @st.cache_data(
     show_spinner=False,
     ttl=86400
 )
-def fetch_trailer_key(movie_id):
+def fetch_trailer(movie_id):
 
     data = tmdb_request(
         f"movie/{movie_id}/videos",
@@ -1476,9 +1362,8 @@ def fetch_trailer_key(movie_id):
         []
     )
 
-
     # --------------------------------------------------------
-    # FIRST: OFFICIAL TRAILER
+    # 1. Official YouTube Trailer
     # --------------------------------------------------------
 
     for video in videos:
@@ -1494,11 +1379,13 @@ def fetch_trailer_key(movie_id):
             key = video.get("key")
 
             if key:
-                return key
-
+                return (
+                    "https://www.youtube.com/watch?v="
+                    + key
+                )
 
     # --------------------------------------------------------
-    # SECOND: ANY TRAILER
+    # 2. Any YouTube Trailer
     # --------------------------------------------------------
 
     for video in videos:
@@ -1512,11 +1399,13 @@ def fetch_trailer_key(movie_id):
             key = video.get("key")
 
             if key:
-                return key
-
+                return (
+                    "https://www.youtube.com/watch?v="
+                    + key
+                )
 
     # --------------------------------------------------------
-    # THIRD: OFFICIAL TEASER
+    # 3. YouTube Teaser fallback
     # --------------------------------------------------------
 
     for video in videos:
@@ -1525,80 +1414,21 @@ def fetch_trailer_key(movie_id):
             video.get("site") == "YouTube"
             and
             video.get("type") == "Teaser"
-            and
-            video.get("official") is True
         ):
 
             key = video.get("key")
 
             if key:
-                return key
-
+                return (
+                    "https://www.youtube.com/watch?v="
+                    + key
+                )
 
     return None
 
 
 # ============================================================
-# 10. YOUTUBE TRAILER PLAYER
-# ============================================================
-
-def show_youtube_trailer(video_key):
-
-    if not video_key:
-        st.info("Trailer not available.")
-        return
-
-
-    # --------------------------------------------------------
-    # YOUTUBE EMBED URL
-    # --------------------------------------------------------
-
-    embed_url = (
-        "https://www.youtube.com/embed/"
-        + str(video_key)
-        + "?rel=0"
-        "&modestbranding=1"
-        "&playsinline=1"
-        "&iv_load_policy=3"
-        "&enablejsapi=1"
-    )
-
-
-    # --------------------------------------------------------
-    # REAL 16:9 YOUTUBE PLAYER
-    # --------------------------------------------------------
-
-    st.html(
-        f"""
-        <div class="trailer-box">
-
-            <div class="trailer-inner">
-
-                <iframe
-                    src="{html.escape(embed_url, quote=True)}"
-                    title="Movie Trailer"
-                    allow="
-                        accelerometer;
-                        autoplay;
-                        clipboard-write;
-                        encrypted-media;
-                        gyroscope;
-                        picture-in-picture;
-                        web-share
-                    "
-                    allowfullscreen
-                    loading="eager">
-                </iframe>
-
-            </div>
-
-        </div>
-        """
-    )
-
-
-# ============================================================
-# 11. RECOMMENDATION
+# 10. RECOMMENDATION
 # ============================================================
 
 def recommend(movie):
@@ -1646,17 +1476,13 @@ def recommend(movie):
 
             continue
 
-        names.append(
-            movie_name
-        )
+        names.append(movie_name)
 
         posters.append(
             fetch_poster(movie_id)
         )
 
-        ids.append(
-            movie_id
-        )
+        ids.append(movie_id)
 
     return (
         names,
@@ -1666,7 +1492,7 @@ def recommend(movie):
 
 
 # ============================================================
-# 12. MOVIE CARD
+# 11. MOVIE CARD
 # ============================================================
 
 def movie_card_html(
@@ -1729,7 +1555,7 @@ def movie_card_html(
 
 
 # ============================================================
-# 13. SELECTED MOVIE PREVIEW
+# 12. SELECTED MOVIE PREVIEW
 # ============================================================
 
 def selected_movie_preview(movie_name):
@@ -1828,20 +1654,27 @@ def selected_movie_preview(movie_name):
 
 
 # ============================================================
-# 14. DETAILS PAGE
+# 13. DETAILS PAGE
 # ============================================================
 
 def show_movie_details(movie_id):
 
+    # --------------------------------------------------------
+    # BACK BUTTON
+    # --------------------------------------------------------
+
     if st.button(
-        "← Back to Recommendations",
+        "←  Back to Recommendations",
         key="back_button"
     ):
 
         st.query_params.clear()
-
         st.rerun()
 
+
+    # --------------------------------------------------------
+    # FETCH DETAILS
+    # --------------------------------------------------------
 
     details = fetch_movie_details(
         movie_id
@@ -1890,9 +1723,13 @@ def show_movie_details(movie_id):
         "poster_path"
     )
 
+    backdrop_path = details.get(
+        "backdrop_path"
+    )
+
 
     # ========================================================
-    # 1. TRAILER FIRST
+    # 1. TRAILER — TOP
     # ========================================================
 
     st.html(
@@ -1904,26 +1741,41 @@ def show_movie_details(movie_id):
     )
 
 
-    trailer_key = fetch_trailer_key(
+    trailer_url = fetch_trailer(
         movie_id
     )
 
 
-    if trailer_key:
+    if trailer_url:
 
-        show_youtube_trailer(
-            trailer_key
+        # ----------------------------------------------------
+        # IMPORTANT:
+        # st.video() creates an actual playable video player.
+        # Streamlit automatically keeps the 16:9 aspect ratio.
+        # ----------------------------------------------------
+
+        st.html(
+            '<div class="trailer-box">'
+            '<div class="trailer-inner">'
+        )
+
+        st.video(
+            trailer_url
+        )
+
+        st.html(
+            "</div></div>"
         )
 
     else:
 
-        st.info(
-            "Trailer not available for this movie."
+        st.warning(
+            "🎬 Trailer is not available for this movie."
         )
 
 
     # ========================================================
-    # 2. POSTER BELOW TRAILER
+    # 2. POSTER — BELOW TRAILER
     # ========================================================
 
     if poster_path:
@@ -1933,35 +1785,36 @@ def show_movie_details(movie_id):
             + poster_path
         )
 
-        st.html(
-            f"""
-            <div class="details-poster-box">
-
-                <img
-                    class="details-poster"
-                    src="{poster_url}"
-                    alt="{html.escape(str(title))}"
-                >
-
-            </div>
-            """
+        poster_col, empty_col = st.columns(
+            [1, 2]
         )
 
+        with poster_col:
+
+            st.image(
+                poster_url,
+                use_container_width=True
+            )
+
 
     # ========================================================
-    # 3. MOVIE DETAILS
+    # 3. MOVIE TITLE
     # ========================================================
 
-    safe_title = html.escape(
-        str(title)
+    st.html(
+        f"""
+        <div class="details-title">
+            🎬 {html.escape(str(title))}
+        </div>
+        """
     )
 
-    safe_overview = html.escape(
-        str(overview)
-    )
 
+    # ========================================================
+    # 4. DETAILS PANEL
+    # ========================================================
 
-    # Runtime text
+    runtime_text = "Unknown"
 
     if runtime:
 
@@ -1980,12 +1833,6 @@ def show_movie_details(movie_id):
                 f"{minutes}min"
             )
 
-    else:
-
-        runtime_text = "Unknown"
-
-
-    # Genres
 
     genre_html = ""
 
@@ -1998,69 +1845,44 @@ def show_movie_details(movie_id):
         if genre_name:
 
             genre_html += (
-                f'<span class="genre-pill">'
+                f'<span class="genre-tag">'
                 f'{html.escape(str(genre_name))}'
                 f'</span>'
             )
 
 
+    safe_overview = html.escape(
+        str(overview)
+    )
+
+
     st.html(
         f"""
-        <div class="movie-details-box">
+        <div class="details-panel">
 
-            <div
-                class="details-page-title"
-                style="
-                    position:relative;
-                    z-index:2;
-                    margin-top:0;
-                "
-            >
-                🎬 {safe_title}
+            <div class="info-heading">
+                🎬 {html.escape(str(title))}
             </div>
 
 
             <div class="info-grid">
 
-                <!-- RATING -->
-
                 <div class="info-item">
 
-                    <div class="info-heading">
-                        ⭐ Rating
+                    <div class="info-label">
+                        ⭐ TMDB Rating
                     </div>
 
                     <div class="info-value">
-                        <strong
-                            style="
-                                font-size:24px;
-                                color:#ffffff;
-                            "
-                        >
-                            {float(rating):.1f}/10
-                        </strong>
-
-                        <br>
-
-                        <span
-                            style="
-                                color:#888;
-                                font-size:12px;
-                            "
-                        >
-                            TMDB Rating
-                        </span>
-
+                        {float(rating):.1f}/10
                     </div>
 
                 </div>
 
 
-                <!-- RELEASE -->
-
                 <div class="info-item">
 
-                    <div class="info-heading">
+                    <div class="info-label">
                         📅 Release Date
                     </div>
 
@@ -2071,16 +1893,14 @@ def show_movie_details(movie_id):
                 </div>
 
 
-                <!-- RUNTIME -->
-
                 <div class="info-item">
 
-                    <div class="info-heading">
+                    <div class="info-label">
                         ⏱️ Runtime
                     </div>
 
                     <div class="info-value">
-                        {runtime_text}
+                        {html.escape(str(runtime_text))}
                     </div>
 
                 </div>
@@ -2088,31 +1908,22 @@ def show_movie_details(movie_id):
             </div>
 
 
-            <!-- GENRES -->
+            <div class="genre-section">
 
-            <div
-                class="story-box"
-                style="
-                    margin-top:10px;
-                "
-            >
-
-                <div class="info-heading">
+                <div class="genre-title">
                     🎭 Genres
                 </div>
 
-                <div class="genre-list">
+                <div>
                     {genre_html}
                 </div>
 
             </div>
 
 
-            <!-- STORY -->
+            <div class="story-section">
 
-            <div class="story-box">
-
-                <div class="info-heading">
+                <div class="story-title">
                     📝 Story
                 </div>
 
@@ -2128,7 +1939,7 @@ def show_movie_details(movie_id):
 
 
 # ============================================================
-# 15. QUERY PARAMETER
+# 14. QUERY PARAMETER
 # ============================================================
 
 movie_id_from_url = st.query_params.get(
@@ -2137,7 +1948,7 @@ movie_id_from_url = st.query_params.get(
 
 
 # ============================================================
-# 16. DETAILS PAGE
+# 15. DETAILS PAGE
 # ============================================================
 
 if movie_id_from_url:
@@ -2152,7 +1963,10 @@ if movie_id_from_url:
             movie_id
         )
 
-    except (ValueError, TypeError):
+    except (
+        ValueError,
+        TypeError
+    ):
 
         st.error(
             "Invalid movie ID."
@@ -2160,7 +1974,7 @@ if movie_id_from_url:
 
 
 # ============================================================
-# 17. MAIN PAGE
+# 16. MAIN PAGE
 # ============================================================
 
 else:
