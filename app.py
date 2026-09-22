@@ -875,41 +875,48 @@ st.html(
 
 
     /* =====================================================
-       ⭐ NEW: DETAILS POSTER — 16:9
+       DETAILS POSTER — SAME SIZE AS TRAILER — 16:9
        ===================================================== */
 
-    .center-poster {
-        width: 70%;
-        max-width: 900px;
+    .center-poster-wrap {
+        width: 100%;
 
         aspect-ratio: 16 / 9;
 
-        height: auto;
+        margin: 25px auto 35px;
+
+        padding: 4px;
+
+        border-radius: 18px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #006cff,
+                #00c8ff,
+                #8b00ff,
+                #ff0066,
+                #ff1744
+            );
+
+        box-shadow:
+            0 0 20px rgba(0,110,255,0.55),
+            0 0 35px rgba(255,0,80,0.45);
+
+        overflow: hidden;
+    }
+
+    .center-poster {
+        width: 100%;
+        height: 100%;
+
+        aspect-ratio: 16 / 9;
 
         object-fit: cover;
 
         display: block;
 
-        margin: 25px auto 35px;
-
-        border-radius: 16px;
-
-        box-shadow:
-            0 0 18px rgba(0,110,255,0.60),
-            0 0 35px rgba(255,0,70,0.40);
-
-        border: 3px solid transparent;
-
-        background:
-            linear-gradient(#03030a, #03030a) padding-box,
-            linear-gradient(
-                90deg,
-                #006cff,
-                #00c8ff,
-                #9d00ff,
-                #ff0066,
-                #ff1744
-            ) border-box;
+        border-radius: 14px;
     }
 
 
@@ -1220,18 +1227,30 @@ st.html(
         }
 
         /* =================================================
-           MOBILE DETAILS POSTER — 16:9
+           MOBILE DETAILS POSTER — SAME SIZE AS TRAILER
            ================================================= */
 
-        .center-poster {
-            width: 92%;
-            max-width: none;
+        .center-poster-wrap {
+            width: 100%;
 
             aspect-ratio: 16 / 9;
 
-            height: auto;
-
             margin: 20px auto 30px;
+
+            padding: 3px;
+
+            border-radius: 14px;
+        }
+
+        .center-poster {
+            width: 100%;
+            height: 100%;
+
+            aspect-ratio: 16 / 9;
+
+            object-fit: cover;
+
+            border-radius: 11px;
         }
 
         .details-panel {
@@ -1835,11 +1854,15 @@ def show_movie_details(movie_id):
 
         st.html(
             f"""
-            <img
-                class="center-poster"
-                src="{poster_url}"
-                alt="{html.escape(str(title))}"
-            >
+            <div class="center-poster-wrap">
+
+                <img
+                    class="center-poster"
+                    src="{poster_url}"
+                    alt="{html.escape(str(title))}"
+                >
+
+            </div>
             """
         )
 
