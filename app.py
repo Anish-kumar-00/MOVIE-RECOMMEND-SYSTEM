@@ -33,12 +33,12 @@ st.html(
         background:
             radial-gradient(
                 circle at 10% 10%,
-                rgba(229, 9, 20, 0.08),
+                rgba(0, 90, 255, 0.08),
                 transparent 30%
             ),
             radial-gradient(
                 circle at 90% 80%,
-                rgba(229, 9, 20, 0.06),
+                rgba(229, 9, 20, 0.08),
                 transparent 30%
             ),
             #050505;
@@ -49,6 +49,7 @@ st.html(
 
     .block-container {
         max-width: 1500px;
+
         padding-top: 25px;
         padding-bottom: 50px;
     }
@@ -59,9 +60,13 @@ st.html(
        ===================================================== */
 
     div[data-baseweb="select"] > div {
+
         background-color: #181818 !important;
+
         border: 1px solid #444 !important;
+
         border-radius: 8px !important;
+
         color: white !important;
     }
 
@@ -188,7 +193,6 @@ st.html(
             opacity: 1;
             transform: translateY(0);
         }
-
     }
 
 
@@ -197,6 +201,103 @@ st.html(
         animation:
             titleFade 1s
             ease-out;
+    }
+
+
+    /* =====================================================
+       MOVIE ROW
+       BLUE + RED GLOW
+       ===================================================== */
+
+    div[data-testid="stHorizontalBlock"] {
+
+        position: relative;
+
+        padding:
+            8px 5px;
+
+        border-radius: 18px;
+
+        background:
+
+            radial-gradient(
+                circle at 5% 50%,
+                rgba(0, 90, 255, 0.24),
+                transparent 25%
+            ),
+
+            radial-gradient(
+                circle at 95% 50%,
+                rgba(229, 9, 20, 0.26),
+                transparent 25%
+            ),
+
+            linear-gradient(
+                90deg,
+                rgba(0, 90, 255, 0.06),
+                rgba(229, 9, 20, 0.07),
+                rgba(0, 90, 255, 0.06)
+            );
+
+        background-size:
+            200% 100%,
+            200% 100%,
+            300% 100%;
+
+        animation:
+            gapGlow 8s
+            ease-in-out
+            infinite;
+
+        margin-bottom: 10px;
+    }
+
+
+    /* =====================================================
+       BLUE + RED MOVING LIGHT
+       ===================================================== */
+
+    @keyframes gapGlow {
+
+        0% {
+
+            background-position:
+                0% 50%,
+                100% 50%,
+                0% 50%;
+        }
+
+        25% {
+
+            background-position:
+                35% 50%,
+                65% 50%,
+                25% 50%;
+        }
+
+        50% {
+
+            background-position:
+                100% 50%,
+                0% 50%,
+                100% 50%;
+        }
+
+        75% {
+
+            background-position:
+                65% 50%,
+                35% 50%,
+                75% 50%;
+        }
+
+        100% {
+
+            background-position:
+                0% 50%,
+                100% 50%,
+                0% 50%;
+        }
     }
 
 
@@ -211,8 +312,8 @@ st.html(
         background:
             linear-gradient(
                 145deg,
-                #202020,
-                #111111
+                #181c27,
+                #101014
             );
 
         border: 1px solid
@@ -234,11 +335,13 @@ st.html(
         box-shadow:
             0 8px 20px
             rgba(0, 0, 0, 0.35);
+
+        z-index: 2;
     }
 
 
     /* =====================================================
-       ANIMATED BORDER
+       ANIMATED CARD BORDER
        ===================================================== */
 
     .movie-wrapper::before {
@@ -259,13 +362,14 @@ st.html(
             linear-gradient(
                 120deg,
                 transparent,
-                rgba(229, 9, 20, 0.8),
+                rgba(0, 90, 255, 0.85),
                 transparent,
-                rgba(255, 70, 80, 0.5),
+                rgba(229, 9, 20, 0.90),
                 transparent
             );
 
-        background-size: 300% 300%;
+        background-size:
+            300% 300%;
 
         opacity: 0;
 
@@ -297,7 +401,6 @@ st.html(
             background-position:
                 0% 50%;
         }
-
     }
 
 
@@ -306,6 +409,10 @@ st.html(
         opacity: 1;
     }
 
+
+    /* =====================================================
+       MOVIE CARD HOVER
+       ===================================================== */
 
     .movie-wrapper:hover {
 
@@ -317,8 +424,12 @@ st.html(
             #e50914;
 
         box-shadow:
+
             0 18px 40px
-            rgba(229, 9, 20, 0.22);
+            rgba(229, 9, 20, 0.28),
+
+            0 0 25px
+            rgba(0, 90, 255, 0.18);
 
         z-index: 20;
     }
@@ -368,7 +479,7 @@ st.html(
 
 
     /* =====================================================
-       PLAY BUTTON
+       PLAY OVERLAY
        ===================================================== */
 
     .movie-overlay {
@@ -404,6 +515,10 @@ st.html(
     }
 
 
+    /* =====================================================
+       PLAY BUTTON
+       ===================================================== */
+
     .play-circle {
 
         width: 58px;
@@ -419,7 +534,11 @@ st.html(
         border-radius: 50%;
 
         background:
-            #e50914;
+            linear-gradient(
+                135deg,
+                #e50914,
+                #0057ff
+            );
 
         color: white;
 
@@ -438,23 +557,25 @@ st.html(
     @keyframes playPulse {
 
         0% {
+
             box-shadow:
                 0 0 0 0
                 rgba(229, 9, 20, 0.55);
         }
 
         70% {
+
             box-shadow:
                 0 0 0 14px
                 rgba(229, 9, 20, 0);
         }
 
         100% {
+
             box-shadow:
                 0 0 0 0
                 rgba(229, 9, 20, 0);
         }
-
     }
 
 
@@ -547,13 +668,29 @@ st.html(
         }
 
 
+        div[data-testid="stHorizontalBlock"] {
+
+            padding:
+                5px 3px;
+
+            border-radius:
+                14px;
+
+            margin-bottom:
+                7px;
+        }
+
+
         .movie-wrapper {
 
-            border-radius: 10px;
+            border-radius:
+                10px;
 
-            padding: 5px;
+            padding:
+                5px;
 
-            margin-bottom: 16px;
+            margin-bottom:
+                16px;
         }
 
 
@@ -567,17 +704,32 @@ st.html(
 
         .movie-title {
 
-            font-size: 11px;
+            font-size:
+                11px;
 
-            min-height: 38px;
+            min-height:
+                38px;
         }
 
 
         .section-title {
 
-            font-size: 25px;
+            font-size:
+                25px;
         }
 
+
+        .play-circle {
+
+            width:
+                45px;
+
+            height:
+                45px;
+
+            font-size:
+                18px;
+        }
     }
 
     </style>
@@ -593,10 +745,12 @@ BASE_DIR = os.path.dirname(
     os.path.abspath(__file__)
 )
 
+
 MOVIES_FILE = os.path.join(
     BASE_DIR,
     "movies.pkl"
 )
+
 
 SIMILARITY_FILE = os.path.join(
     BASE_DIR,
@@ -616,7 +770,9 @@ def load_data():
         "rb"
     ) as file:
 
-        movies_data = pickle.load(file)
+        movies_data = pickle.load(
+            file
+        )
 
 
     with gzip.open(
@@ -624,7 +780,9 @@ def load_data():
         "rb"
     ) as file:
 
-        similarity_data = pickle.load(file)
+        similarity_data = pickle.load(
+            file
+        )
 
 
     return (
@@ -640,7 +798,9 @@ movies, similarity_indices = load_data()
 # 5. TMDB API KEY
 # ============================================================
 
-TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
+TMDB_API_KEY = st.secrets[
+    "TMDB_API_KEY"
+]
 
 
 # ============================================================
@@ -778,7 +938,7 @@ def fetch_trailer(
 
 
     # --------------------------------------------------------
-    # OFFICIAL YOUTUBE TRAILER FIRST
+    # OFFICIAL YOUTUBE TRAILER
     # --------------------------------------------------------
 
     for video in videos:
@@ -786,10 +946,14 @@ def fetch_trailer(
         if (
             video.get("site")
             == "YouTube"
+
             and
+
             video.get("type")
             == "Trailer"
+
             and
+
             video.get("official")
             is True
         ):
@@ -816,7 +980,9 @@ def fetch_trailer(
         if (
             video.get("site")
             == "YouTube"
+
             and
+
             video.get("type")
             == "Trailer"
         ):
@@ -857,7 +1023,9 @@ def recommend(movie):
 
 
     names = []
+
     posters = []
+
     ids = []
 
 
@@ -929,6 +1097,7 @@ def movie_card_html(
     <a
         href="?movie_id={movie_id}"
         target="_self"
+
         style="
             display:block;
             text-decoration:none;
@@ -942,7 +1111,9 @@ def movie_card_html(
 
                 <img
                     class="movie-poster"
+
                     src="{poster_url}"
+
                     alt="{movie_name}"
                 >
 
@@ -950,7 +1121,9 @@ def movie_card_html(
                 <div class="movie-overlay">
 
                     <div class="play-circle">
+
                         ▶
+
                     </div>
 
                 </div>
@@ -1079,23 +1252,29 @@ def show_movie_details(
             <div
                 style="
                     width:100%;
+
                     height:420px;
 
                     border-radius:15px;
 
                     background-image:
+
                         linear-gradient(
                             to top,
                             #050505 0%,
                             rgba(5,5,5,0.15) 75%
                         ),
+
                         url('{backdrop_url}');
 
-                    background-size:cover;
+                    background-size:
+                        cover;
 
-                    background-position:center;
+                    background-position:
+                        center;
 
-                    border:1px solid #292929;
+                    border:
+                        1px solid #292929;
 
                     box-shadow:
                         0 15px 45px
@@ -1173,7 +1352,7 @@ def show_movie_details(
 
 
         # ----------------------------------------------------
-        # Release Date
+        # RELEASE DATE
         # ----------------------------------------------------
 
         st.subheader(
@@ -1187,7 +1366,7 @@ def show_movie_details(
 
 
         # ----------------------------------------------------
-        # Runtime
+        # RUNTIME
         # ----------------------------------------------------
 
         if runtime:
@@ -1224,7 +1403,7 @@ def show_movie_details(
 
 
         # ----------------------------------------------------
-        # Genres
+        # GENRES
         # ----------------------------------------------------
 
         if genres:
@@ -1262,7 +1441,7 @@ def show_movie_details(
 
 
         # ----------------------------------------------------
-        # Story
+        # STORY
         # ----------------------------------------------------
 
         st.divider()
@@ -1284,6 +1463,7 @@ def show_movie_details(
 
     st.divider()
 
+
     st.subheader(
         "▶️ Trailer"
     )
@@ -1295,13 +1475,6 @@ def show_movie_details(
 
 
     if trailer_url:
-
-        # ----------------------------------------------------
-        # IMPORTANT:
-        # Trailer Streamlit ke andar hi play hoga.
-        # User ko manually YouTube website par forward
-        # karne ke liye link/button nahi diya gaya hai.
-        # ----------------------------------------------------
 
         st.video(
             trailer_url
@@ -1362,6 +1535,7 @@ else:
         """
         <div
             class="hero-box"
+
             style="
                 min-height:390px;
 
@@ -1374,6 +1548,7 @@ else:
                 border-radius:16px;
 
                 background:
+
                     linear-gradient(
                         90deg,
                         #050505 0%,
@@ -1402,7 +1577,8 @@ else:
                         margin-bottom:12px;
                     "
                 >
-                    DEVELOPED BY ANISH-ABRAR-ABHISHEK-VISHAL
+                    DEVELOPED BY
+                    ANISH-ABRAR-ABHISHEK-VISHAL
                 </div>
 
 
@@ -1478,7 +1654,9 @@ else:
 
     selected_movie = st.selectbox(
         "Choose movie",
+
         movie_list,
+
         index=default_index
     )
 
@@ -1498,16 +1676,24 @@ else:
     st.markdown(
         f"""
         <div class="section-title">
+
             🔥 Recommended Movies
+
         </div>
 
         <div class="section-subtitle">
+
             Because you selected
+
             <b style="color:#ffffff;">
                 {selected_movie}
             </b>
+
             <br>
-            👆 Tap any poster to open movie details
+
+            👆 Tap any poster to open
+            movie details
+
         </div>
         """,
         unsafe_allow_html=True
@@ -1551,7 +1737,9 @@ else:
 
                 movie_html = movie_card_html(
                     names[position],
+
                     posters[position],
+
                     ids[position]
                 )
 
@@ -1628,10 +1816,10 @@ else:
                     font-size:12px;
                 "
             >
-                Machine Learning & Web Application Project
+                Machine Learning &
+                Web Application Project
             </div>
 
         </div>
         """
     )
-
