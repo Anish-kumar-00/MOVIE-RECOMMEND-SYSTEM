@@ -1,8 +1,8 @@
 import gzip
 import os
 import pickle
-import requests
 import html
+import requests
 import streamlit as st
 
 
@@ -19,7 +19,7 @@ st.set_page_config(
 
 
 # ============================================================
-# 2. GLOBAL CSS — CLEAN NETFLIX STYLE
+# 2. GLOBAL CSS
 # ============================================================
 
 st.html("""
@@ -29,45 +29,53 @@ st.html("""
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
-body {
+html, body {
+    margin: 0;
+    padding: 0;
     background: #000;
 }
 
-.stApp {
-    background:
-        linear-gradient(
-            180deg,
-            #000000 0%,
-            #080808 45%,
-            #000000 100%
-        );
-
-    color: #ffffff;
+body {
     overflow-x: hidden;
 }
 
-
 /* ============================================================
-   STREAMLIT CONTAINER
+   MAIN STREAMLIT BACKGROUND
    ============================================================ */
 
-.block-container {
-    max-width: 1500px;
-    padding-top: 18px;
-    padding-bottom: 50px;
+.stApp {
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(229, 9, 20, 0.10),
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            #000000 0%,
+            #050505 45%,
+            #000000 100%
+        );
+    color: white;
 }
 
-[data-testid="stVerticalBlock"] {
-    gap: 0.35rem;
+/* Keep actual app content above butterflies */
+
+[data-testid="stAppViewContainer"] {
+    position: relative;
+    z-index: 1;
 }
 
+.main .block-container {
+    position: relative;
+    z-index: 5;
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
+    max-width: 1450px;
+}
 
 /* ============================================================
-   HIDE DEFAULT STREAMLIT ELEMENTS
+   HIDE STREAMLIT DEFAULT UI
    ============================================================ */
 
 #MainMenu {
@@ -82,45 +90,744 @@ header {
     background: transparent !important;
 }
 
+/* ============================================================
+   BUTTERFLY BACKGROUND
+   ============================================================ */
+
+.butterfly-field {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Butterfly */
+
+.butterfly {
+    position: absolute;
+    width: 52px;
+    height: 44px;
+    opacity: 0.28;
+    filter: blur(1.4px);
+    transform-origin: center center;
+    animation:
+        butterfly-fly 26s linear infinite,
+        butterfly-float 3s ease-in-out infinite;
+}
+
+/* Wings */
+
+.butterfly .wing {
+    position: absolute;
+    top: 7px;
+    width: 25px;
+    height: 32px;
+    border-radius: 75% 25% 65% 35%;
+    transform-origin: 100% 70%;
+    animation: wing-flap 0.85s ease-in-out infinite;
+}
+
+.butterfly .left {
+    left: 1px;
+    transform: rotate(-25deg);
+}
+
+.butterfly .right {
+    right: 1px;
+    transform: scaleX(-1) rotate(-25deg);
+}
+
+/* Body */
+
+.butterfly .body {
+    position: absolute;
+    width: 7px;
+    height: 29px;
+    background: rgba(255,255,255,0.65);
+    border-radius: 50%;
+    left: 23px;
+    top: 9px;
+    filter: blur(1px);
+    z-index: 3;
+}
+
+/* Antennae */
+
+.butterfly .body::before,
+.butterfly .body::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 8px;
+    border-top: 1px solid rgba(255,255,255,0.5);
+    top: -4px;
+}
+
+.butterfly .body::before {
+    left: -9px;
+    transform: rotate(-30deg);
+}
+
+.butterfly .body::after {
+    right: -9px;
+    transform: rotate(30deg);
+}
 
 /* ============================================================
-   SELECT BOX
+   BUTTERFLY COLORS
+   ============================================================ */
+
+.b1 .wing {
+    background:
+        radial-gradient(
+            circle at 35% 40%,
+            rgba(0, 210, 255, 0.95),
+            rgba(0, 100, 255, 0.40) 45%,
+            rgba(0, 80, 255, 0.02) 75%
+        );
+}
+
+.b2 .wing {
+    background:
+        radial-gradient(
+            circle at 35% 40%,
+            rgba(180, 80, 255, 0.95),
+            rgba(110, 30, 255, 0.40) 45%,
+            rgba(90, 0, 255, 0.02) 75%
+        );
+}
+
+.b3 .wing {
+    background:
+        radial-gradient(
+            circle at 35% 40%,
+            rgba(255, 70, 180, 0.95),
+            rgba(255, 0, 120, 0.40) 45%,
+            rgba(255, 0, 120, 0.02) 75%
+        );
+}
+
+.b4 .wing {
+    background:
+        radial-gradient(
+            circle at 35% 40%,
+            rgba(80, 255, 230, 0.90),
+            rgba(0, 180, 200, 0.35) 45%,
+            rgba(0, 180, 200, 0.02) 75%
+        );
+}
+
+.b5 .wing {
+    background:
+        radial-gradient(
+            circle at 35% 40%,
+            rgba(255, 90, 160, 0.90),
+            rgba(230, 20, 80, 0.35) 45%,
+            rgba(230, 20, 80, 0.02) 75%
+        );
+}
+
+.b6 .wing {
+    background:
+        radial-gradient(
+            circle at 35% 40%,
+            rgba(120, 150, 255, 0.95),
+            rgba(50, 70, 230, 0.35) 45%,
+            rgba(50, 70, 230, 0.02) 75%
+        );
+}
+
+.b7 .wing {
+    background:
+        radial-gradient(
+            circle at 35% 40%,
+            rgba(255, 180, 100, 0.75),
+            rgba(255, 70, 40, 0.30) 45%,
+            rgba(255, 50, 20, 0.02) 75%
+        );
+}
+
+.b8 .wing {
+    background:
+        radial-gradient(
+            circle at 35% 40%,
+            rgba(220, 100, 255, 0.90),
+            rgba(150, 20, 220, 0.35) 45%,
+            rgba(150, 20, 220, 0.02) 75%
+        );
+}
+
+/* ============================================================
+   BUTTERFLY POSITIONS + FLIGHT
+   ============================================================ */
+
+.b1 {
+    left: -8%;
+    top: 18%;
+    animation-duration: 28s, 3s;
+    animation-delay: -4s, 0s;
+    transform: scale(0.85);
+}
+
+.b2 {
+    left: 12%;
+    top: 65%;
+    animation-duration: 31s, 3.5s;
+    animation-delay: -16s, -1s;
+    transform: scale(1.15);
+}
+
+.b3 {
+    left: 35%;
+    top: 10%;
+    animation-duration: 24s, 2.8s;
+    animation-delay: -8s, -0.5s;
+    transform: scale(0.75);
+}
+
+.b4 {
+    left: 65%;
+    top: 72%;
+    animation-duration: 34s, 3.8s;
+    animation-delay: -20s, -1.5s;
+    transform: scale(1.0);
+}
+
+.b5 {
+    left: 80%;
+    top: 20%;
+    animation-duration: 29s, 3.2s;
+    animation-delay: -13s, -2s;
+    transform: scale(0.9);
+}
+
+.b6 {
+    left: 92%;
+    top: 55%;
+    animation-duration: 27s, 3.6s;
+    animation-delay: -5s, -1s;
+    transform: scale(1.1);
+}
+
+.b7 {
+    left: 48%;
+    top: 88%;
+    animation-duration: 32s, 4s;
+    animation-delay: -25s, -2s;
+    transform: scale(0.7);
+}
+
+.b8 {
+    left: 25%;
+    top: 38%;
+    animation-duration: 30s, 3.3s;
+    animation-delay: -18s, -1s;
+    transform: scale(0.8);
+}
+
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+
+@keyframes wing-flap {
+
+    0%, 100% {
+        transform: rotateY(0deg) rotate(-25deg);
+    }
+
+    50% {
+        transform: rotateY(65deg) rotate(-25deg);
+    }
+}
+
+@keyframes butterfly-float {
+
+    0%, 100% {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+
+    25% {
+        margin-top: -25px;
+        margin-left: 35px;
+    }
+
+    50% {
+        margin-top: 15px;
+        margin-left: -25px;
+    }
+
+    75% {
+        margin-top: -18px;
+        margin-left: 20px;
+    }
+}
+
+@keyframes butterfly-fly {
+
+    0% {
+        transform: translate(-10vw, 10vh) rotate(10deg) scale(0.8);
+    }
+
+    20% {
+        transform: translate(15vw, -8vh) rotate(-8deg) scale(1);
+    }
+
+    40% {
+        transform: translate(38vw, 12vh) rotate(12deg) scale(0.9);
+    }
+
+    60% {
+        transform: translate(58vw, -10vh) rotate(-12deg) scale(1.1);
+    }
+
+    80% {
+        transform: translate(80vw, 15vh) rotate(8deg) scale(0.85);
+    }
+
+    100% {
+        transform: translate(115vw, -5vh) rotate(-8deg) scale(0.75);
+    }
+}
+
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-bottom: 35px;
+    padding: 75px 35px;
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,0.98) 0%,
+            rgba(0,0,0,0.92) 45%,
+            rgba(20,0,0,0.75) 100%
+        );
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,0.7);
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    right: -150px;
+    top: -170px;
+
+    background: radial-gradient(
+        circle,
+        rgba(229,9,20,0.30),
+        transparent 65%
+    );
+
+    filter: blur(20px);
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 180px;
+    height: 4px;
+    background: #e50914;
+    box-shadow: 0 0 20px rgba(229,9,20,0.7);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    margin: 0;
+    font-size: clamp(35px, 5vw, 68px);
+    font-weight: 900;
+    letter-spacing: -2px;
+    color: white;
+}
+
+.hero-title span {
+    color: #e50914;
+}
+
+.hero-subtitle {
+    margin-top: 15px;
+    max-width: 700px;
+    font-size: 18px;
+    line-height: 1.7;
+    color: #bcbcbc;
+}
+
+.hero-badge {
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 7px 13px;
+    border-radius: 30px;
+    background: rgba(229,9,20,0.12);
+    border: 1px solid rgba(229,9,20,0.35);
+    color: #ff5a62;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+
+/* ============================================================
+   SECTION HEADINGS
+   ============================================================ */
+
+.section-heading {
+    margin-top: 30px;
+    margin-bottom: 22px;
+    font-size: 27px;
+    font-weight: 800;
+    color: white;
+    border-left: 4px solid #e50914;
+    padding-left: 14px;
+}
+
+
+/* ============================================================
+   SELECTBOX
    ============================================================ */
 
 div[data-baseweb="select"] > div {
-
-    background: #141414 !important;
-
-    border: 1px solid #333333 !important;
-
-    border-radius: 5px !important;
-
-    color: #ffffff !important;
-
-    min-height: 46px;
-
-    box-shadow: none !important;
-
-    transition: border-color 0.2s ease;
+    background: #111 !important;
+    border: 1px solid #333 !important;
+    border-radius: 10px !important;
+    color: white !important;
 }
 
 div[data-baseweb="select"] > div:hover {
-
-    border-color: #777777 !important;
-}
-
-div[data-baseweb="select"] > div:focus-within {
-
     border-color: #e50914 !important;
+}
 
-    box-shadow: 0 0 0 1px #e50914 !important;
+div[data-baseweb="select"] * {
+    color: white !important;
+}
+
+label {
+    color: #aaa !important;
 }
 
 
-/* Dropdown text */
+/* ============================================================
+   SELECTED MOVIE
+   ============================================================ */
 
-div[data-baseweb="select"] span {
-    color: #ffffff !important;
+.selected-box {
+    margin-top: 30px;
+    margin-bottom: 35px;
+    padding: 25px;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            120deg,
+            #101010,
+            #080808
+        );
+
+    border: 1px solid #292929;
+    border-left: 4px solid #e50914;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,0.55);
+}
+
+.selected-poster {
+    width: 170px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,0.7);
+}
+
+.selected-info {
+    flex: 1;
+}
+
+.selected-title {
+    font-size: 30px;
+    font-weight: 850;
+    margin-bottom: 12px;
+    color: white;
+}
+
+.selected-description {
+    color: #aaa;
+    line-height: 1.75;
+    font-size: 15px;
+}
+
+
+/* ============================================================
+   MOVIE CARDS
+   ============================================================ */
+
+.movie-wrapper {
+    margin-bottom: 25px;
+}
+
+.movie-poster-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+
+    background: #111;
+    border: 1px solid #292929;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.45);
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.movie-poster-container:hover {
+    transform: translateY(-7px) scale(1.025);
+
+    border-color: rgba(229,9,20,0.85);
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,0.75),
+        0 0 18px rgba(229,9,20,0.18);
+}
+
+.movie-poster {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+
+    transition:
+        transform 0.5s ease,
+        filter 0.5s ease;
+}
+
+.movie-poster-container:hover .movie-poster {
+    transform: scale(1.06);
+    filter: brightness(0.65);
+}
+
+.movie-overlay {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent 30%,
+            rgba(0,0,0,0.75)
+        );
+
+    transition: opacity 0.3s ease;
+}
+
+.movie-poster-container:hover .movie-overlay {
+    opacity: 1;
+}
+
+.play-circle {
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e50914;
+    color: white;
+
+    font-size: 21px;
+
+    padding-left: 3px;
+
+    box-shadow:
+        0 0 30px rgba(229,9,20,0.5);
+}
+
+.movie-title {
+    margin-top: 10px;
+
+    color: #eee;
+    font-size: 14px;
+    font-weight: 650;
+
+    text-align: center;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* ============================================================
+   TRAILER
+   ============================================================ */
+
+.trailer-heading {
+    margin-top: 25px;
+    margin-bottom: 18px;
+
+    font-size: 27px;
+    font-weight: 850;
+
+    color: white;
+
+    border-left: 4px solid #e50914;
+    padding-left: 14px;
+}
+
+.trailer-box {
+    max-width: 1000px;
+    margin: 0 auto 35px auto;
+
+    padding: 8px;
+
+    background: #080808;
+
+    border-radius: 15px;
+
+    border: 1px solid #292929;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.7);
+}
+
+.trailer-inner {
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+
+/* ============================================================
+   DETAIL POSTER
+   ============================================================ */
+
+.center-poster-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0 30px 0;
+}
+
+.center-poster {
+    width: min(320px, 80vw);
+    border-radius: 13px;
+
+    border: 1px solid #333;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,0.75);
+}
+
+.details-title {
+    text-align: center;
+
+    font-size: clamp(30px, 5vw, 48px);
+    font-weight: 900;
+
+    color: white;
+
+    margin-bottom: 30px;
+}
+
+.details-panel {
+    max-width: 1050px;
+    margin: 0 auto 50px auto;
+
+    padding: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111,
+            #080808
+        );
+
+    border: 1px solid #292929;
+    border-left: 4px solid #e50914;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.6);
+}
+
+.detail-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 35px;
+    margin-bottom: 22px;
+}
+
+.detail-item {
+    color: #aaa;
+    font-size: 15px;
+}
+
+.detail-item strong {
+    color: white;
+}
+
+.story-heading {
+    color: white;
+    font-size: 21px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.story-text {
+    color: #aaa;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+.genre-tag {
+    display: inline-block;
+
+    margin: 4px 5px 4px 0;
+    padding: 6px 11px;
+
+    border-radius: 20px;
+
+    background: rgba(229,9,20,0.10);
+    border: 1px solid rgba(229,9,20,0.30);
+
+    color: #ff6b72;
+    font-size: 12px;
 }
 
 
@@ -129,1048 +836,111 @@ div[data-baseweb="select"] span {
    ============================================================ */
 
 .stButton > button {
-
     background: #e50914 !important;
-
-    color: #ffffff !important;
+    color: white !important;
 
     border: none !important;
-
-    border-radius: 4px !important;
+    border-radius: 8px !important;
 
     font-weight: 700 !important;
 
-    padding: 8px 18px !important;
+    padding: 10px 20px !important;
 
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease !important;
-
-    box-shadow: none !important;
+    transition: all 0.25s ease !important;
 }
 
 .stButton > button:hover {
-
-    background: #f40612 !important;
-
-    transform: translateY(-1px);
-
-    box-shadow: none !important;
-}
-
-
-/* ============================================================
-   HR
-   ============================================================ */
-
-hr {
-
-    border: none !important;
-
-    height: 1px !important;
-
-    background: #292929 !important;
-
-    margin: 30px 0 !important;
-}
-
-
-/* ============================================================
-   HERO
-   ============================================================ */
-
-.hero-box {
-
-    position: relative;
-
-    min-height: 470px;
-
-    display: flex;
-
-    align-items: flex-end;
-
-    padding: 50px;
-
-    border-radius: 4px;
-
-    overflow: hidden;
-
-    margin-bottom: 42px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #000000 0%,
-            rgba(0,0,0,0.95) 18%,
-            rgba(0,0,0,0.72) 42%,
-            rgba(0,0,0,0.30) 70%,
-            rgba(0,0,0,0.78) 100%
-        ),
-        linear-gradient(
-            180deg,
-            rgba(0,0,0,0.05) 35%,
-            #000000 100%
-        ),
-        radial-gradient(
-            circle at 75% 35%,
-            #351014 0%,
-            #170708 28%,
-            #090909 58%,
-            #000000 100%
-        );
+    background: #f6121d !important;
+    transform: translateY(-2px);
 
     box-shadow:
-        inset 0 -100px 100px rgba(0,0,0,0.65);
-}
-
-
-/* subtle cinematic line */
-
-.hero-box::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    height: 2px;
-
-    background: #e50914;
-
-    opacity: 0.75;
-}
-
-
-.hero-content {
-
-    position: relative;
-
-    z-index: 5;
-
-    max-width: 720px;
-
-    animation: heroFade 0.8s ease-out;
-}
-
-
-@keyframes heroFade {
-
-    from {
-        opacity: 0;
-        transform: translateY(18px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+        0 8px 25px rgba(229,9,20,0.3);
 }
 
 
 /* ============================================================
-   HERO TITLE
+   TEAM SECTION
    ============================================================ */
 
-.hero-title {
+.team-section {
+    margin-top: 65px;
+    padding-top: 35px;
 
-    font-size: clamp(42px, 6vw, 76px);
-
-    font-weight: 900;
-
-    line-height: 0.98;
-
-    letter-spacing: -2px;
-
-    margin: 12px 0 20px;
-
-    color: #ffffff;
+    border-top: 1px solid #222;
 }
 
-
-.gradient-text {
-
-    color: #e50914;
-
-    background: none;
-
-    -webkit-text-fill-color: #e50914;
-}
-
-
-/* ============================================================
-   SECTION TITLES
-   ============================================================ */
-
-.section-title {
-
-    font-size: 27px;
-
-    font-weight: 800;
-
-    color: #ffffff;
-
-    margin-top: 15px;
-
-    margin-bottom: 5px;
-}
-
-
-.section-subtitle {
-
-    color: #8c8c8c;
-
-    margin-bottom: 22px;
-
-    font-size: 14px;
-}
-
-
-.section-subtitle strong {
-
-    color: #ffffff !important;
-
-    text-shadow: none !important;
-}
-
-
-/* ============================================================
-   SELECTED MOVIE
-   ============================================================ */
-
-.selected-movie-box {
-
-    position: relative;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 24px;
-
-    padding: 18px;
-
-    min-height: 175px;
-
-    margin-top: 22px;
-
-    margin-bottom: 34px;
-
-    border-radius: 5px;
-
-    background: #111111;
-
-    border: 1px solid #252525;
-
-    box-shadow: 0 8px 25px rgba(0,0,0,0.35);
-
-    overflow: hidden;
-}
-
-
-.selected-movie-box::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-
-    top: 0;
-
-    bottom: 0;
-
-    width: 4px;
-
-    background: #e50914;
-}
-
-
-.selected-poster {
-
-    width: 115px;
-
-    height: 165px;
-
-    object-fit: cover;
-
-    border-radius: 3px;
-
-    position: relative;
-
-    z-index: 2;
-
-    box-shadow:
-        0 8px 20px rgba(0,0,0,0.55);
-}
-
-
-.selected-info {
-
-    position: relative;
-
-    z-index: 2;
-}
-
-
-.selected-badge {
-
-    display: inline-block;
-
-    padding: 5px 10px;
-
-    border-radius: 3px;
-
-    color: #ffffff;
-
-    font-size: 11px;
-
-    font-weight: 800;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.7px;
-
-    background: #e50914;
-}
-
-
-.selected-title {
-
-    font-size: 30px;
-
-    font-weight: 800;
-
-    margin: 8px 0 10px;
-
-    color: #ffffff;
-}
-
-
-.selected-overview {
-
-    color: #b3b3b3;
-
-    line-height: 1.6;
-
-    max-width: 780px;
-
-    font-size: 14px;
-}
-
-
-/* ============================================================
-   MOVIE GRID
-   ============================================================ */
-
-div[data-testid="stHorizontalBlock"] {
-
-    position: relative;
-
-    padding: 5px 2px;
-
-    margin-bottom: 6px;
-
-    overflow: visible;
-}
-
-
-/* ============================================================
-   MOVIE CARD
-   ============================================================ */
-
-.movie-wrapper {
-
-    position: relative;
-
-    background: #111111;
-
-    border: 1px solid #242424;
-
-    border-radius: 4px;
-
-    padding: 0;
-
-    margin-bottom: 18px;
-
-    overflow: hidden;
-
-    transition:
-        transform 0.28s ease,
-        box-shadow 0.28s ease,
-        border-color 0.28s ease;
-
-    box-shadow:
-        0 5px 15px rgba(0,0,0,0.35);
-
-    z-index: 2;
-}
-
-
-.movie-wrapper:hover {
-
-    transform:
-        translateY(-7px)
-        scale(1.025);
-
-    border-color: #444444;
-
-    box-shadow:
-        0 15px 30px rgba(0,0,0,0.75);
-
-    z-index: 50;
-}
-
-
-/* ============================================================
-   POSTER
-   ============================================================ */
-
-.movie-poster-container {
-
-    position: relative;
-
-    overflow: hidden;
-
-    border-radius: 3px 3px 0 0;
-
-    z-index: 3;
-
-    background: #181818;
-}
-
-
-.movie-poster {
-
-    width: 100%;
-
-    aspect-ratio: 2 / 3;
-
-    object-fit: cover;
-
-    display: block;
-
-    transition:
-        transform 0.4s ease,
-        filter 0.4s ease;
-}
-
-
-.movie-wrapper:hover .movie-poster {
-
-    transform: scale(1.055);
-
-    filter:
-        brightness(0.62)
-        saturate(1.05);
-}
-
-
-/* ============================================================
-   HOVER OVERLAY
-   ============================================================ */
-
-.movie-overlay {
-
-    position: absolute;
-
-    inset: 0;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    opacity: 0;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(0,0,0,0.05),
-            rgba(0,0,0,0.72)
-        );
-
-    transition: opacity 0.25s ease;
-}
-
-
-.movie-wrapper:hover .movie-overlay {
-
-    opacity: 1;
-}
-
-
-.play-circle {
-
-    width: 50px;
-
-    height: 50px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: #e50914;
-
-    color: #ffffff;
-
-    font-size: 20px;
-
-    box-shadow:
-        0 5px 18px rgba(0,0,0,0.55);
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease;
-}
-
-
-.movie-wrapper:hover .play-circle {
-
-    transform: scale(1.08);
-
-    background: #f40612;
-}
-
-
-/* ============================================================
-   MOVIE TITLE
-   ============================================================ */
-
-.movie-title {
-
-    position: relative;
-
-    z-index: 5;
-
-    color: #e5e5e5;
-
-    font-size: 13px;
-
-    font-weight: 650;
-
+.team-heading {
     text-align: center;
 
-    padding: 11px 5px;
+    font-size: 28px;
+    font-weight: 850;
 
-    min-height: 44px;
+    color: white;
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background: #111111;
-
-    transition: color 0.2s ease;
+    margin-bottom: 30px;
 }
 
-
-.movie-wrapper:hover .movie-title {
-
-    color: #ffffff;
-}
-
-
-/* ============================================================
-   DETAILS PAGE
-   ============================================================ */
-
-.details-title {
-
-    font-size: clamp(30px, 5vw, 55px);
-
-    font-weight: 900;
-
-    margin-top: 25px;
-
-    margin-bottom: 20px;
-
-    color: #ffffff;
-}
-
-
-.trailer-heading {
-
-    font-size: 27px;
-
-    font-weight: 800;
-
-    margin-top: 18px;
-
-    margin-bottom: 15px;
-
-    color: #ffffff;
-}
-
-
-.trailer-heading::first-letter {
-
+.team-heading span {
     color: #e50914;
 }
 
+.team-card {
+    background: #0d0d0d;
+    border: 1px solid #242424;
 
-/* ============================================================
-   TRAILER
-   ============================================================ */
+    border-radius: 14px;
 
-.trailer-box {
+    padding: 20px;
 
-    width: 100%;
-
-    padding: 0;
-
-    border-radius: 4px;
-
-    background: #111111;
-
-    border: 1px solid #2a2a2a;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.55);
-
-    margin-bottom: 35px;
-
-    overflow: hidden;
-}
-
-
-.trailer-inner {
-
-    width: 100%;
-
-    border-radius: 4px;
-
-    overflow: hidden;
-
-    background: #000;
-}
-
-
-/* ============================================================
-   CENTER POSTER
-   ============================================================ */
-
-.center-poster-wrap {
-
-    width: 100%;
-
-    aspect-ratio: 16 / 9;
-
-    margin: 25px auto 35px;
-
-    padding: 0;
-
-    border-radius: 4px;
-
-    background: #111111;
-
-    border: 1px solid #292929;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.6);
-
-    overflow: hidden;
-}
-
-
-.center-poster {
-
-    width: 100%;
+    text-align: center;
 
     height: 100%;
 
-    aspect-ratio: 16 / 9;
-
-    object-fit: cover;
-
-    display: block;
-
-    border-radius: 3px;
-}
-
-
-/* ============================================================
-   DETAILS PANEL
-   ============================================================ */
-
-.details-panel {
-
-    position: relative;
-
-    padding: 28px;
-
-    border-radius: 5px;
-
-    background: #111111;
-
-    border: 1px solid #292929;
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,0.4);
-
-    overflow: hidden;
-}
-
-
-.details-panel::before {
-
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-
-    top: 0;
-
-    bottom: 0;
-
-    width: 4px;
-
-    background: #e50914;
-}
-
-
-.info-heading {
-
-    font-size: 27px;
-
-    font-weight: 800;
-
-    color: #ffffff;
-
-    margin-bottom: 22px;
-}
-
-
-.info-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 12px;
-
-    margin-bottom: 25px;
-}
-
-
-.info-item {
-
-    padding: 17px;
-
-    border-radius: 4px;
-
-    background: #181818;
-
-    border: 1px solid #2b2b2b;
-
     transition:
-        background 0.2s ease,
-        border-color 0.2s ease;
+        transform 0.3s ease,
+        border-color 0.3s ease;
 }
 
-
-.info-item:hover {
-
-    background: #202020;
-
-    border-color: #444444;
+.team-card:hover {
+    transform: translateY(-5px);
+    border-color: #e50914;
 }
-
-
-.info-label {
-
-    color: #8c8c8c;
-
-    font-size: 12px;
-
-    margin-bottom: 6px;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.4px;
-}
-
-
-.info-value {
-
-    color: #ffffff;
-
-    font-size: 19px;
-
-    font-weight: 750;
-}
-
-
-/* ============================================================
-   GENRES / STORY
-   ============================================================ */
-
-.genre-section,
-.story-section {
-
-    padding-top: 20px;
-
-    margin-top: 18px;
-
-    border-top:
-        1px solid #292929;
-}
-
-
-.genre-title,
-.story-title {
-
-    font-size: 19px;
-
-    font-weight: 800;
-
-    color: #ffffff;
-
-    margin-bottom: 10px;
-}
-
-
-.genre-tag {
-
-    display: inline-block;
-
-    padding: 6px 12px;
-
-    margin: 4px 5px 4px 0;
-
-    border-radius: 3px;
-
-    color: #ffffff;
-
-    border: 1px solid #444444;
-
-    background: #181818;
-
-    font-size: 13px;
-}
-
-
-.story-text {
-
-    color: #b3b3b3;
-
-    line-height: 1.8;
-
-    font-size: 14px;
-}
-
-
-/* ============================================================
-   TEAM FOOTER
-   ============================================================ */
-
-.team-footer {
-
-    position: relative;
-
-    width: 100%;
-
-    margin-top: 55px;
-
-    padding: 0 12px 35px;
-
-    text-align: center;
-
-    overflow: hidden;
-}
-
-
-.team-neon-line {
-
-    width: 82%;
-
-    height: 1px;
-
-    margin: 0 auto 28px;
-
-    background: #333333;
-
-    border-radius: 0;
-
-    box-shadow: none;
-
-    animation: none;
-}
-
-
-.team-grid {
-
-    width: 92%;
-
-    max-width: 1150px;
-
-    margin: 0 auto;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    align-items: stretch;
-}
-
-
-.team-member {
-
-    min-height: 145px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 8px 12px;
-
-    position: relative;
-}
-
-
-.team-member + .team-member {
-
-    border-left:
-        1px solid
-        #2b2b2b;
-}
-
-
-/* ============================================================
-   ANISH PHOTO
-   ============================================================ */
 
 .team-photo {
+    width: 95px;
+    height: 95px;
 
-    width: 58px;
-
-    height: 58px;
+    object-fit: cover;
 
     border-radius: 50%;
 
-    object-fit: cover;
+    border: 2px solid #333;
 
-    object-position: center;
-
-    padding: 2px;
-
-    margin-bottom: 8px;
-
-    background: #222222;
-
-    border: 2px solid #e50914;
-
-    box-shadow:
-        0 5px 15px rgba(0,0,0,0.6);
-
-    animation: none;
+    margin-bottom: 12px;
 }
-
-
-/* ============================================================
-   TEAM ICONS
-   ============================================================ */
-
-.team-icon {
-
-    height: 38px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    margin-bottom: 8px;
-
-    font-size: 27px;
-
-    font-weight: 900;
-
-    line-height: 1;
-
-    color: #e50914;
-
-    text-shadow: none;
-}
-
-
-.icon-math,
-.icon-project,
-.icon-front {
-
-    color: #e50914;
-
-    text-shadow: none;
-}
-
-
-/* ============================================================
-   TEAM TEXT
-   ============================================================ */
-
-.team-role {
-
-    color: #999999;
-
-    font-size: 12px;
-
-    font-weight: 500;
-
-    line-height: 1.35;
-
-    min-height: 35px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-}
-
 
 .team-name {
-
-    margin-top: 5px;
-
-    font-size: 16px;
-
+    font-size: 17px;
     font-weight: 800;
-
-    line-height: 1.2;
-
-    white-space: nowrap;
-
-    color: #ffffff;
+    color: white;
 }
 
+.team-role {
+    margin-top: 6px;
 
-.name-anish,
-.name-abhishek,
-.name-abrar,
-.name-vishal {
+    font-size: 13px;
 
-    color: #ffffff;
+    color: #999;
+}
 
-    text-shadow: none;
+.footer-text {
+    text-align: center;
+
+    margin-top: 40px;
+
+    color: #666;
+
+    font-size: 12px;
 }
 
 
@@ -1178,284 +948,57 @@ div[data-testid="stHorizontalBlock"] {
    MOBILE
    ============================================================ */
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
 
-    .block-container {
-
-        padding-left: 9px;
-
-        padding-right: 9px;
-
-        padding-top: 10px;
+    .main .block-container {
+        padding-left: 14px;
+        padding-right: 14px;
     }
 
-
-    .hero-box {
-
-        min-height: 330px;
-
-        padding: 28px 22px;
-
-        border-radius: 3px;
-
-        margin-bottom: 30px;
+    .hero {
+        padding: 50px 22px;
+        border-radius: 16px;
     }
-
 
     .hero-title {
-
-        font-size: 41px;
-
-        line-height: 1;
-
-        letter-spacing: -1px;
+        font-size: 38px;
     }
 
-
-    .selected-movie-box {
-
-        gap: 14px;
-
-        padding: 12px;
-
-        min-height: 140px;
+    .hero-subtitle {
+        font-size: 14px;
     }
 
+    .selected-box {
+        flex-direction: column;
+        text-align: center;
+    }
 
     .selected-poster {
-
-        width: 82px;
-
-        height: 120px;
+        width: 145px;
+        height: 215px;
     }
-
 
     .selected-title {
+        font-size: 24px;
+    }
 
+    .section-heading {
         font-size: 22px;
-
-        margin: 7px 0;
     }
-
-
-    .selected-overview {
-
-        font-size: 11px;
-
-        line-height: 1.45;
-
-        display: -webkit-box;
-
-        -webkit-line-clamp: 4;
-
-        -webkit-box-orient: vertical;
-
-        overflow: hidden;
-    }
-
-
-    .section-title {
-
-        font-size: 23px;
-    }
-
-
-    .movie-wrapper {
-
-        border-radius: 3px;
-
-        margin-bottom: 10px;
-    }
-
-
-    .movie-wrapper:hover {
-
-        transform:
-            translateY(-4px)
-            scale(1.015);
-    }
-
 
     .movie-title {
-
-        font-size: 10px;
-
-        min-height: 36px;
-
-        padding: 7px 3px;
+        font-size: 12px;
     }
 
-
-    .play-circle {
-
-        width: 42px;
-
-        height: 42px;
-
-        font-size: 17px;
+    .butterfly {
+        opacity: 0.18;
+        filter: blur(2px);
     }
 
-
-    div[data-testid="stHorizontalBlock"] {
-
-        padding: 3px 1px;
-
-        margin-bottom: 4px;
+    .b7,
+    .b8 {
+        display: none;
     }
-
-
-    .trailer-box {
-
-        border-radius: 3px;
-
-        margin-bottom: 25px;
-    }
-
-
-    .trailer-heading {
-
-        font-size: 23px;
-    }
-
-
-    .center-poster-wrap {
-
-        width: 100%;
-
-        aspect-ratio: 16 / 9;
-
-        margin: 18px auto 25px;
-
-        border-radius: 3px;
-    }
-
-
-    .center-poster {
-
-        border-radius: 2px;
-    }
-
-
-    .details-panel {
-
-        padding: 18px;
-    }
-
-
-    .info-grid {
-
-        grid-template-columns: 1fr;
-
-        gap: 9px;
-    }
-
-
-    .info-value {
-
-        font-size: 17px;
-    }
-
-
-    .genre-tag {
-
-        font-size: 11px;
-
-        padding: 5px 9px;
-    }
-
-
-    .story-text {
-
-        font-size: 13px;
-
-        line-height: 1.7;
-    }
-
-
-    /* ========================================================
-       MOBILE FOOTER
-       ======================================================== */
-
-    .team-footer {
-
-        margin-top: 35px;
-
-        padding: 0 3px 25px;
-    }
-
-
-    .team-neon-line {
-
-        width: 88%;
-
-        margin-bottom: 18px;
-    }
-
-
-    .team-grid {
-
-        width: 100%;
-
-        grid-template-columns:
-            repeat(4, 1fr);
-    }
-
-
-    .team-member {
-
-        min-height: 130px;
-
-        padding: 5px 3px;
-    }
-
-
-    .team-member + .team-member {
-
-        border-left:
-            1px solid
-            #292929;
-    }
-
-
-    .team-photo {
-
-        width: 43px;
-
-        height: 43px;
-
-        padding: 2px;
-
-        margin-bottom: 5px;
-    }
-
-
-    .team-icon {
-
-        height: 28px;
-
-        font-size: 21px;
-
-        margin-bottom: 5px;
-    }
-
-
-    .team-role {
-
-        font-size: 8px;
-
-        line-height: 1.25;
-
-        min-height: 31px;
-    }
-
-
-    .team-name {
-
-        margin-top: 5px;
-
-        font-size: 10px;
-    }
-
 }
 
 </style>
@@ -1463,12 +1006,69 @@ div[data-testid="stHorizontalBlock"] {
 
 
 # ============================================================
-# 3. FILE PATHS
+# 3. BUTTERFLY ANIMATION
 # ============================================================
 
-BASE_DIR = os.path.dirname(
-    os.path.abspath(__file__)
-)
+st.html("""
+<div class="butterfly-field">
+
+    <div class="butterfly b1">
+        <div class="wing left"></div>
+        <div class="wing right"></div>
+        <div class="body"></div>
+    </div>
+
+    <div class="butterfly b2">
+        <div class="wing left"></div>
+        <div class="wing right"></div>
+        <div class="body"></div>
+    </div>
+
+    <div class="butterfly b3">
+        <div class="wing left"></div>
+        <div class="wing right"></div>
+        <div class="body"></div>
+    </div>
+
+    <div class="butterfly b4">
+        <div class="wing left"></div>
+        <div class="wing right"></div>
+        <div class="body"></div>
+    </div>
+
+    <div class="butterfly b5">
+        <div class="wing left"></div>
+        <div class="wing right"></div>
+        <div class="body"></div>
+    </div>
+
+    <div class="butterfly b6">
+        <div class="wing left"></div>
+        <div class="wing right"></div>
+        <div class="body"></div>
+    </div>
+
+    <div class="butterfly b7">
+        <div class="wing left"></div>
+        <div class="wing right"></div>
+        <div class="body"></div>
+    </div>
+
+    <div class="butterfly b8">
+        <div class="wing left"></div>
+        <div class="wing right"></div>
+        <div class="body"></div>
+    </div>
+
+</div>
+""")
+
+
+# ============================================================
+# 4. FILE PATHS
+# ============================================================
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 MOVIES_FILE = os.path.join(
     BASE_DIR,
@@ -1482,7 +1082,7 @@ SIMILARITY_FILE = os.path.join(
 
 
 # ============================================================
-# 4. ANISH PHOTO
+# 5. ANISH PHOTO
 # ============================================================
 
 ANISH_PHOTO_URL = (
@@ -1492,7 +1092,7 @@ ANISH_PHOTO_URL = (
 
 
 # ============================================================
-# 5. LOAD DATA
+# 6. LOAD DATA
 # ============================================================
 
 @st.cache_data(show_spinner=False)
@@ -1505,14 +1105,12 @@ def load_data():
 
         movies_data = pickle.load(file)
 
-
     with gzip.open(
         SIMILARITY_FILE,
         "rb"
     ) as file:
 
         similarity_data = pickle.load(file)
-
 
     return (
         movies_data,
@@ -1524,15 +1122,11 @@ movies, similarity_indices = load_data()
 
 
 # ============================================================
-# 6. TMDB API KEY
+# 7. TMDB API
 # ============================================================
 
 TMDB_API_KEY = st.secrets["TMDB_API_KEY"]
 
-
-# ============================================================
-# 7. TMDB REQUEST
-# ============================================================
 
 def tmdb_request(
     endpoint,
@@ -1560,11 +1154,9 @@ def tmdb_request(
         )
 
         if response.status_code == 200:
-
             return response.json()
 
     except Exception:
-
         return None
 
     return None
@@ -1598,9 +1190,7 @@ def fetch_movie_details(movie_id):
 )
 def fetch_poster(movie_id):
 
-    details = fetch_movie_details(
-        movie_id
-    )
+    details = fetch_movie_details(movie_id)
 
     if not details:
         return None
@@ -1643,70 +1233,67 @@ def fetch_trailer(movie_id):
         []
     )
 
-
-    # OFFICIAL TRAILER
-
-    for video in videos:
-
-        if (
-            video.get("site") == "YouTube"
-            and video.get("type") == "Trailer"
-            and video.get("official") is True
-        ):
-
-            key = video.get("key")
-
-            if key:
-
-                return (
-                    "https://www.youtube.com/watch?v="
-                    + key
-                )
-
-
-    # NORMAL TRAILER
+    # Official trailer first
 
     for video in videos:
 
         if (
             video.get("site") == "YouTube"
-            and video.get("type") == "Trailer"
+            and
+            video.get("type") == "Trailer"
+            and
+            video.get("official") is True
         ):
 
             key = video.get("key")
 
             if key:
-
                 return (
                     "https://www.youtube.com/watch?v="
                     + key
                 )
 
-
-    # TEASER
+    # Any trailer
 
     for video in videos:
 
         if (
             video.get("site") == "YouTube"
-            and video.get("type") == "Teaser"
+            and
+            video.get("type") == "Trailer"
         ):
 
             key = video.get("key")
 
             if key:
-
                 return (
                     "https://www.youtube.com/watch?v="
                     + key
                 )
 
+    # Teaser
+
+    for video in videos:
+
+        if (
+            video.get("site") == "YouTube"
+            and
+            video.get("type") == "Teaser"
+        ):
+
+            key = video.get("key")
+
+            if key:
+                return (
+                    "https://www.youtube.com/watch?v="
+                    + key
+                )
 
     return None
 
 
 # ============================================================
-# 11. RECOMMENDATION
+# 11. RECOMMENDATION FUNCTION
 # ============================================================
 
 def recommend(movie):
@@ -1715,37 +1302,28 @@ def recommend(movie):
         movies["title"] == movie
     ].index
 
-
     if len(indexes) == 0:
-
         return [], [], []
 
-
     index = indexes[0]
-
 
     names = []
     posters = []
     ids = []
 
-
-    similar_movies = (
-        similarity_indices[index][0:20]
-    )
-
+    similar_movies = similarity_indices[
+        index
+    ][0:20]
 
     for movie_index in similar_movies:
 
         try:
-
             movie_index = int(
                 movie_index
             )
 
         except Exception:
-
             continue
-
 
         try:
 
@@ -1758,9 +1336,7 @@ def recommend(movie):
             ]["title"]
 
         except Exception:
-
             continue
-
 
         names.append(
             movie_name
@@ -1773,7 +1349,6 @@ def recommend(movie):
         ids.append(
             movie_id
         )
-
 
     return (
         names,
@@ -1796,7 +1371,6 @@ def movie_card_html(
         str(movie_name)
     )
 
-
     if not poster_url:
 
         poster_url = (
@@ -1804,8 +1378,8 @@ def movie_card_html(
             "500x750?text=No+Poster"
         )
 
-
     return f"""
+
     <a
         href="?movie_id={movie_id}"
         target="_self"
@@ -1844,6 +1418,7 @@ def movie_card_html(
         </div>
 
     </a>
+
     """
 
 
@@ -1859,13 +1434,10 @@ def selected_movie_preview(
         movies["title"] == movie_name
     ].index
 
-
     if len(indexes) == 0:
         return
 
-
     index = indexes[0]
-
 
     try:
 
@@ -1874,18 +1446,14 @@ def selected_movie_preview(
         ]["movie_id"]
 
     except Exception:
-
         return
-
 
     details = fetch_movie_details(
         movie_id
     )
 
-
     if not details:
         return
-
 
     poster_path = details.get(
         "poster_path"
@@ -1896,7 +1464,6 @@ def selected_movie_preview(
         "No description available."
     )
 
-
     safe_title = html.escape(
         str(
             details.get(
@@ -1906,11 +1473,9 @@ def selected_movie_preview(
         )
     )
 
-
     safe_overview = html.escape(
         str(overview)
     )
-
 
     if poster_path:
 
@@ -1926,45 +1491,42 @@ def selected_movie_preview(
             "500x750?text=No+Poster"
         )
 
+    st.html(f"""
 
-    st.html(
-        f"""
-        <div class="selected-movie-box">
+    <div class="selected-box">
 
-            <img
-                class="selected-poster"
-                src="{poster_url}"
-                alt="{safe_title}"
-            >
+        <img
+            class="selected-poster"
+            src="{poster_url}"
+            alt="{safe_title}"
+        >
 
-            <div class="selected-info">
+        <div class="selected-info">
 
-                <span class="selected-badge">
-                    Selected Movie
-                </span>
+            <div class="selected-title">
+                {safe_title}
+            </div>
 
-                <div class="selected-title">
-                    {safe_title}
-                </div>
-
-                <div class="selected-overview">
-                    {safe_overview}
-                </div>
-
+            <div class="selected-description">
+                {safe_overview}
             </div>
 
         </div>
-        """
-    )
+
+    </div>
+
+    """)
 
 
 # ============================================================
-# 14. DETAILS PAGE
+# 14. MOVIE DETAILS PAGE
 # ============================================================
 
 def show_movie_details(
     movie_id
 ):
+
+    # BACK BUTTON
 
     if st.button(
         "←  Back to Recommendations",
@@ -1972,14 +1534,11 @@ def show_movie_details(
     ):
 
         st.query_params.clear()
-
         st.rerun()
-
 
     details = fetch_movie_details(
         movie_id
     )
-
 
     if not details:
 
@@ -1988,7 +1547,6 @@ def show_movie_details(
         )
 
         return
-
 
     title = details.get(
         "title",
@@ -2029,37 +1587,36 @@ def show_movie_details(
     # TRAILER
     # ========================================================
 
-    st.html(
-        '<div class="trailer-heading">'
-        '▶ Trailer'
-        '</div>'
-    )
-
+    st.html("""
+    <div class="trailer-heading">
+        ▶️ Trailer
+    </div>
+    """)
 
     trailer_url = fetch_trailer(
         movie_id
     )
 
-
     if trailer_url:
 
-        st.html(
-            '<div class="trailer-box">'
-            '<div class="trailer-inner">'
-        )
+        st.html("""
+        <div class="trailer-box">
+            <div class="trailer-inner">
+        """)
 
         st.video(
             trailer_url
         )
 
-        st.html(
-            "</div></div>"
-        )
+        st.html("""
+            </div>
+        </div>
+        """)
 
     else:
 
         st.warning(
-            "Trailer is not available for this movie."
+            "🎬 Trailer is not available for this movie."
         )
 
 
@@ -2074,35 +1631,32 @@ def show_movie_details(
             + poster_path
         )
 
+        st.html(f"""
 
-        st.html(
-            f"""
-            <div class="center-poster-wrap">
+        <div class="center-poster-wrap">
 
-                <img
-                    class="center-poster"
-                    src="{poster_url}"
-                    alt="{html.escape(str(title))}"
-                >
+            <img
+                class="center-poster"
+                src="{poster_url}"
+                alt="{html.escape(str(title))}"
+            >
 
-            </div>
-            """
-        )
+        </div>
+
+        """)
 
 
     # ========================================================
     # TITLE
     # ========================================================
 
-    st.html(
-        f"""
-        <div class="details-title">
+    st.html(f"""
 
-            🎬 {html.escape(str(title))}
+    <div class="details-title">
+        🎬 {html.escape(str(title))}
+    </div>
 
-        </div>
-        """
-    )
+    """)
 
 
     # ========================================================
@@ -2111,13 +1665,10 @@ def show_movie_details(
 
     runtime_text = "Unknown"
 
-
     if runtime:
 
         hours = runtime // 60
-
         minutes = runtime % 60
-
 
         if hours:
 
@@ -2138,22 +1689,28 @@ def show_movie_details(
 
     genre_html = ""
 
-
     for genre in genres:
 
         genre_name = genre.get(
             "name"
         )
 
-
         if genre_name:
 
             genre_html += (
                 '<span class="genre-tag">'
-                f'{html.escape(str(genre_name))}'
+                +
+                html.escape(
+                    str(genre_name)
+                )
+                +
                 '</span>'
             )
 
+
+    # ========================================================
+    # STORY
+    # ========================================================
 
     safe_overview = html.escape(
         str(overview)
@@ -2164,98 +1721,231 @@ def show_movie_details(
     # DETAILS PANEL
     # ========================================================
 
-    st.html(
-        f"""
-        <div class="details-panel">
+    st.html(f"""
 
-            <div class="info-heading">
+    <div class="details-panel">
 
-                🎬 {html.escape(str(title))}
+        <div class="detail-row">
 
+            <div class="detail-item">
+                ⭐ <strong>Rating:</strong>
+                {float(rating):.1f}/10
             </div>
 
-
-            <div class="info-grid">
-
-
-                <div class="info-item">
-
-                    <div class="info-label">
-                        TMDB Rating
-                    </div>
-
-                    <div class="info-value">
-                        ⭐ {float(rating):.1f}/10
-                    </div>
-
-                </div>
-
-
-                <div class="info-item">
-
-                    <div class="info-label">
-                        Release Date
-                    </div>
-
-                    <div class="info-value">
-                        {html.escape(
-                            str(release_date)
-                        )}
-                    </div>
-
-                </div>
-
-
-                <div class="info-item">
-
-                    <div class="info-label">
-                        Runtime
-                    </div>
-
-                    <div class="info-value">
-                        {html.escape(
-                            str(runtime_text)
-                        )}
-                    </div>
-
-                </div>
-
-
+            <div class="detail-item">
+                📅 <strong>Release:</strong>
+                {html.escape(str(release_date))}
             </div>
 
-
-            <div class="genre-section">
-
-                <div class="genre-title">
-                    Genres
-                </div>
-
-                <div>
-                    {genre_html}
-                </div>
-
-            </div>
-
-
-            <div class="story-section">
-
-                <div class="story-title">
-                    Story
-                </div>
-
-                <div class="story-text">
-                    {safe_overview}
-                </div>
-
+            <div class="detail-item">
+                ⏱️ <strong>Runtime:</strong>
+                {html.escape(str(runtime_text))}
             </div>
 
         </div>
-        """
-    )
+
+
+        <div class="story-heading">
+            🎭 Genres
+        </div>
+
+        <div style="margin-bottom:25px;">
+            {genre_html}
+        </div>
+
+
+        <div class="story-heading">
+            📖 Story
+        </div>
+
+        <div class="story-text">
+            {safe_overview}
+        </div>
+
+    </div>
+
+    """)
 
 
 # ============================================================
-# 15. QUERY PARAMETER
+# 15. TEAM SECTION
+# ============================================================
+
+def show_team():
+
+    st.html("""
+
+    <div class="team-section">
+
+        <div class="team-heading">
+            Meet The <span>Team</span>
+        </div>
+
+    </div>
+
+    """)
+
+    cols = st.columns(
+        4,
+        gap="medium"
+    )
+
+
+    # ========================================================
+    # ANISH
+    # ========================================================
+
+    with cols[0]:
+
+        st.html(f"""
+
+        <div class="team-card">
+
+            <img
+                class="team-photo"
+                src="{ANISH_PHOTO_URL}"
+                alt="Anish Kumar"
+            >
+
+            <div class="team-name">
+                Anish Kumar
+            </div>
+
+            <div class="team-role">
+                Coding & Development
+            </div>
+
+        </div>
+
+        """)
+
+
+    # ========================================================
+    # ABHISHEK
+    # ========================================================
+
+    with cols[1]:
+
+        st.html("""
+
+        <div class="team-card">
+
+            <div
+                class="team-photo"
+                style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    background:#171717;
+                    color:#e50914;
+                    font-size:30px;
+                "
+            >
+                A
+            </div>
+
+            <div class="team-name">
+                Abhishek Kumar
+            </div>
+
+            <div class="team-role">
+                Mathematical Calculation
+            </div>
+
+        </div>
+
+        """)
+
+
+    # ========================================================
+    # ABRAR
+    # ========================================================
+
+    with cols[2]:
+
+        st.html("""
+
+        <div class="team-card">
+
+            <div
+                class="team-photo"
+                style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    background:#171717;
+                    color:#e50914;
+                    font-size:30px;
+                "
+            >
+                A
+            </div>
+
+            <div class="team-name">
+                Abrar Ahmad
+            </div>
+
+            <div class="team-role">
+                Project Management
+            </div>
+
+        </div>
+
+        """)
+
+
+    # ========================================================
+    # VISHAL
+    # ========================================================
+
+    with cols[3]:
+
+        st.html("""
+
+        <div class="team-card">
+
+            <div
+                class="team-photo"
+                style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    background:#171717;
+                    color:#e50914;
+                    font-size:30px;
+                "
+            >
+                V
+            </div>
+
+            <div class="team-name">
+                Vishal Kumar
+            </div>
+
+            <div class="team-role">
+                Frontend Development
+            </div>
+
+        </div>
+
+        """)
+
+
+    st.html("""
+
+    <div class="footer-text">
+
+        🎬 Movie Recommendation System
+        <br><br>
+        Developed with Python • Streamlit • Machine Learning • TMDB
+
+    </div>
+
+    """)
+
+
+# ============================================================
+# 16. QUERY PARAMETER
 # ============================================================
 
 movie_id_from_url = st.query_params.get(
@@ -2264,7 +1954,7 @@ movie_id_from_url = st.query_params.get(
 
 
 # ============================================================
-# 16. DETAILS PAGE
+# 17. MOVIE DETAILS ROUTE
 # ============================================================
 
 if movie_id_from_url:
@@ -2290,7 +1980,7 @@ if movie_id_from_url:
 
 
 # ============================================================
-# 17. MAIN PAGE
+# 18. HOME PAGE
 # ============================================================
 
 else:
@@ -2299,86 +1989,46 @@ else:
     # HERO
     # ========================================================
 
-    st.html(
-        """
-        <div class="hero-box">
+    st.html("""
 
-            <div class="hero-content">
+    <div class="hero">
 
-                <div
-                    style="
-                        color:#e50914;
-                        font-size:12px;
-                        font-weight:800;
-                        letter-spacing:2px;
-                    "
-                >
+        <div class="hero-content">
 
-                    🎬 DEVELOPED BY
-                    ANISH-ABRAR-ABHISHEK-VISHAL
+            <div class="hero-badge">
+                AI POWERED • CONTENT BASED
+            </div>
 
-                </div>
+            <h1 class="hero-title">
+                Movie <span>Recommendation</span> System
+            </h1>
 
+            <div class="hero-subtitle">
 
-                <div class="hero-title">
-
-                    Movie
-
-                    <br>
-
-                    <span class="gradient-text">
-                        Recommendation
-                    </span>
-
-                    <br>
-
-                    System
-
-                </div>
-
-
-                <div
-                    style="
-                        color:#b3b3b3;
-                        font-size:16px;
-                        line-height:1.6;
-                        max-width:650px;
-                    "
-                >
-
-                    Discover movies similar to your
-                    favourite movies using
-                    AI-powered recommendations.
-
-                </div>
+                Discover movies you will love.
+                Select a movie and explore similar
+                recommendations powered by Machine Learning.
 
             </div>
 
         </div>
-        """
-    )
+
+    </div>
+
+    """)
 
 
     # ========================================================
-    # CHOOSE MOVIE
+    # MOVIE SELECTOR
     # ========================================================
 
-    st.html(
-        """
-        <div
-            style="
-                font-size:28px;
-                font-weight:800;
-                margin-bottom:8px;
-                color:#ffffff;
-            "
-        >
+    st.html("""
 
-            🎬 Choose Your Movie
+    <div class="section-heading">
+        🎬 Choose Your Movie
+    </div>
 
-        </div>
-        """
-    )
+    """)
 
 
     movie_list = (
@@ -2388,23 +2038,33 @@ else:
     )
 
 
-    default_index = 0
-
-
     if "Avatar" in movie_list:
 
         default_index = list(
             movie_list
         ).index("Avatar")
 
+    else:
+
+        default_index = 0
+
 
     selected_movie = st.selectbox(
+
         "Choose movie",
+
         movie_list,
+
         index=default_index,
+
         key="movie_selector"
+
     )
 
+
+    # ========================================================
+    # SELECTED MOVIE
+    # ========================================================
 
     selected_movie_preview(
         selected_movie
@@ -2420,33 +2080,24 @@ else:
     )
 
 
-    st.html(
-        f"""
-        <div class="section-title">
+    st.html(f"""
 
-            🔥 Recommended Movies
+    <div class="section-heading">
+        ✨ Recommended Movies
+    </div>
 
-        </div>
+    <div style="
+        color:#777;
+        margin-bottom:25px;
+        font-size:14px;
+    ">
+        Movies similar to
+        <strong style="color:#ddd;">
+            {html.escape(str(selected_movie))}
+        </strong>
+    </div>
 
-        <div class="section-subtitle">
-
-            Because you selected
-
-            <strong>
-
-                {html.escape(
-                    str(selected_movie)
-                )}
-
-            </strong>
-
-            <br>
-
-            Select any poster to view movie details.
-
-        </div>
-        """
-    )
+    """)
 
 
     # ========================================================
@@ -2478,7 +2129,6 @@ else:
 
 
             if position >= len(names):
-
                 continue
 
 
@@ -2494,132 +2144,7 @@ else:
 
 
     # ========================================================
-    # TEAM FOOTER
+    # TEAM
     # ========================================================
 
-    st.html(
-        f"""
-        <div class="team-footer">
-
-            <div class="team-neon-line"></div>
-
-
-            <div class="team-grid">
-
-
-                <!-- ANISH -->
-
-                <div class="team-member">
-
-                    <img
-                        class="team-photo"
-                        src="{ANISH_PHOTO_URL}"
-                        alt="Anish Kumar"
-                        loading="lazy"
-                    >
-
-
-                    <div class="team-role">
-
-                        Coding development<br>
-                        by
-
-                    </div>
-
-
-                    <div class="team-name name-anish">
-
-                        Anish Kumar
-
-                    </div>
-
-                </div>
-
-
-                <!-- ABHISHEK -->
-
-                <div class="team-member">
-
-                    <div class="team-icon icon-math">
-
-                        ▦
-
-                    </div>
-
-
-                    <div class="team-role">
-
-                        Mathematical<br>
-                        calculation by
-
-                    </div>
-
-
-                    <div class="team-name name-abhishek">
-
-                        Abhishek Kumar
-
-                    </div>
-
-                </div>
-
-
-                <!-- ABRAR -->
-
-                <div class="team-member">
-
-                    <div class="team-icon icon-project">
-
-                        ☁
-
-                    </div>
-
-
-                    <div class="team-role">
-
-                        Manage project by
-
-                    </div>
-
-
-                    <div class="team-name name-abrar">
-
-                        Abrar Ahmad
-
-                    </div>
-
-                </div>
-
-
-                <!-- VISHAL -->
-
-                <div class="team-member">
-
-                    <div class="team-icon icon-front">
-
-                        ▱
-
-                    </div>
-
-
-                    <div class="team-role">
-
-                        Front development by
-
-                    </div>
-
-
-                    <div class="team-name name-vishal">
-
-                        Vishal Kumar
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-        </div>
-        """
-    )
+    show_team()
