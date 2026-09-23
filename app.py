@@ -806,38 +806,314 @@ else:
 
     st.html(
         """
-        <div class="footer">
+        <style>
 
-            <div class="footer-line"></div>
+        .team-footer {
+            position: relative;
+            width: 100%;
+            margin-top: 45px;
+            padding: 0 12px 35px;
+            text-align: center;
+            overflow: hidden;
+        }
 
-            <div class="footer-title">
-                🎬 Movie Recommendation System
-            </div>
+        .team-neon-line {
+            width: 82%;
+            height: 3px;
+            margin: 0 auto 30px;
 
-            <div style="
-                margin-top:18px;
-                color:#ffffff;
-                font-size:15px;
-                line-height:2;
-                font-weight:700;
-            ">
-                Coding development by Anish Kumar
-                <br>
-                Mathematical calculation by Abhishek Kumar
-                <br>
-                Manage project by Abrar Ahmad
-                <br>
-                Front development by Vishal Kumar
-            </div>
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent 0%,
+                    #006cff 18%,
+                    #00c8ff 35%,
+                    #9d00ff 50%,
+                    #ff0066 68%,
+                    #006cff 84%,
+                    transparent 100%
+                );
 
-            <div style="
-                margin-top:14px;
-                color:#555;
-                font-size:12px;
-            ">
-                Machine Learning & Web Application Project
+            box-shadow:
+                0 0 8px #006cff,
+                0 0 15px #9d00ff,
+                0 0 20px #ff0066;
+
+            border-radius: 50%;
+
+            animation: teamLineGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes teamLineGlow {
+            0% {
+                opacity: 0.75;
+                transform: scaleX(0.96);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scaleX(1);
+            }
+
+            100% {
+                opacity: 0.75;
+                transform: scaleX(0.96);
+            }
+        }
+
+        .team-grid {
+            width: 92%;
+            max-width: 1150px;
+            margin: 0 auto;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            align-items: stretch;
+        }
+
+        .team-member {
+            min-height: 125px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            padding: 8px 12px;
+            position: relative;
+        }
+
+        .team-member + .team-member {
+            border-left:
+                1px solid
+                rgba(100, 120, 160, 0.35);
+        }
+
+        .team-icon {
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 8px;
+
+            font-size: 29px;
+            font-weight: 950;
+            line-height: 1;
+        }
+
+        .icon-code {
+            color: #ff00ff;
+            text-shadow:
+                0 0 8px #ff00ff,
+                0 0 16px rgba(255,0,255,0.7);
+        }
+
+        .icon-math {
+            color: #00ff95;
+            text-shadow:
+                0 0 8px #00ff95,
+                0 0 16px rgba(0,255,149,0.65);
+        }
+
+        .icon-project {
+            color: #00bfff;
+            text-shadow:
+                0 0 8px #00bfff,
+                0 0 16px rgba(0,191,255,0.7);
+        }
+
+        .icon-front {
+            color: #ffd000;
+            text-shadow:
+                0 0 8px #ffd000,
+                0 0 16px rgba(255,208,0,0.65);
+        }
+
+        .team-role {
+            color: #f4f4f8;
+
+            font-size: 13px;
+            font-weight: 650;
+
+            line-height: 1.35;
+
+            min-height: 35px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+        }
+
+        .team-name {
+            margin-top: 5px;
+
+            font-size: 17px;
+            font-weight: 900;
+
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .name-anish {
+            color: #ff39ff;
+            text-shadow:
+                0 0 8px rgba(255,57,255,0.55);
+        }
+
+        .name-abhishek {
+            color: #00f58a;
+            text-shadow:
+                0 0 8px rgba(0,245,138,0.5);
+        }
+
+        .name-abrar {
+            color: #00aaff;
+            text-shadow:
+                0 0 8px rgba(0,170,255,0.55);
+        }
+
+        .name-vishal {
+            color: #ffd000;
+            text-shadow:
+                0 0 8px rgba(255,208,0,0.55);
+        }
+
+        @media (max-width: 700px) {
+
+            .team-footer {
+                margin-top: 35px;
+                padding: 0 4px 25px;
+            }
+
+            .team-neon-line {
+                width: 88%;
+                height: 2px;
+                margin-bottom: 20px;
+            }
+
+            .team-grid {
+                width: 100%;
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .team-member {
+                min-height: 105px;
+                padding: 5px 4px;
+            }
+
+            .team-member + .team-member {
+                border-left:
+                    1px solid
+                    rgba(100, 120, 160, 0.30);
+            }
+
+            .team-icon {
+                height: 29px;
+                font-size: 22px;
+                margin-bottom: 6px;
+            }
+
+            .team-role {
+                font-size: 10px;
+                line-height: 1.25;
+                min-height: 31px;
+            }
+
+            .team-name {
+                margin-top: 5px;
+                font-size: 12px;
+            }
+        }
+
+        </style>
+
+
+        <div class="team-footer">
+
+            <div class="team-neon-line"></div>
+
+            <div class="team-grid">
+
+                <!-- Coding Development -->
+                <div class="team-member">
+
+                    <div class="team-icon icon-code">
+                        &lt;/&gt;
+                    </div>
+
+                    <div class="team-role">
+                        Coding development<br>
+                        by
+                    </div>
+
+                    <div class="team-name name-anish">
+                        Anish Kumar
+                    </div>
+
+                </div>
+
+
+                <!-- Mathematical Calculation -->
+                <div class="team-member">
+
+                    <div class="team-icon icon-math">
+                        ▦
+                    </div>
+
+                    <div class="team-role">
+                        Mathematical<br>
+                        calculation by
+                    </div>
+
+                    <div class="team-name name-abhishek">
+                        Abhishek Kumar
+                    </div>
+
+                </div>
+
+
+                <!-- Manage Project -->
+                <div class="team-member">
+
+                    <div class="team-icon icon-project">
+                        ☁
+                    </div>
+
+                    <div class="team-role">
+                        Manage project by
+                    </div>
+
+                    <div class="team-name name-abrar">
+                        Abrar Ahmad
+                    </div>
+
+                </div>
+
+
+                <!-- Front Development -->
+                <div class="team-member">
+
+                    <div class="team-icon icon-front">
+                        ▱
+                    </div>
+
+                    <div class="team-role">
+                        Front development by
+                    </div>
+
+                    <div class="team-name name-vishal">
+                        Vishal Kumar
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
         """
     )
+
