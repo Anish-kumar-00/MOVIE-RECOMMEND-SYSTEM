@@ -2241,7 +2241,7 @@ def show_team():
     <div class="team-section">
 
         <div class="team-heading">
-            Meet The <span>Team</span>
+            Meet The <span>Developer</span>
         </div>
 
     </div>
@@ -2364,7 +2364,7 @@ def show_team():
             </div>
 
             <div class="team-role">
-                Project Management
+                Special Project Manager
             </div>
 
         </div>
