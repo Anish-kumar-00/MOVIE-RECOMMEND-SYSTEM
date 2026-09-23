@@ -2264,7 +2264,7 @@ def show_team():
         st.html(f"""
 
         <a
-            href="https://github.com/Anish-kumar-00/MOVIE-RECOMMEND-SYSTEM"
+            href="https://github.com/Anish-kumar-00"
             target="_blank"
             rel="noopener noreferrer"
             style="
