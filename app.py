@@ -19,7 +19,7 @@ st.set_page_config(
 
 
 # ============================================================
-# 2. GLOBAL CSS
+# 2. GLOBAL CSS — CLEAN NETFLIX STYLE
 # ============================================================
 
 st.html("""
@@ -34,28 +34,52 @@ html {
 }
 
 body {
-    background: #03030a;
+    background: #000;
 }
 
 .stApp {
     background:
-        radial-gradient(circle at 0% 20%, rgba(0, 75, 255, 0.25), transparent 30%),
-        radial-gradient(circle at 100% 30%, rgba(255, 0, 60, 0.25), transparent 32%),
-        radial-gradient(circle at 50% 100%, rgba(100, 0, 255, 0.15), transparent 35%),
-        #03030a;
+        linear-gradient(
+            180deg,
+            #000000 0%,
+            #080808 45%,
+            #000000 100%
+        );
 
-    color: white;
+    color: #ffffff;
     overflow-x: hidden;
 }
 
+
+/* ============================================================
+   STREAMLIT CONTAINER
+   ============================================================ */
+
 .block-container {
     max-width: 1500px;
-    padding-top: 25px;
+    padding-top: 18px;
     padding-bottom: 50px;
 }
 
 [data-testid="stVerticalBlock"] {
-    gap: 0.5rem;
+    gap: 0.35rem;
+}
+
+
+/* ============================================================
+   HIDE DEFAULT STREAMLIT ELEMENTS
+   ============================================================ */
+
+#MainMenu {
+    visibility: hidden;
+}
+
+footer {
+    visibility: hidden;
+}
+
+header {
+    background: transparent !important;
 }
 
 
@@ -64,27 +88,39 @@ body {
    ============================================================ */
 
 div[data-baseweb="select"] > div {
-    background: linear-gradient(
-        135deg,
-        rgba(0, 20, 50, 0.95),
-        rgba(25, 0, 25, 0.95)
-    ) !important;
 
-    border: 2px solid transparent !important;
-    border-radius: 12px !important;
-    color: white !important;
+    background: #141414 !important;
 
-    box-shadow:
-        0 0 10px rgba(0, 110, 255, 0.25),
-        0 0 10px rgba(255, 0, 60, 0.18) !important;
+    border: 1px solid #333333 !important;
+
+    border-radius: 5px !important;
+
+    color: #ffffff !important;
+
+    min-height: 46px;
+
+    box-shadow: none !important;
+
+    transition: border-color 0.2s ease;
+}
+
+div[data-baseweb="select"] > div:hover {
+
+    border-color: #777777 !important;
 }
 
 div[data-baseweb="select"] > div:focus-within {
-    border-color: #008cff !important;
 
-    box-shadow:
-        0 0 15px rgba(0, 140, 255, 0.65),
-        0 0 25px rgba(255, 0, 80, 0.35) !important;
+    border-color: #e50914 !important;
+
+    box-shadow: 0 0 0 1px #e50914 !important;
+}
+
+
+/* Dropdown text */
+
+div[data-baseweb="select"] span {
+    color: #ffffff !important;
 }
 
 
@@ -93,33 +129,33 @@ div[data-baseweb="select"] > div:focus-within {
    ============================================================ */
 
 .stButton > button {
-    background: linear-gradient(
-        135deg,
-        #006cff,
-        #7b00ff,
-        #ff003c
-    ) !important;
 
-    color: white !important;
+    background: #e50914 !important;
 
-    border: 1px solid #ff174f !important;
-    border-radius: 10px !important;
+    color: #ffffff !important;
 
-    font-weight: 800 !important;
+    border: none !important;
 
-    transition: all 0.3s ease !important;
+    border-radius: 4px !important;
 
-    box-shadow:
-        0 0 12px rgba(0, 110, 255, 0.25),
-        0 0 12px rgba(255, 0, 70, 0.20) !important;
+    font-weight: 700 !important;
+
+    padding: 8px 18px !important;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease !important;
+
+    box-shadow: none !important;
 }
 
 .stButton > button:hover {
-    transform: translateY(-3px);
 
-    box-shadow:
-        0 0 18px rgba(0, 110, 255, 0.60),
-        0 0 30px rgba(255, 0, 70, 0.50) !important;
+    background: #f40612 !important;
+
+    transform: translateY(-1px);
+
+    box-shadow: none !important;
 }
 
 
@@ -128,18 +164,14 @@ div[data-baseweb="select"] > div:focus-within {
    ============================================================ */
 
 hr {
+
     border: none !important;
+
     height: 1px !important;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #006cff,
-        #ff0066,
-        transparent
-    ) !important;
+    background: #292929 !important;
 
-    box-shadow: 0 0 10px rgba(0, 100, 255, 0.5);
+    margin: 30px 0 !important;
 }
 
 
@@ -148,167 +180,87 @@ hr {
    ============================================================ */
 
 .hero-box {
+
     position: relative;
 
-    min-height: 390px;
+    min-height: 470px;
 
     display: flex;
+
     align-items: flex-end;
 
-    padding: 55px;
+    padding: 50px;
 
-    border-radius: 20px;
+    border-radius: 4px;
 
     overflow: hidden;
 
+    margin-bottom: 42px;
+
     background:
-        radial-gradient(
-            circle at 75% 45%,
-            rgba(0, 100, 255, 0.30),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 90% 55%,
-            rgba(255, 0, 70, 0.28),
-            transparent 30%
+        linear-gradient(
+            90deg,
+            #000000 0%,
+            rgba(0,0,0,0.95) 18%,
+            rgba(0,0,0,0.72) 42%,
+            rgba(0,0,0,0.30) 70%,
+            rgba(0,0,0,0.78) 100%
         ),
         linear-gradient(
-            110deg,
-            #02030a,
-            #080814,
-            #11030a
+            180deg,
+            rgba(0,0,0,0.05) 35%,
+            #000000 100%
+        ),
+        radial-gradient(
+            circle at 75% 35%,
+            #351014 0%,
+            #170708 28%,
+            #090909 58%,
+            #000000 100%
         );
 
-    border: 2px solid transparent;
-    background-clip: padding-box;
-
     box-shadow:
-        0 0 15px rgba(0, 110, 255, 0.45),
-        0 0 30px rgba(255, 0, 70, 0.30);
-
-    margin-bottom: 40px;
-
-    animation: heroPulse 4s ease-in-out infinite;
+        inset 0 -100px 100px rgba(0,0,0,0.65);
 }
 
-.hero-box::before {
-    content: "";
 
-    position: absolute;
-    inset: 0;
-
-    border-radius: 20px;
-    padding: 2px;
-
-    background: linear-gradient(
-        90deg,
-        #006cff,
-        #00c8ff,
-        #9d00ff,
-        #ff0066,
-        #ff1744,
-        #006cff
-    );
-
-    background-size: 300% 100%;
-
-    animation: neonBorder 5s linear infinite;
-
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-
-    pointer-events: none;
-}
+/* subtle cinematic line */
 
 .hero-box::after {
+
     content: "";
 
     position: absolute;
 
-    width: 450px;
-    height: 450px;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-    right: -100px;
-    top: -120px;
+    height: 2px;
 
-    background: radial-gradient(
-        circle,
-        rgba(0, 100, 255, 0.25),
-        transparent 65%
-    );
+    background: #e50914;
 
-    filter: blur(25px);
-
-    animation: heroLight 5s ease-in-out infinite;
+    opacity: 0.75;
 }
 
-@keyframes heroPulse {
-
-    0% {
-        box-shadow:
-            0 0 15px rgba(0, 110, 255, 0.35),
-            0 0 20px rgba(255, 0, 70, 0.20);
-    }
-
-    50% {
-        box-shadow:
-            0 0 30px rgba(0, 110, 255, 0.65),
-            0 0 45px rgba(255, 0, 70, 0.45);
-    }
-
-    100% {
-        box-shadow:
-            0 0 15px rgba(0, 110, 255, 0.35),
-            0 0 20px rgba(255, 0, 70, 0.20);
-    }
-}
-
-@keyframes neonBorder {
-
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-@keyframes heroLight {
-
-    0% {
-        transform: translateX(0) translateY(0);
-    }
-
-    50% {
-        transform: translateX(-100px) translateY(50px);
-    }
-
-    100% {
-        transform: translateX(0) translateY(0);
-    }
-}
 
 .hero-content {
+
     position: relative;
+
     z-index: 5;
 
-    animation: titleFade 1s ease-out;
+    max-width: 720px;
+
+    animation: heroFade 0.8s ease-out;
 }
 
-@keyframes titleFade {
+
+@keyframes heroFade {
 
     from {
         opacity: 0;
-        transform: translateY(25px);
+        transform: translateY(18px);
     }
 
     to {
@@ -317,73 +269,70 @@ hr {
     }
 }
 
+
+/* ============================================================
+   HERO TITLE
+   ============================================================ */
+
 .hero-title {
 
-    font-size: clamp(38px, 6vw, 72px);
+    font-size: clamp(42px, 6vw, 76px);
 
-    font-weight: 950;
+    font-weight: 900;
 
     line-height: 0.98;
 
-    margin: 10px 0 20px;
+    letter-spacing: -2px;
 
-    color: white;
+    margin: 12px 0 20px;
 
-    text-shadow:
-        0 0 15px rgba(255,255,255,0.15);
+    color: #ffffff;
 }
+
 
 .gradient-text {
 
-    background: linear-gradient(
-        90deg,
-        #00aaff,
-        #7b00ff,
-        #ff0077
-    );
+    color: #e50914;
 
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background: none;
 
-    background-clip: text;
+    -webkit-text-fill-color: #e50914;
 }
 
 
 /* ============================================================
-   SECTION
+   SECTION TITLES
    ============================================================ */
 
 .section-title {
 
-    font-size: 32px;
+    font-size: 27px;
 
-    font-weight: 950;
+    font-weight: 800;
+
+    color: #ffffff;
 
     margin-top: 15px;
 
     margin-bottom: 5px;
-
-    background: linear-gradient(
-        90deg,
-        #ffffff 0%,
-        #00aaff 35%,
-        #9d00ff 65%,
-        #ff0066 100%
-    );
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    background-clip: text;
 }
+
 
 .section-subtitle {
 
-    color: #aeb4c5;
+    color: #8c8c8c;
 
-    margin-bottom: 25px;
+    margin-bottom: 22px;
 
-    font-size: 15px;
+    font-size: 14px;
+}
+
+
+.section-subtitle strong {
+
+    color: #ffffff !important;
+
+    text-shadow: none !important;
 }
 
 
@@ -399,90 +348,64 @@ hr {
 
     align-items: center;
 
-    gap: 28px;
+    gap: 24px;
 
     padding: 18px;
 
-    min-height: 180px;
+    min-height: 175px;
 
-    margin-top: 25px;
+    margin-top: 22px;
 
-    margin-bottom: 30px;
+    margin-bottom: 34px;
 
-    border-radius: 18px;
+    border-radius: 5px;
 
-    background: linear-gradient(
-        110deg,
-        rgba(0, 40, 90, 0.48),
-        rgba(25, 5, 50, 0.42),
-        rgba(80, 0, 25, 0.45)
-    );
+    background: #111111;
 
-    border: 2px solid transparent;
+    border: 1px solid #252525;
 
-    background-clip: padding-box;
-
-    box-shadow:
-        0 0 18px rgba(0, 100, 255, 0.35),
-        0 0 30px rgba(255, 0, 70, 0.25);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.35);
 
     overflow: hidden;
 }
 
-.selected-movie-box::before {
+
+.selected-movie-box::after {
 
     content: "";
 
     position: absolute;
 
-    inset: 0;
+    left: 0;
 
-    border-radius: 18px;
+    top: 0;
 
-    padding: 2px;
+    bottom: 0;
 
-    background: linear-gradient(
-        90deg,
-        #0077ff,
-        #00ccff,
-        #9d00ff,
-        #ff0066,
-        #ff003c,
-        #0077ff
-    );
+    width: 4px;
 
-    background-size: 300% 100%;
-
-    animation: neonBorder 4s linear infinite;
-
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    -webkit-mask-composite: xor;
-
-    mask-composite: exclude;
-
-    pointer-events: none;
+    background: #e50914;
 }
+
 
 .selected-poster {
 
-    width: 120px;
-    height: 175px;
+    width: 115px;
+
+    height: 165px;
 
     object-fit: cover;
 
-    border-radius: 12px;
+    border-radius: 3px;
 
     position: relative;
 
     z-index: 2;
 
     box-shadow:
-        0 0 12px rgba(0, 110, 255, 0.65),
-        0 0 20px rgba(255, 0, 70, 0.35);
+        0 8px 20px rgba(0,0,0,0.55);
 }
+
 
 .selected-info {
 
@@ -491,205 +414,119 @@ hr {
     z-index: 2;
 }
 
+
 .selected-badge {
 
     display: inline-block;
 
-    padding: 5px 12px;
+    padding: 5px 10px;
 
-    border-radius: 50px;
+    border-radius: 3px;
 
-    color: white;
+    color: #ffffff;
 
-    font-size: 12px;
+    font-size: 11px;
 
     font-weight: 800;
 
-    background: linear-gradient(
-        90deg,
-        #006cff,
-        #8b00ff,
-        #ff0066
-    );
+    text-transform: uppercase;
 
-    box-shadow:
-        0 0 12px rgba(0, 120, 255, 0.45);
+    letter-spacing: 0.7px;
+
+    background: #e50914;
 }
+
 
 .selected-title {
 
-    font-size: 32px;
+    font-size: 30px;
 
-    font-weight: 900;
+    font-weight: 800;
 
-    margin: 8px 0;
+    margin: 8px 0 10px;
+
+    color: #ffffff;
 }
+
 
 .selected-overview {
 
-    color: #c5cad5;
+    color: #b3b3b3;
 
     line-height: 1.6;
 
-    max-width: 750px;
+    max-width: 780px;
+
+    font-size: 14px;
 }
 
 
 /* ============================================================
-   MOVIE CARDS
+   MOVIE GRID
    ============================================================ */
 
 div[data-testid="stHorizontalBlock"] {
 
     position: relative;
 
-    padding: 7px 4px;
+    padding: 5px 2px;
 
-    border-radius: 18px;
-
-    background:
-        radial-gradient(
-            circle at 0% 50%,
-            rgba(0, 100, 255, 0.25),
-            transparent 23%
-        ),
-        radial-gradient(
-            circle at 100% 50%,
-            rgba(255, 0, 70, 0.25),
-            transparent 23%
-        );
-
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 
     overflow: visible;
 }
+
+
+/* ============================================================
+   MOVIE CARD
+   ============================================================ */
 
 .movie-wrapper {
 
     position: relative;
 
-    background: linear-gradient(
-        145deg,
-        #0d1425,
-        #0a0a12
-    );
+    background: #111111;
 
-    border: 2px solid transparent;
+    border: 1px solid #242424;
 
-    border-radius: 14px;
+    border-radius: 4px;
 
-    padding: 5px;
+    padding: 0;
 
     margin-bottom: 18px;
 
     overflow: hidden;
 
     transition:
-        transform 0.35s ease,
-        box-shadow 0.35s ease;
+        transform 0.28s ease,
+        box-shadow 0.28s ease,
+        border-color 0.28s ease;
 
     box-shadow:
-        0 5px 15px rgba(0,0,0,0.5);
+        0 5px 15px rgba(0,0,0,0.35);
 
     z-index: 2;
 }
 
-.movie-wrapper::before {
-
-    content: "";
-
-    position: absolute;
-
-    inset: -2px;
-
-    border-radius: 15px;
-
-    padding: 2px;
-
-    background: linear-gradient(
-        130deg,
-        #006cff,
-        #00c8ff,
-        #7000ff,
-        #ff0066,
-        #ff1744,
-        #006cff
-    );
-
-    background-size: 350% 350%;
-
-    animation: cardLightning 3.5s linear infinite;
-
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    -webkit-mask-composite: xor;
-
-    mask-composite: exclude;
-
-    opacity: 0.95;
-
-    pointer-events: none;
-}
-
-@keyframes cardLightning {
-
-    0% {
-        background-position: 0% 50%;
-    }
-
-    25% {
-        background-position: 50% 0%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    75% {
-        background-position: 50% 100%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-.movie-wrapper::after {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            120deg,
-            rgba(0, 100, 255, 0.08),
-            transparent 35%,
-            rgba(255, 0, 70, 0.08)
-        );
-
-    pointer-events: none;
-}
 
 .movie-wrapper:hover {
 
     transform:
-        translateY(-9px)
-        scale(1.035);
+        translateY(-7px)
+        scale(1.025);
+
+    border-color: #444444;
 
     box-shadow:
-        0 0 15px rgba(0, 110, 255, 0.65),
-        0 0 25px rgba(255, 0, 70, 0.55),
-        0 18px 40px rgba(0,0,0,0.75);
+        0 15px 30px rgba(0,0,0,0.75);
 
     z-index: 50;
 }
+
+
+/* ============================================================
+   POSTER
+   ============================================================ */
 
 .movie-poster-container {
 
@@ -697,10 +534,13 @@ div[data-testid="stHorizontalBlock"] {
 
     overflow: hidden;
 
-    border-radius: 9px;
+    border-radius: 3px 3px 0 0;
 
     z-index: 3;
+
+    background: #181818;
 }
+
 
 .movie-poster {
 
@@ -713,18 +553,24 @@ div[data-testid="stHorizontalBlock"] {
     display: block;
 
     transition:
-        transform 0.55s ease,
-        filter 0.55s ease;
+        transform 0.4s ease,
+        filter 0.4s ease;
 }
+
 
 .movie-wrapper:hover .movie-poster {
 
-    transform: scale(1.08);
+    transform: scale(1.055);
 
     filter:
-        brightness(0.48)
-        saturate(1.2);
+        brightness(0.62)
+        saturate(1.05);
 }
+
+
+/* ============================================================
+   HOVER OVERLAY
+   ============================================================ */
 
 .movie-overlay {
 
@@ -742,23 +588,26 @@ div[data-testid="stHorizontalBlock"] {
 
     background:
         linear-gradient(
-            to bottom,
+            180deg,
             rgba(0,0,0,0.05),
-            rgba(0,0,0,0.88)
+            rgba(0,0,0,0.72)
         );
 
-    transition: opacity 0.35s ease;
+    transition: opacity 0.25s ease;
 }
+
 
 .movie-wrapper:hover .movie-overlay {
 
     opacity: 1;
 }
 
+
 .play-circle {
 
-    width: 60px;
-    height: 60px;
+    width: 50px;
+
+    height: 50px;
 
     display: flex;
 
@@ -768,39 +617,32 @@ div[data-testid="stHorizontalBlock"] {
 
     border-radius: 50%;
 
-    background:
-        linear-gradient(
-            135deg,
-            #006cff,
-            #8b00ff,
-            #ff003c
-        );
+    background: #e50914;
 
-    color: white;
+    color: #ffffff;
 
-    font-size: 24px;
+    font-size: 20px;
 
     box-shadow:
-        0 0 15px rgba(0, 110, 255, 0.8),
-        0 0 30px rgba(255, 0, 70, 0.65);
+        0 5px 18px rgba(0,0,0,0.55);
 
-    animation: playPulse 1.7s infinite;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
 }
 
-@keyframes playPulse {
 
-    0% {
-        transform: scale(1);
-    }
+.movie-wrapper:hover .play-circle {
 
-    50% {
-        transform: scale(1.08);
-    }
+    transform: scale(1.08);
 
-    100% {
-        transform: scale(1);
-    }
+    background: #f40612;
 }
+
+
+/* ============================================================
+   MOVIE TITLE
+   ============================================================ */
 
 .movie-title {
 
@@ -808,17 +650,17 @@ div[data-testid="stHorizontalBlock"] {
 
     z-index: 5;
 
-    color: white;
+    color: #e5e5e5;
 
     font-size: 13px;
 
-    font-weight: 800;
+    font-weight: 650;
 
     text-align: center;
 
-    padding: 10px 5px 8px;
+    padding: 11px 5px;
 
-    min-height: 43px;
+    min-height: 44px;
 
     display: flex;
 
@@ -826,8 +668,15 @@ div[data-testid="stHorizontalBlock"] {
 
     justify-content: center;
 
-    text-shadow:
-        0 0 8px rgba(255,255,255,0.12);
+    background: #111111;
+
+    transition: color 0.2s ease;
+}
+
+
+.movie-wrapper:hover .movie-title {
+
+    color: #ffffff;
 }
 
 
@@ -839,87 +688,76 @@ div[data-testid="stHorizontalBlock"] {
 
     font-size: clamp(30px, 5vw, 55px);
 
-    font-weight: 950;
+    font-weight: 900;
 
     margin-top: 25px;
 
     margin-bottom: 20px;
 
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #00aaff,
-            #9d00ff,
-            #ff0066
-        );
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    background-clip: text;
+    color: #ffffff;
 }
+
 
 .trailer-heading {
 
-    font-size: 32px;
+    font-size: 27px;
 
-    font-weight: 950;
+    font-weight: 800;
 
-    margin-top: 15px;
+    margin-top: 18px;
 
     margin-bottom: 15px;
 
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #00aaff,
-            #9d00ff,
-            #ff0066
-        );
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    background-clip: text;
+    color: #ffffff;
 }
+
+
+.trailer-heading::first-letter {
+
+    color: #e50914;
+}
+
+
+/* ============================================================
+   TRAILER
+   ============================================================ */
 
 .trailer-box {
 
     width: 100%;
 
-    padding: 4px;
+    padding: 0;
 
-    border-radius: 18px;
+    border-radius: 4px;
 
-    background:
-        linear-gradient(
-            90deg,
-            #006cff,
-            #00c8ff,
-            #8b00ff,
-            #ff0066,
-            #ff1744
-        );
+    background: #111111;
+
+    border: 1px solid #2a2a2a;
 
     box-shadow:
-        0 0 20px rgba(0,110,255,0.55),
-        0 0 35px rgba(255,0,80,0.45);
+        0 10px 30px rgba(0,0,0,0.55);
 
     margin-bottom: 35px;
+
+    overflow: hidden;
 }
+
 
 .trailer-inner {
 
     width: 100%;
 
-    border-radius: 14px;
+    border-radius: 4px;
 
     overflow: hidden;
 
     background: #000;
 }
+
+
+/* ============================================================
+   CENTER POSTER
+   ============================================================ */
 
 .center-poster-wrap {
 
@@ -929,30 +767,25 @@ div[data-testid="stHorizontalBlock"] {
 
     margin: 25px auto 35px;
 
-    padding: 4px;
+    padding: 0;
 
-    border-radius: 18px;
+    border-radius: 4px;
 
-    background:
-        linear-gradient(
-            90deg,
-            #006cff,
-            #00c8ff,
-            #8b00ff,
-            #ff0066,
-            #ff1744
-        );
+    background: #111111;
+
+    border: 1px solid #292929;
 
     box-shadow:
-        0 0 20px rgba(0,110,255,0.55),
-        0 0 35px rgba(255,0,80,0.45);
+        0 10px 30px rgba(0,0,0,0.6);
 
     overflow: hidden;
 }
 
+
 .center-poster {
 
     width: 100%;
+
     height: 100%;
 
     aspect-ratio: 16 / 9;
@@ -961,8 +794,13 @@ div[data-testid="stHorizontalBlock"] {
 
     display: block;
 
-    border-radius: 14px;
+    border-radius: 3px;
 }
+
+
+/* ============================================================
+   DETAILS PANEL
+   ============================================================ */
 
 .details-panel {
 
@@ -970,26 +808,18 @@ div[data-testid="stHorizontalBlock"] {
 
     padding: 28px;
 
-    border-radius: 20px;
+    border-radius: 5px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0,20,50,0.78),
-            rgba(15,5,30,0.78),
-            rgba(50,0,25,0.70)
-        );
+    background: #111111;
 
-    border: 2px solid transparent;
-
-    background-clip: padding-box;
+    border: 1px solid #292929;
 
     box-shadow:
-        0 0 20px rgba(0,110,255,0.35),
-        0 0 35px rgba(255,0,70,0.25);
+        0 8px 25px rgba(0,0,0,0.4);
 
     overflow: hidden;
 }
+
 
 .details-panel::before {
 
@@ -997,48 +827,29 @@ div[data-testid="stHorizontalBlock"] {
 
     position: absolute;
 
-    inset: 0;
+    left: 0;
 
-    padding: 2px;
+    top: 0;
 
-    border-radius: 20px;
+    bottom: 0;
 
-    background:
-        linear-gradient(
-            90deg,
-            #006cff,
-            #00c8ff,
-            #9d00ff,
-            #ff0066,
-            #ff1744,
-            #006cff
-        );
+    width: 4px;
 
-    background-size: 300% 100%;
-
-    animation: neonBorder 4s linear infinite;
-
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    -webkit-mask-composite: xor;
-
-    mask-composite: exclude;
-
-    pointer-events: none;
+    background: #e50914;
 }
+
 
 .info-heading {
 
-    font-size: 30px;
+    font-size: 27px;
 
-    font-weight: 950;
+    font-weight: 800;
 
-    color: white;
+    color: #ffffff;
 
     margin-bottom: 22px;
 }
+
 
 .info-grid {
 
@@ -1047,48 +858,63 @@ div[data-testid="stHorizontalBlock"] {
     grid-template-columns:
         repeat(3, 1fr);
 
-    gap: 18px;
+    gap: 12px;
 
     margin-bottom: 25px;
 }
 
+
 .info-item {
 
-    padding: 18px;
+    padding: 17px;
 
-    border-radius: 14px;
+    border-radius: 4px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0,80,180,0.15),
-            rgba(255,0,80,0.12)
-        );
+    background: #181818;
 
-    border:
-        1px solid rgba(0,160,255,0.35);
+    border: 1px solid #2b2b2b;
 
-    box-shadow:
-        0 0 12px rgba(0,110,255,0.12);
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
 }
+
+
+.info-item:hover {
+
+    background: #202020;
+
+    border-color: #444444;
+}
+
 
 .info-label {
 
-    color: #aeb4c5;
+    color: #8c8c8c;
 
-    font-size: 13px;
+    font-size: 12px;
 
     margin-bottom: 6px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
 }
+
 
 .info-value {
 
-    color: white;
+    color: #ffffff;
 
-    font-size: 20px;
+    font-size: 19px;
 
-    font-weight: 850;
+    font-weight: 750;
 }
+
+
+/* ============================================================
+   GENRES / STORY
+   ============================================================ */
 
 .genre-section,
 .story-section {
@@ -1098,53 +924,50 @@ div[data-testid="stHorizontalBlock"] {
     margin-top: 18px;
 
     border-top:
-        1px solid rgba(0,150,255,0.35);
+        1px solid #292929;
 }
+
 
 .genre-title,
 .story-title {
 
-    font-size: 20px;
+    font-size: 19px;
 
-    font-weight: 900;
+    font-weight: 800;
 
-    color: white;
+    color: #ffffff;
 
     margin-bottom: 10px;
 }
+
 
 .genre-tag {
 
     display: inline-block;
 
-    padding: 7px 15px;
+    padding: 6px 12px;
 
     margin: 4px 5px 4px 0;
 
-    border-radius: 50px;
+    border-radius: 3px;
 
-    color: white;
+    color: #ffffff;
 
-    border: 1px solid #008cff;
+    border: 1px solid #444444;
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(0,110,255,0.20),
-            rgba(150,0,255,0.20)
-        );
+    background: #181818;
 
-    box-shadow:
-        0 0 10px rgba(0,110,255,0.25);
+    font-size: 13px;
 }
+
 
 .story-text {
 
-    color: #c5cad5;
+    color: #b3b3b3;
 
     line-height: 1.8;
 
-    font-size: 15px;
+    font-size: 14px;
 }
 
 
@@ -1158,7 +981,7 @@ div[data-testid="stHorizontalBlock"] {
 
     width: 100%;
 
-    margin-top: 45px;
+    margin-top: 55px;
 
     padding: 0 12px 35px;
 
@@ -1167,53 +990,24 @@ div[data-testid="stHorizontalBlock"] {
     overflow: hidden;
 }
 
+
 .team-neon-line {
 
     width: 82%;
 
-    height: 3px;
+    height: 1px;
 
-    margin: 0 auto 30px;
+    margin: 0 auto 28px;
 
-    background:
-        linear-gradient(
-            90deg,
-            transparent 0%,
-            #006cff 18%,
-            #00c8ff 35%,
-            #9d00ff 50%,
-            #ff0066 68%,
-            #006cff 84%,
-            transparent 100%
-        );
+    background: #333333;
 
-    box-shadow:
-        0 0 8px #006cff,
-        0 0 15px #9d00ff,
-        0 0 20px #ff0066;
+    border-radius: 0;
 
-    border-radius: 50%;
+    box-shadow: none;
 
-    animation: teamLineGlow 3s ease-in-out infinite;
+    animation: none;
 }
 
-@keyframes teamLineGlow {
-
-    0% {
-        opacity: 0.75;
-        transform: scaleX(0.96);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scaleX(1);
-    }
-
-    100% {
-        opacity: 0.75;
-        transform: scaleX(0.96);
-    }
-}
 
 .team-grid {
 
@@ -1231,9 +1025,10 @@ div[data-testid="stHorizontalBlock"] {
     align-items: stretch;
 }
 
+
 .team-member {
 
-    min-height: 150px;
+    min-height: 145px;
 
     display: flex;
 
@@ -1248,11 +1043,12 @@ div[data-testid="stHorizontalBlock"] {
     position: relative;
 }
 
+
 .team-member + .team-member {
 
     border-left:
         1px solid
-        rgba(100, 120, 160, 0.35);
+        #2b2b2b;
 }
 
 
@@ -1262,9 +1058,9 @@ div[data-testid="stHorizontalBlock"] {
 
 .team-photo {
 
-    width: 62px;
+    width: 58px;
 
-    height: 62px;
+    height: 58px;
 
     border-radius: 50%;
 
@@ -1272,57 +1068,18 @@ div[data-testid="stHorizontalBlock"] {
 
     object-position: center;
 
-    padding: 3px;
+    padding: 2px;
 
     margin-bottom: 8px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ff00ff,
-            #7b00ff,
-            #00aaff,
-            #ff0066
-        );
+    background: #222222;
+
+    border: 2px solid #e50914;
 
     box-shadow:
-        0 0 8px #ff00ff,
-        0 0 18px rgba(255,0,255,0.75),
-        0 0 30px rgba(0,140,255,0.45);
+        0 5px 15px rgba(0,0,0,0.6);
 
-    animation:
-        profileGlow 2.5s ease-in-out infinite;
-}
-
-@keyframes profileGlow {
-
-    0% {
-
-        transform: scale(1);
-
-        box-shadow:
-            0 0 8px #ff00ff,
-            0 0 18px rgba(255,0,255,0.60);
-    }
-
-    50% {
-
-        transform: scale(1.05);
-
-        box-shadow:
-            0 0 12px #ff00ff,
-            0 0 25px rgba(255,0,255,0.90),
-            0 0 35px rgba(0,140,255,0.50);
-    }
-
-    100% {
-
-        transform: scale(1);
-
-        box-shadow:
-            0 0 8px #ff00ff,
-            0 0 18px rgba(255,0,255,0.60);
-    }
+    animation: none;
 }
 
 
@@ -1342,38 +1099,25 @@ div[data-testid="stHorizontalBlock"] {
 
     margin-bottom: 8px;
 
-    font-size: 29px;
+    font-size: 27px;
 
-    font-weight: 950;
+    font-weight: 900;
 
     line-height: 1;
+
+    color: #e50914;
+
+    text-shadow: none;
 }
 
-.icon-math {
 
-    color: #00ff95;
-
-    text-shadow:
-        0 0 8px #00ff95,
-        0 0 16px rgba(0,255,149,0.65);
-}
-
-.icon-project {
-
-    color: #00bfff;
-
-    text-shadow:
-        0 0 8px #00bfff,
-        0 0 16px rgba(0,191,255,0.7);
-}
-
+.icon-math,
+.icon-project,
 .icon-front {
 
-    color: #ffd000;
+    color: #e50914;
 
-    text-shadow:
-        0 0 8px #ffd000,
-        0 0 16px rgba(255,208,0,0.65);
+    text-shadow: none;
 }
 
 
@@ -1383,11 +1127,11 @@ div[data-testid="stHorizontalBlock"] {
 
 .team-role {
 
-    color: #f4f4f8;
+    color: #999999;
 
-    font-size: 13px;
+    font-size: 12px;
 
-    font-weight: 650;
+    font-weight: 500;
 
     line-height: 1.35;
 
@@ -1402,49 +1146,31 @@ div[data-testid="stHorizontalBlock"] {
     text-align: center;
 }
 
+
 .team-name {
 
     margin-top: 5px;
 
-    font-size: 17px;
+    font-size: 16px;
 
-    font-weight: 900;
+    font-weight: 800;
 
     line-height: 1.2;
 
     white-space: nowrap;
+
+    color: #ffffff;
 }
 
-.name-anish {
 
-    color: #ff39ff;
-
-    text-shadow:
-        0 0 8px rgba(255,57,255,0.55);
-}
-
-.name-abhishek {
-
-    color: #00f58a;
-
-    text-shadow:
-        0 0 8px rgba(0,245,138,0.5);
-}
-
-.name-abrar {
-
-    color: #00aaff;
-
-    text-shadow:
-        0 0 8px rgba(0,170,255,0.55);
-}
-
+.name-anish,
+.name-abhishek,
+.name-abrar,
 .name-vishal {
 
-    color: #ffd000;
+    color: #ffffff;
 
-    text-shadow:
-        0 0 8px rgba(255,208,0,0.55);
+    text-shadow: none;
 }
 
 
@@ -1455,50 +1181,66 @@ div[data-testid="stHorizontalBlock"] {
 @media (max-width: 700px) {
 
     .block-container {
-        padding-left: 10px;
-        padding-right: 10px;
+
+        padding-left: 9px;
+
+        padding-right: 9px;
+
+        padding-top: 10px;
     }
+
 
     .hero-box {
 
-        min-height: 300px;
+        min-height: 330px;
 
-        padding: 28px 24px;
+        padding: 28px 22px;
 
-        border-radius: 15px;
+        border-radius: 3px;
+
+        margin-bottom: 30px;
     }
+
 
     .hero-title {
 
-        font-size: 42px;
+        font-size: 41px;
 
         line-height: 1;
+
+        letter-spacing: -1px;
     }
+
 
     .selected-movie-box {
 
-        gap: 15px;
+        gap: 14px;
 
         padding: 12px;
 
-        min-height: 145px;
+        min-height: 140px;
     }
+
 
     .selected-poster {
 
-        width: 85px;
+        width: 82px;
 
-        height: 125px;
+        height: 120px;
     }
+
 
     .selected-title {
 
-        font-size: 24px;
+        font-size: 22px;
+
+        margin: 7px 0;
     }
+
 
     .selected-overview {
 
-        font-size: 12px;
+        font-size: 11px;
 
         line-height: 1.45;
 
@@ -1511,19 +1253,20 @@ div[data-testid="stHorizontalBlock"] {
         overflow: hidden;
     }
 
+
     .section-title {
 
-        font-size: 25px;
+        font-size: 23px;
     }
+
 
     .movie-wrapper {
 
-        border-radius: 11px;
+        border-radius: 3px;
 
-        padding: 4px;
-
-        margin-bottom: 12px;
+        margin-bottom: 10px;
     }
+
 
     .movie-wrapper:hover {
 
@@ -1531,6 +1274,7 @@ div[data-testid="stHorizontalBlock"] {
             translateY(-4px)
             scale(1.015);
     }
+
 
     .movie-title {
 
@@ -1541,40 +1285,38 @@ div[data-testid="stHorizontalBlock"] {
         padding: 7px 3px;
     }
 
+
     .play-circle {
 
-        width: 44px;
+        width: 42px;
 
-        height: 44px;
+        height: 42px;
 
-        font-size: 18px;
+        font-size: 17px;
     }
+
 
     div[data-testid="stHorizontalBlock"] {
 
-        padding: 4px 2px;
+        padding: 3px 1px;
 
-        border-radius: 12px;
-
-        margin-bottom: 5px;
+        margin-bottom: 4px;
     }
+
 
     .trailer-box {
 
-        padding: 3px;
+        border-radius: 3px;
 
-        border-radius: 14px;
+        margin-bottom: 25px;
     }
 
-    .trailer-inner {
-
-        border-radius: 11px;
-    }
 
     .trailer-heading {
 
-        font-size: 25px;
+        font-size: 23px;
     }
+
 
     .center-poster-wrap {
 
@@ -1582,59 +1324,73 @@ div[data-testid="stHorizontalBlock"] {
 
         aspect-ratio: 16 / 9;
 
-        margin: 20px auto 30px;
+        margin: 18px auto 25px;
 
-        padding: 3px;
-
-        border-radius: 14px;
+        border-radius: 3px;
     }
+
 
     .center-poster {
 
-        width: 100%;
-
-        height: 100%;
-
-        object-fit: cover;
-
-        border-radius: 11px;
+        border-radius: 2px;
     }
+
 
     .details-panel {
 
         padding: 18px;
     }
 
+
     .info-grid {
 
         grid-template-columns: 1fr;
+
+        gap: 9px;
     }
+
 
     .info-value {
 
-        font-size: 18px;
+        font-size: 17px;
     }
 
 
-    /* ============================================
+    .genre-tag {
+
+        font-size: 11px;
+
+        padding: 5px 9px;
+    }
+
+
+    .story-text {
+
+        font-size: 13px;
+
+        line-height: 1.7;
+    }
+
+
+    /* ========================================================
        MOBILE FOOTER
-       ============================================ */
+       ======================================================== */
 
     .team-footer {
 
         margin-top: 35px;
 
-        padding: 0 4px 25px;
+        padding: 0 3px 25px;
     }
+
 
     .team-neon-line {
 
         width: 88%;
 
-        height: 2px;
-
-        margin-bottom: 20px;
+        margin-bottom: 18px;
     }
+
 
     .team-grid {
 
@@ -1644,55 +1400,62 @@ div[data-testid="stHorizontalBlock"] {
             repeat(4, 1fr);
     }
 
+
     .team-member {
 
-        min-height: 135px;
+        min-height: 130px;
 
-        padding: 5px 4px;
+        padding: 5px 3px;
     }
+
 
     .team-member + .team-member {
 
         border-left:
             1px solid
-            rgba(100, 120, 160, 0.30);
+            #292929;
     }
+
 
     .team-photo {
 
-        width: 45px;
+        width: 43px;
 
-        height: 45px;
+        height: 43px;
 
         padding: 2px;
 
         margin-bottom: 5px;
     }
 
+
     .team-icon {
 
-        height: 29px;
+        height: 28px;
 
-        font-size: 22px;
+        font-size: 21px;
 
-        margin-bottom: 6px;
+        margin-bottom: 5px;
     }
+
 
     .team-role {
 
-        font-size: 9px;
+        font-size: 8px;
 
         line-height: 1.25;
 
         min-height: 31px;
     }
 
+
     .team-name {
 
         margin-top: 5px;
 
-        font-size: 11px;
+        font-size: 10px;
     }
+
 }
 
 </style>
@@ -1719,7 +1482,7 @@ SIMILARITY_FILE = os.path.join(
 
 
 # ============================================================
-# 4. ANISH PHOTO URL
+# 4. ANISH PHOTO
 # ============================================================
 
 ANISH_PHOTO_URL = (
@@ -1781,16 +1544,12 @@ def tmdb_request(
         + endpoint
     )
 
-
     if params is None:
-
         params = {}
-
 
     params = params.copy()
 
     params["api_key"] = TMDB_API_KEY
-
 
     try:
 
@@ -1800,16 +1559,13 @@ def tmdb_request(
             timeout=15
         )
 
-
         if response.status_code == 200:
 
             return response.json()
 
-
     except Exception:
 
         return None
-
 
     return None
 
@@ -1846,21 +1602,15 @@ def fetch_poster(movie_id):
         movie_id
     )
 
-
     if not details:
-
         return None
-
 
     poster_path = details.get(
         "poster_path"
     )
 
-
     if not poster_path:
-
         return None
-
 
     return (
         "https://image.tmdb.org/t/p/w500"
@@ -1885,11 +1635,8 @@ def fetch_trailer(movie_id):
         }
     )
 
-
     if not data:
-
         return None
-
 
     videos = data.get(
         "results",
@@ -1898,6 +1645,7 @@ def fetch_trailer(movie_id):
 
 
     # OFFICIAL TRAILER
+
     for video in videos:
 
         if (
@@ -1917,6 +1665,7 @@ def fetch_trailer(movie_id):
 
 
     # NORMAL TRAILER
+
     for video in videos:
 
         if (
@@ -1935,6 +1684,7 @@ def fetch_trailer(movie_id):
 
 
     # TEASER
+
     for video in videos:
 
         if (
@@ -2111,7 +1861,6 @@ def selected_movie_preview(
 
 
     if len(indexes) == 0:
-
         return
 
 
@@ -2135,7 +1884,6 @@ def selected_movie_preview(
 
 
     if not details:
-
         return
 
 
@@ -2192,7 +1940,7 @@ def selected_movie_preview(
             <div class="selected-info">
 
                 <span class="selected-badge">
-                    ⭐ Selected Movie
+                    Selected Movie
                 </span>
 
                 <div class="selected-title">
@@ -2277,11 +2025,13 @@ def show_movie_details(
     )
 
 
+    # ========================================================
     # TRAILER
+    # ========================================================
 
     st.html(
         '<div class="trailer-heading">'
-        '▶️ Trailer'
+        '▶ Trailer'
         '</div>'
     )
 
@@ -2309,11 +2059,13 @@ def show_movie_details(
     else:
 
         st.warning(
-            "🎬 Trailer is not available for this movie."
+            "Trailer is not available for this movie."
         )
 
 
+    # ========================================================
     # POSTER
+    # ========================================================
 
     if poster_path:
 
@@ -2338,7 +2090,9 @@ def show_movie_details(
         )
 
 
+    # ========================================================
     # TITLE
+    # ========================================================
 
     st.html(
         f"""
@@ -2351,7 +2105,9 @@ def show_movie_details(
     )
 
 
+    # ========================================================
     # RUNTIME
+    # ========================================================
 
     runtime_text = "Unknown"
 
@@ -2376,7 +2132,9 @@ def show_movie_details(
             )
 
 
+    # ========================================================
     # GENRES
+    # ========================================================
 
     genre_html = ""
 
@@ -2402,7 +2160,9 @@ def show_movie_details(
     )
 
 
+    # ========================================================
     # DETAILS PANEL
+    # ========================================================
 
     st.html(
         f"""
@@ -2421,11 +2181,11 @@ def show_movie_details(
                 <div class="info-item">
 
                     <div class="info-label">
-                        ⭐ TMDB Rating
+                        TMDB Rating
                     </div>
 
                     <div class="info-value">
-                        {float(rating):.1f}/10
+                        ⭐ {float(rating):.1f}/10
                     </div>
 
                 </div>
@@ -2434,7 +2194,7 @@ def show_movie_details(
                 <div class="info-item">
 
                     <div class="info-label">
-                        📅 Release Date
+                        Release Date
                     </div>
 
                     <div class="info-value">
@@ -2449,7 +2209,7 @@ def show_movie_details(
                 <div class="info-item">
 
                     <div class="info-label">
-                        ⏱️ Runtime
+                        Runtime
                     </div>
 
                     <div class="info-value">
@@ -2467,7 +2227,7 @@ def show_movie_details(
             <div class="genre-section">
 
                 <div class="genre-title">
-                    🎭 Genres
+                    Genres
                 </div>
 
                 <div>
@@ -2480,7 +2240,7 @@ def show_movie_details(
             <div class="story-section">
 
                 <div class="story-title">
-                    📝 Story
+                    Story
                 </div>
 
                 <div class="story-text">
@@ -2547,10 +2307,10 @@ else:
 
                 <div
                     style="
-                        color:#ff1744;
-                        font-size:13px;
-                        font-weight:900;
-                        letter-spacing:3px;
+                        color:#e50914;
+                        font-size:12px;
+                        font-weight:800;
+                        letter-spacing:2px;
                     "
                 >
 
@@ -2579,8 +2339,8 @@ else:
 
                 <div
                     style="
-                        color:#c5cad5;
-                        font-size:17px;
+                        color:#b3b3b3;
+                        font-size:16px;
                         line-height:1.6;
                         max-width:650px;
                     "
@@ -2607,36 +2367,14 @@ else:
         """
         <div
             style="
-                font-size:32px;
-                font-weight:900;
+                font-size:28px;
+                font-weight:800;
                 margin-bottom:8px;
+                color:#ffffff;
             "
         >
 
-            🎬
-
-            <span style="color:white;">
-                Choose
-            </span>
-
-            <span
-                style="
-                    background:
-                        linear-gradient(
-                            90deg,
-                            #00aaff,
-                            #9d00ff,
-                            #ff0066
-                        );
-
-                    -webkit-background-clip:text;
-                    -webkit-text-fill-color:transparent;
-                "
-            >
-
-                Your Movie
-
-            </span>
+            🎬 Choose Your Movie
 
         </div>
         """
@@ -2694,14 +2432,7 @@ else:
 
             Because you selected
 
-            <strong
-                style="
-                    color:#00aaff;
-                    text-shadow:
-                        0 0 8px
-                        rgba(0,170,255,0.6);
-                "
-            >
+            <strong>
 
                 {html.escape(
                     str(selected_movie)
@@ -2711,8 +2442,7 @@ else:
 
             <br>
 
-            👆 Tap any poster to open
-            movie details
+            Select any poster to view movie details.
 
         </div>
         """
