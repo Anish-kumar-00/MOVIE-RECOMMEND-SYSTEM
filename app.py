@@ -39,11 +39,6 @@ body {
     overflow-x: hidden;
 }
 
-
-/* ============================================================
-   MAIN APP
-   ============================================================ */
-
 .stApp {
     background:
         radial-gradient(
@@ -106,21 +101,12 @@ header {
     z-index: 0;
 }
 
-
-/* ============================================================
-   BUTTERFLY
-   ============================================================ */
-
 .butterfly {
     position: absolute;
-
     width: 52px;
     height: 44px;
-
     opacity: 0.28;
-
     filter: blur(1.5px);
-
     transform-origin: center;
 
     animation:
@@ -128,12 +114,9 @@ header {
         butterfly-float 3s ease-in-out infinite;
 }
 
-
 .butterfly .wing {
     position: absolute;
-
     top: 7px;
-
     width: 25px;
     height: 32px;
 
@@ -146,12 +129,10 @@ header {
         wing-flap 0.85s ease-in-out infinite;
 }
 
-
 .butterfly .left {
     left: 1px;
     transform: rotate(-25deg);
 }
-
 
 .butterfly .right {
     right: 1px;
@@ -160,7 +141,6 @@ header {
         scaleX(-1)
         rotate(-25deg);
 }
-
 
 .butterfly .body {
     position: absolute;
@@ -347,7 +327,6 @@ header {
     }
 }
 
-
 @keyframes butterfly-float {
 
     0%, 100% {
@@ -370,7 +349,6 @@ header {
         margin-left: 20px;
     }
 }
-
 
 @keyframes butterfly-fly {
 
@@ -448,7 +426,6 @@ header {
         0 25px 70px rgba(0,0,0,0.7);
 }
 
-
 .hero::before {
     content: "";
 
@@ -470,7 +447,6 @@ header {
     filter: blur(20px);
 }
 
-
 .hero::after {
     content: "";
 
@@ -488,12 +464,10 @@ header {
         0 0 20px rgba(229,9,20,0.7);
 }
 
-
 .hero-content {
     position: relative;
     z-index: 2;
 }
-
 
 .hero-badge {
     display: inline-block;
@@ -519,7 +493,6 @@ header {
     letter-spacing: 1.5px;
 }
 
-
 .hero-title {
     margin: 0;
 
@@ -533,11 +506,9 @@ header {
     color: white;
 }
 
-
 .hero-title span {
     color: #e50914;
 }
-
 
 .hero-subtitle {
     margin-top: 15px;
@@ -590,17 +561,14 @@ div[data-baseweb="select"] > div {
     color: white !important;
 }
 
-
 div[data-baseweb="select"] > div:hover {
     border-color:
         #e50914 !important;
 }
 
-
 div[data-baseweb="select"] * {
     color: white !important;
 }
-
 
 label {
     color: #aaa !important;
@@ -643,7 +611,6 @@ label {
         0 15px 45px rgba(0,0,0,0.55);
 }
 
-
 .selected-poster {
 
     width: 170px;
@@ -657,11 +624,9 @@ label {
         0 15px 35px rgba(0,0,0,0.7);
 }
 
-
 .selected-info {
     flex: 1;
 }
-
 
 .selected-title {
 
@@ -673,7 +638,6 @@ label {
 
     color: white;
 }
-
 
 .selected-description {
 
@@ -692,7 +656,6 @@ label {
 .movie-wrapper {
     margin-bottom: 25px;
 }
-
 
 .movie-poster-container {
 
@@ -716,7 +679,6 @@ label {
         box-shadow 0.35s ease;
 }
 
-
 .movie-poster-container:hover {
 
     transform:
@@ -730,7 +692,6 @@ label {
         0 20px 45px rgba(0,0,0,0.75),
         0 0 18px rgba(229,9,20,0.18);
 }
-
 
 .movie-poster {
 
@@ -747,7 +708,6 @@ label {
         filter 0.5s ease;
 }
 
-
 .movie-poster-container:hover
 .movie-poster {
 
@@ -757,7 +717,6 @@ label {
     filter:
         brightness(0.65);
 }
-
 
 .movie-overlay {
 
@@ -784,12 +743,10 @@ label {
         opacity 0.3s ease;
 }
 
-
 .movie-poster-container:hover
 .movie-overlay {
     opacity: 1;
 }
-
 
 .play-circle {
 
@@ -816,7 +773,6 @@ label {
         0 0 30px rgba(229,9,20,0.5);
 }
 
-
 .movie-title {
 
     margin-top: 10px;
@@ -838,13 +794,15 @@ label {
 
 
 /* ============================================================
-   TRAILER
+   VIDEO SECTION
    ============================================================ */
 
-.trailer-heading {
+.video-heading {
 
-    margin-top: 25px;
-    margin-bottom: 18px;
+    max-width: 1100px;
+
+    margin:
+        30px auto 18px auto;
 
     font-size: 27px;
 
@@ -859,16 +817,16 @@ label {
 }
 
 
-.trailer-box {
+.video-box {
 
     width: 100%;
 
     max-width: 1100px;
 
     margin:
-        0 auto 35px auto;
+        0 auto 38px auto;
 
-    padding: 8px;
+    padding: 0;
 
     background: #080808;
 
@@ -877,72 +835,106 @@ label {
     border:
         1px solid #292929;
 
+    overflow: hidden;
+
     box-shadow:
-        0 20px 60px rgba(0,0,0,0.7);
+        0 20px 60px rgba(0,0,0,0.70);
+
+    position: relative;
 }
 
 
-.trailer-inner {
+/*
+   Streamlit st.video iframe/video area
+   Force same 16:9 size for trailer and full movie.
+*/
 
-    overflow: hidden;
+.video-box [data-testid="stVideo"] {
 
-    border-radius: 10px;
+    width: 100% !important;
+
+    aspect-ratio: 16 / 9 !important;
+
+    min-height: 0 !important;
+
+    background: #000 !important;
+
+    border-radius: 14px !important;
+
+    overflow: hidden !important;
+}
+
+.video-box [data-testid="stVideo"] video,
+.video-box iframe {
+
+    width: 100% !important;
+
+    height: 100% !important;
+
+    aspect-ratio: 16 / 9 !important;
+
+    border: none !important;
 }
 
 
 /* ============================================================
-   WIDE MOVIE BACKDROP
+   FULL MOVIE PLACEHOLDER
    ============================================================ */
 
-.center-backdrop-wrap {
-
-    width: 100%;
-
-    max-width: 1100px;
-
-    margin:
-        30px auto 30px auto;
-
-    border-radius: 15px;
-
-    overflow: hidden;
-
-    background: #080808;
-
-    border:
-        1px solid #292929;
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,0.7);
-}
-
-
-.center-backdrop {
-
-    display: block;
+.full-movie-placeholder {
 
     width: 100%;
 
     aspect-ratio: 16 / 9;
 
-    object-fit: cover;
+    display: flex;
 
-    object-position: center;
+    align-items: center;
 
-    border-radius: 14px;
+    justify-content: center;
 
-    transition:
-        transform 0.5s ease,
-        filter 0.5s ease;
+    flex-direction: column;
+
+    gap: 12px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(229,9,20,0.12),
+            #080808 55%
+        );
+
+    color: #aaa;
+
+    text-align: center;
 }
 
+.full-movie-placeholder .big-play {
 
-.center-backdrop:hover {
+    width: 64px;
+    height: 64px;
 
-    transform: scale(1.015);
+    display: flex;
 
-    filter:
-        brightness(1.08);
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e50914;
+
+    color: white;
+
+    font-size: 25px;
+
+    box-shadow:
+        0 0 35px rgba(229,9,20,0.35);
+}
+
+.full-movie-placeholder strong {
+    color: white;
+    font-size: 18px;
 }
 
 
@@ -1005,7 +997,6 @@ label {
         0 20px 50px rgba(0,0,0,0.6);
 }
 
-
 .detail-row {
 
     display: flex;
@@ -1018,7 +1009,6 @@ label {
     margin-bottom: 22px;
 }
 
-
 .detail-item {
 
     color: #aaa;
@@ -1026,11 +1016,9 @@ label {
     font-size: 15px;
 }
 
-
 .detail-item strong {
     color: white;
 }
-
 
 .story-heading {
 
@@ -1043,7 +1031,6 @@ label {
     margin-bottom: 10px;
 }
 
-
 .story-text {
 
     color: #aaa;
@@ -1052,7 +1039,6 @@ label {
 
     font-size: 15px;
 }
-
 
 .genre-tag {
 
@@ -1106,7 +1092,6 @@ label {
         all 0.25s ease !important;
 }
 
-
 .stButton > button:hover {
 
     background:
@@ -1135,7 +1120,6 @@ label {
         1px solid #222;
 }
 
-
 .team-heading {
 
     text-align: center;
@@ -1149,11 +1133,9 @@ label {
     margin-bottom: 30px;
 }
 
-
 .team-heading span {
     color: #e50914;
 }
-
 
 .team-card {
 
@@ -1175,7 +1157,6 @@ label {
         border-color 0.3s ease;
 }
 
-
 .team-card:hover {
 
     transform:
@@ -1184,7 +1165,6 @@ label {
     border-color:
         #e50914;
 }
-
 
 .team-photo {
 
@@ -1201,7 +1181,6 @@ label {
     margin-bottom: 12px;
 }
 
-
 .team-name {
 
     font-size: 17px;
@@ -1211,7 +1190,6 @@ label {
     color: white;
 }
 
-
 .team-role {
 
     margin-top: 6px;
@@ -1220,7 +1198,6 @@ label {
 
     color: #999;
 }
-
 
 .footer-text {
 
@@ -1246,7 +1223,6 @@ label {
         padding-right: 14px;
     }
 
-
     .hero {
 
         padding:
@@ -1255,16 +1231,13 @@ label {
         border-radius: 16px;
     }
 
-
     .hero-title {
         font-size: 38px;
     }
 
-
     .hero-subtitle {
         font-size: 14px;
     }
-
 
     .selected-box {
 
@@ -1275,51 +1248,68 @@ label {
             center;
     }
 
-
     .selected-poster {
 
         width: 145px;
         height: 215px;
     }
 
-
     .selected-title {
         font-size: 24px;
     }
-
 
     .section-heading {
         font-size: 22px;
     }
 
-
     .movie-title {
         font-size: 12px;
     }
 
+    .video-heading {
 
-    .center-backdrop-wrap {
+        margin-top: 25px;
+
+        font-size: 22px;
+
+        padding-left: 12px;
+    }
+
+    .video-box {
 
         width: 100%;
 
-        margin-top: 20px;
-        margin-bottom: 25px;
+        margin-bottom: 28px;
 
         border-radius: 10px;
     }
 
+    .video-box [data-testid="stVideo"] {
 
-    .center-backdrop {
+        width: 100% !important;
 
-        width: 100%;
+        aspect-ratio: 16 / 9 !important;
+
+        height: auto !important;
+
+        border-radius: 9px !important;
+    }
+
+    .video-box iframe {
+
+        width: 100% !important;
+
+        height: auto !important;
+
+        aspect-ratio: 16 / 9 !important;
+    }
+
+    .full-movie-placeholder {
 
         aspect-ratio: 16 / 9;
 
-        object-fit: cover;
-
         border-radius: 9px;
     }
-
 
     .details-title {
 
@@ -1330,14 +1320,12 @@ label {
         margin-bottom: 22px;
     }
 
-
     .details-panel {
 
         padding: 20px;
 
         border-radius: 12px;
     }
-
 
     .detail-row {
 
@@ -1347,11 +1335,9 @@ label {
         font-size: 13px;
     }
 
-
     .story-text {
         font-size: 13px;
     }
-
 
     .butterfly {
 
@@ -1360,7 +1346,6 @@ label {
         filter:
             blur(2px);
     }
-
 
     .b7,
     .b8 {
@@ -1461,7 +1446,25 @@ ANISH_PHOTO_URL = (
 
 
 # ============================================================
-# 6. LOAD DATA
+# 6. FULL MOVIE URLS
+#
+# Add only official/legal full-movie URLs here.
+#
+# Example:
+#
+# FULL_MOVIE_URLS = {
+#     "Movie Name": "https://www.youtube.com/watch?v=VIDEO_ID"
+# }
+#
+# ============================================================
+
+FULL_MOVIE_URLS = {
+    # "Avatar": "PASTE_OFFICIAL_FULL_MOVIE_YOUTUBE_URL_HERE",
+}
+
+
+# ============================================================
+# 7. LOAD DATA
 # ============================================================
 
 @st.cache_data(show_spinner=False)
@@ -1493,7 +1496,7 @@ movies, similarity_indices = load_data()
 
 
 # ============================================================
-# 7. TMDB API
+# 8. TMDB API
 # ============================================================
 
 TMDB_API_KEY = st.secrets[
@@ -1511,15 +1514,12 @@ def tmdb_request(
         + endpoint
     )
 
-
     if params is None:
         params = {}
-
 
     params = params.copy()
 
     params["api_key"] = TMDB_API_KEY
-
 
     try:
 
@@ -1529,22 +1529,17 @@ def tmdb_request(
             timeout=15
         )
 
-
         if response.status_code == 200:
-
             return response.json()
 
-
     except Exception:
-
         return None
-
 
     return None
 
 
 # ============================================================
-# 8. MOVIE DETAILS
+# 9. MOVIE DETAILS
 # ============================================================
 
 @st.cache_data(
@@ -1562,7 +1557,7 @@ def fetch_movie_details(movie_id):
 
 
 # ============================================================
-# 9. POSTER
+# 10. POSTER
 # ============================================================
 
 @st.cache_data(
@@ -1575,19 +1570,15 @@ def fetch_poster(movie_id):
         movie_id
     )
 
-
     if not details:
         return None
-
 
     poster_path = details.get(
         "poster_path"
     )
 
-
     if not poster_path:
         return None
-
 
     return (
         "https://image.tmdb.org/t/p/w500"
@@ -1596,7 +1587,7 @@ def fetch_poster(movie_id):
 
 
 # ============================================================
-# 10. TRAILER
+# 11. TRAILER
 # ============================================================
 
 @st.cache_data(
@@ -1612,36 +1603,29 @@ def fetch_trailer(movie_id):
         }
     )
 
-
     if not data:
         return None
-
 
     videos = data.get(
         "results",
         []
     )
 
-
-    # Official Trailer
+    # --------------------------------------------------------
+    # OFFICIAL TRAILER
+    # --------------------------------------------------------
 
     for video in videos:
 
         if (
-            video.get("site")
-            == "YouTube"
+            video.get("site") == "YouTube"
             and
-            video.get("type")
-            == "Trailer"
+            video.get("type") == "Trailer"
             and
-            video.get("official")
-            is True
+            video.get("official") is True
         ):
 
-            key = video.get(
-                "key"
-            )
-
+            key = video.get("key")
 
             if key:
 
@@ -1650,23 +1634,19 @@ def fetch_trailer(movie_id):
                     + key
                 )
 
-
-    # Normal Trailer
+    # --------------------------------------------------------
+    # NORMAL TRAILER
+    # --------------------------------------------------------
 
     for video in videos:
 
         if (
-            video.get("site")
-            == "YouTube"
+            video.get("site") == "YouTube"
             and
-            video.get("type")
-            == "Trailer"
+            video.get("type") == "Trailer"
         ):
 
-            key = video.get(
-                "key"
-            )
-
+            key = video.get("key")
 
             if key:
 
@@ -1675,23 +1655,19 @@ def fetch_trailer(movie_id):
                     + key
                 )
 
-
-    # Teaser
+    # --------------------------------------------------------
+    # TEASER
+    # --------------------------------------------------------
 
     for video in videos:
 
         if (
-            video.get("site")
-            == "YouTube"
+            video.get("site") == "YouTube"
             and
-            video.get("type")
-            == "Teaser"
+            video.get("type") == "Teaser"
         ):
 
-            key = video.get(
-                "key"
-            )
-
+            key = video.get("key")
 
             if key:
 
@@ -1699,13 +1675,28 @@ def fetch_trailer(movie_id):
                     "https://www.youtube.com/watch?v="
                     + key
                 )
-
 
     return None
 
 
 # ============================================================
-# 11. RECOMMEND
+# 12. FULL MOVIE
+# ============================================================
+
+def fetch_full_movie(
+    movie_title
+):
+
+    if not movie_title:
+        return None
+
+    return FULL_MOVIE_URLS.get(
+        str(movie_title)
+    )
+
+
+# ============================================================
+# 13. RECOMMEND
 # ============================================================
 
 def recommend(movie):
@@ -1714,24 +1705,18 @@ def recommend(movie):
         movies["title"] == movie
     ].index
 
-
     if len(indexes) == 0:
-
         return [], [], []
 
-
     index = indexes[0]
-
 
     names = []
     posters = []
     ids = []
 
-
     similar_movies = (
         similarity_indices[index][0:20]
     )
-
 
     for movie_index in similar_movies:
 
@@ -1744,7 +1729,6 @@ def recommend(movie):
         except Exception:
 
             continue
-
 
         try:
 
@@ -1760,7 +1744,6 @@ def recommend(movie):
 
             continue
 
-
         names.append(
             movie_name
         )
@@ -1773,7 +1756,6 @@ def recommend(movie):
             movie_id
         )
 
-
     return (
         names,
         posters,
@@ -1782,7 +1764,7 @@ def recommend(movie):
 
 
 # ============================================================
-# 12. MOVIE CARD
+# 14. MOVIE CARD
 # ============================================================
 
 def movie_card_html(
@@ -1795,14 +1777,12 @@ def movie_card_html(
         str(movie_name)
     )
 
-
     if not poster_url:
 
         poster_url = (
             "https://via.placeholder.com/"
             "500x750?text=No+Poster"
         )
-
 
     return f"""
 
@@ -1849,7 +1829,7 @@ def movie_card_html(
 
 
 # ============================================================
-# 13. SELECTED MOVIE PREVIEW
+# 15. SELECTED MOVIE PREVIEW
 # ============================================================
 
 def selected_movie_preview(
@@ -1860,13 +1840,10 @@ def selected_movie_preview(
         movies["title"] == movie_name
     ].index
 
-
     if len(indexes) == 0:
         return
 
-
     index = indexes[0]
-
 
     try:
 
@@ -1878,26 +1855,21 @@ def selected_movie_preview(
 
         return
 
-
     details = fetch_movie_details(
         movie_id
     )
 
-
     if not details:
         return
-
 
     poster_path = details.get(
         "poster_path"
     )
 
-
     overview = details.get(
         "overview",
         "No description available."
     )
-
 
     safe_title = html.escape(
         str(
@@ -1908,11 +1880,9 @@ def selected_movie_preview(
         )
     )
 
-
     safe_overview = html.escape(
         str(overview)
     )
-
 
     if poster_path:
 
@@ -1927,7 +1897,6 @@ def selected_movie_preview(
             "https://via.placeholder.com/"
             "500x750?text=No+Poster"
         )
-
 
     st.html(f"""
 
@@ -1957,7 +1926,7 @@ def selected_movie_preview(
 
 
 # ============================================================
-# 14. MOVIE DETAILS PAGE
+# 16. MOVIE DETAILS PAGE
 # ============================================================
 
 def show_movie_details(
@@ -1986,7 +1955,6 @@ def show_movie_details(
         movie_id
     )
 
-
     if not details:
 
         st.error(
@@ -2001,30 +1969,25 @@ def show_movie_details(
         "Unknown Movie"
     )
 
-
     overview = details.get(
         "overview",
         "No description available."
     )
-
 
     rating = details.get(
         "vote_average",
         0
     )
 
-
     release_date = details.get(
         "release_date",
         "Unknown"
     )
 
-
     runtime = details.get(
         "runtime",
         0
     )
-
 
     genres = details.get(
         "genres",
@@ -2037,7 +2000,7 @@ def show_movie_details(
     # ========================================================
 
     st.html("""
-    <div class="trailer-heading">
+    <div class="video-heading">
         ▶️ Trailer
     </div>
     """)
@@ -2051,57 +2014,95 @@ def show_movie_details(
     if trailer_url:
 
         st.html("""
-        <div class="trailer-box">
-            <div class="trailer-inner">
+        <div class="video-box">
         """)
-
 
         st.video(
             trailer_url
         )
 
-
         st.html("""
-            </div>
         </div>
         """)
 
     else:
 
-        st.warning(
-            "🎬 Trailer is not available for this movie."
-        )
+        st.html("""
+        <div class="video-box">
+
+            <div class="full-movie-placeholder">
+
+                <div class="big-play">
+                    ▶
+                </div>
+
+                <strong>
+                    Trailer Not Available
+                </strong>
+
+                <span>
+                    No trailer was found for this movie.
+                </span>
+
+            </div>
+
+        </div>
+        """)
 
 
     # ========================================================
-    # BACKDROP
+    # FULL MOVIE
     # ========================================================
 
-    backdrop_path = details.get(
-        "backdrop_path"
+    st.html("""
+    <div class="video-heading">
+        🎞️ Full Movie
+    </div>
+    """)
+
+
+    full_movie_url = fetch_full_movie(
+        title
     )
 
 
-    if backdrop_path:
+    if full_movie_url:
 
-        backdrop_url = (
-            "https://image.tmdb.org/t/p/w1280"
-            + backdrop_path
+        st.html("""
+        <div class="video-box">
+        """)
+
+        st.video(
+            full_movie_url
         )
 
+        st.html("""
+        </div>
+        """)
 
-        st.html(f"""
+    else:
 
-        <div class="center-backdrop-wrap">
+        st.html("""
+        <div class="video-box">
 
-            <img
-                class="center-backdrop"
-                src="{backdrop_url}"
-                alt="{html.escape(str(title))}"
-            >
+            <div class="full-movie-placeholder">
+
+                <div class="big-play">
+                    ▶
+                </div>
+
+                <strong>
+                    Full Movie
+                </strong>
+
+                <span>
+                    Add an official/legal full-movie
+                    YouTube URL to FULL_MOVIE_URLS.
+                </span>
+
+            </div>
 
         </div>
-
         """)
 
 
@@ -2124,12 +2125,10 @@ def show_movie_details(
 
     runtime_text = "Unknown"
 
-
     if runtime:
 
         hours = runtime // 60
         minutes = runtime % 60
-
 
         if hours:
 
@@ -2150,13 +2149,11 @@ def show_movie_details(
 
     genre_html = ""
 
-
     for genre in genres:
 
         genre_name = genre.get(
             "name"
         )
-
 
         if genre_name:
 
@@ -2231,7 +2228,7 @@ def show_movie_details(
 
 
 # ============================================================
-# 15. TEAM
+# 17. TEAM
 # ============================================================
 
 def show_team():
@@ -2256,7 +2253,7 @@ def show_team():
 
 
     # ========================================================
-    # ANISH — CLICKABLE GITHUB CARD
+    # ANISH
     # ========================================================
 
     with cols[0]:
@@ -2430,7 +2427,7 @@ def show_team():
 
 
 # ============================================================
-# 16. URL ROUTING
+# 18. URL ROUTING
 # ============================================================
 
 movie_id_from_url = st.query_params.get(
@@ -2439,7 +2436,7 @@ movie_id_from_url = st.query_params.get(
 
 
 # ============================================================
-# 17. DETAILS PAGE
+# 19. DETAILS PAGE
 # ============================================================
 
 if movie_id_from_url:
@@ -2450,11 +2447,9 @@ if movie_id_from_url:
             movie_id_from_url
         )
 
-
         show_movie_details(
             movie_id
         )
-
 
     except (
         ValueError,
@@ -2467,7 +2462,7 @@ if movie_id_from_url:
 
 
 # ============================================================
-# 18. HOME PAGE
+# 20. HOME PAGE
 # ============================================================
 
 else:
