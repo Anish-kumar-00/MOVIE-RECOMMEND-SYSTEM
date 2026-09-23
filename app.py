@@ -70,7 +70,6 @@ body {
     position: relative;
     z-index: 5;
     max-width: 1450px;
-
     padding-top: 1.5rem;
     padding-bottom: 4rem;
 }
@@ -99,16 +98,11 @@ header {
 
 .butterfly-field {
     position: fixed;
-
     inset: 0;
-
     width: 100vw;
     height: 100vh;
-
     overflow: hidden;
-
     pointer-events: none;
-
     z-index: 0;
 }
 
@@ -280,7 +274,6 @@ header {
 .b1 {
     left: -8%;
     top: 18%;
-
     animation-duration: 28s, 3s;
     animation-delay: -4s, 0s;
 }
@@ -288,7 +281,6 @@ header {
 .b2 {
     left: 12%;
     top: 65%;
-
     animation-duration: 31s, 3.5s;
     animation-delay: -16s, -1s;
 }
@@ -296,7 +288,6 @@ header {
 .b3 {
     left: 35%;
     top: 10%;
-
     animation-duration: 24s, 2.8s;
     animation-delay: -8s, -0.5s;
 }
@@ -304,7 +295,6 @@ header {
 .b4 {
     left: 65%;
     top: 72%;
-
     animation-duration: 34s, 3.8s;
     animation-delay: -20s, -1.5s;
 }
@@ -312,7 +302,6 @@ header {
 .b5 {
     left: 80%;
     top: 20%;
-
     animation-duration: 29s, 3.2s;
     animation-delay: -13s, -2s;
 }
@@ -320,7 +309,6 @@ header {
 .b6 {
     left: 92%;
     top: 55%;
-
     animation-duration: 27s, 3.6s;
     animation-delay: -5s, -1s;
 }
@@ -328,7 +316,6 @@ header {
 .b7 {
     left: 48%;
     top: 88%;
-
     animation-duration: 32s, 4s;
     animation-delay: -25s, -2s;
 }
@@ -336,7 +323,6 @@ header {
 .b8 {
     left: 25%;
     top: 38%;
-
     animation-duration: 30s, 3.3s;
     animation-delay: -18s, -1s;
 }
@@ -438,7 +424,6 @@ header {
 
 .hero {
     position: relative;
-
     overflow: hidden;
 
     margin-top: 10px;
@@ -906,7 +891,6 @@ label {
 
 
 /* ============================================================
-   IMPORTANT:
    WIDE MOVIE BACKDROP
    ============================================================ */
 
@@ -1313,8 +1297,6 @@ label {
         font-size: 12px;
     }
 
-
-    /* WIDE BACKDROP MOBILE */
 
     .center-backdrop-wrap {
 
@@ -2092,10 +2074,7 @@ def show_movie_details(
 
 
     # ========================================================
-    # IMPORTANT FIX
-    #
-    # poster_path = vertical poster
-    # backdrop_path = wide cinematic image
+    # BACKDROP
     # ========================================================
 
     backdrop_path = details.get(
@@ -2276,50 +2255,52 @@ def show_team():
     )
 
 
-# --------------------------------------------------------
-# ANISH
-# --------------------------------------------------------
+    # ========================================================
+    # ANISH — CLICKABLE GITHUB CARD
+    # ========================================================
 
-with cols[0]:
+    with cols[0]:
 
-    st.html(f"""
+        st.html(f"""
 
-    <a
-        href="https://github.com/Anish-kumar-00/MOVIE-RECOMMEND-SYSTEM"
-        target="_blank"
-        style="
-            display:block;
-            text-decoration:none;
-            color:inherit;
-        "
-    >
+        <a
+            href="https://github.com/Anish-kumar-00/MOVIE-RECOMMEND-SYSTEM"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="
+                display:block;
+                text-decoration:none;
+                color:inherit;
+                height:100%;
+            "
+        >
 
-        <div class="team-card">
+            <div class="team-card">
 
-            <img
-                class="team-photo"
-                src="{ANISH_PHOTO_URL}"
-                alt="Anish Kumar"
-            >
+                <img
+                    class="team-photo"
+                    src="{ANISH_PHOTO_URL}"
+                    alt="Anish Kumar"
+                >
 
-            <div class="team-name">
-                Anish Kumar
+                <div class="team-name">
+                    Anish Kumar
+                </div>
+
+                <div class="team-role">
+                    Coding & Development
+                </div>
+
             </div>
 
-            <div class="team-role">
-                Coding & Development
-            </div>
+        </a>
 
-        </div>
-
-    </a>
-
-    """)
+        """)
 
 
-    # --------------------------------------------------------
+    # ========================================================
     # ABHISHEK
-    # --------------------------------------------------------
+    # ========================================================
 
     with cols[1]:
 
@@ -2354,9 +2335,9 @@ with cols[0]:
         """)
 
 
-    # --------------------------------------------------------
+    # ========================================================
     # ABRAR
-    # --------------------------------------------------------
+    # ========================================================
 
     with cols[2]:
 
@@ -2391,9 +2372,9 @@ with cols[0]:
         """)
 
 
-    # --------------------------------------------------------
+    # ========================================================
     # VISHAL
-    # --------------------------------------------------------
+    # ========================================================
 
     with cols[3]:
 
@@ -2427,6 +2408,10 @@ with cols[0]:
 
         """)
 
+
+    # ========================================================
+    # FOOTER
+    # ========================================================
 
     st.html("""
 
@@ -2487,9 +2472,9 @@ if movie_id_from_url:
 
 else:
 
-    # --------------------------------------------------------
+    # ========================================================
     # HERO
-    # --------------------------------------------------------
+    # ========================================================
 
     st.html("""
 
@@ -2522,9 +2507,9 @@ else:
     """)
 
 
-    # --------------------------------------------------------
+    # ========================================================
     # MOVIE SELECTOR
-    # --------------------------------------------------------
+    # ========================================================
 
     st.html("""
 
@@ -2566,18 +2551,18 @@ else:
     )
 
 
-    # --------------------------------------------------------
+    # ========================================================
     # SELECTED MOVIE
-    # --------------------------------------------------------
+    # ========================================================
 
     selected_movie_preview(
         selected_movie
     )
 
 
-    # --------------------------------------------------------
+    # ========================================================
     # RECOMMENDATIONS
-    # --------------------------------------------------------
+    # ========================================================
 
     names, posters, ids = recommend(
         selected_movie
@@ -2607,9 +2592,9 @@ else:
     """)
 
 
-    # --------------------------------------------------------
+    # ========================================================
     # MOVIE GRID
-    # --------------------------------------------------------
+    # ========================================================
 
     COLS_PER_ROW = 5
 
@@ -2650,8 +2635,8 @@ else:
                 )
 
 
-    # --------------------------------------------------------
+    # ========================================================
     # TEAM
-    # --------------------------------------------------------
+    # ========================================================
 
     show_team()
