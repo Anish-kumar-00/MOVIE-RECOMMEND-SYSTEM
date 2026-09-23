@@ -2276,23 +2276,13 @@ def show_team():
     )
 
 
-# --------------------------------------------------------
-# ANISH
-# --------------------------------------------------------
+    # --------------------------------------------------------
+    # ANISH
+    # --------------------------------------------------------
 
-with cols[0]:
+    with cols[0]:
 
-    st.html(f"""
-
-    <a
-        href="https://github.com/Anish-kumar-00/MOVIE-RECOMMEND-SYSTEM"
-        target="_blank"
-        style="
-            display:block;
-            text-decoration:none;
-            color:inherit;
-        "
-    >
+        st.html(f"""
 
         <div class="team-card">
 
@@ -2312,9 +2302,7 @@ with cols[0]:
 
         </div>
 
-    </a>
-
-    """)
+        """)
 
 
     # --------------------------------------------------------
