@@ -1446,6 +1446,16 @@ ANISH_PHOTO_URL = (
 
 
 # ============================================================
+# 5B. ABRAR PHOTO
+# ============================================================
+
+ABRAR_PHOTO_URL = (
+    "https://i.ibb.co/8LVGypHs/"
+    "IMG-20261121-WA0020.jpg"
+)
+
+
+# ============================================================
 # 6. FULL MOVIE URLS
 #
 # Add only official/legal full-movie URLs here.
@@ -2338,23 +2348,15 @@ def show_team():
 
     with cols[2]:
 
-        st.html("""
+        st.html(f"""
 
         <div class="team-card">
 
-            <div
+            <img
                 class="team-photo"
-                style="
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    background:#171717;
-                    color:#e50914;
-                    font-size:30px;
-                "
+                src="{ABRAR_PHOTO_URL}"
+                alt="Abrar Ahmad"
             >
-                A
-            </div>
 
             <div class="team-name">
                 Abrar Ahmad
