@@ -1466,6 +1466,16 @@ VISHAL_PHOTO_URL = (
 
 
 # ============================================================
+# 5D. ABHISHEK PHOTO
+# ============================================================
+
+ABHISHEK_PHOTO_URL = (
+    "https://i.ibb.co/hFfq5cnW/"
+    "IMG-20260923-WA0003.jpg"
+)
+
+
+# ============================================================
 # 6. FULL MOVIE URLS
 #
 # Add only official/legal full-movie URLs here.
@@ -2321,23 +2331,15 @@ def show_team():
 
     with cols[1]:
 
-        st.html("""
+        st.html(f"""
 
         <div class="team-card">
 
-            <div
+            <img
                 class="team-photo"
-                style="
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    background:#171717;
-                    color:#e50914;
-                    font-size:30px;
-                "
+                src="{ABHISHEK_PHOTO_URL}"
+                alt="Abhishek Kumar"
             >
-                A
-            </div>
 
             <div class="team-name">
                 Abhishek Kumar
